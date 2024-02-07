@@ -5,7 +5,10 @@ export default async function Home() {
   const categories: CategoryType[] = await getCategories();
   return (
     <main>
-      <div className="items-center justify-center flex">BEM VINDO A HOME!</div>
+      <div className="items-center justify-center flex">
+        <div className="font-noto">減肥</div>
+        <div className="font-montse"> &nbsp; / Emagrecimento</div>
+      </div>
       {categories &&
         categories.map((category) => (
           <div>
