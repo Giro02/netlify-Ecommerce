@@ -21,6 +21,11 @@ const category = {
       },
     }),
     defineField({
+      name: "description",
+      title: "Description",
+      type: "text",
+    }),
+    defineField({
       name: "categoryImage",
       title: "Image",
       type: "image",
