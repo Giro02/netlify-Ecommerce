@@ -1,8 +1,8 @@
 import { defineField } from "sanity";
 
-const forYouCarousel = {
-  name: "prodForYouCarousel",
-  title: "prodForYouCarousel",
+const carousel = {
+  name: "carousel",
+  title: "Carousel",
   type: "document",
   fields: [
     defineField({
@@ -19,4 +19,4 @@ const forYouCarousel = {
   ],
 };
 
-export default forYouCarousel;
+export default carousel;

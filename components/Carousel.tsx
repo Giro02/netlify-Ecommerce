@@ -1,27 +1,32 @@
+"use client";
 import React, { useCallback, useEffect, useState } from "react";
-import { useEmblaCarousel } from "embla-carousel-react";
+import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import "../../styles/carousel.css";
+import "../public/static/carousel.css";
 import { IoIosArrowForward } from "react-icons/io";
-import { getProdForYouCarousel } from "@/sanity/sanity.query";
+import { getCarousel } from "@/sanity/sanity.query";
+import { CarouselType } from "@/types";
 
-const App = () => {
+interface CarouselProps {
+  carousel: CarouselType;
+}
+
+export default function Carousel({ carousel }: CarouselProps) {
   return (
     <div className="flex justify-center w-full overflow-hidden">
-      <div className="">
-        <Constructor></Constructor>
+      <div>
+        <Constructor carousel={carousel}></Constructor>
       </div>
     </div>
   );
-};
+}
 
-export default App;
-
-function Constructor() {
+function Constructor({ carousel }: CarouselProps) {
   const [selected, setSelected] = useState(0);
-  const Products = ProdData.ProdsForYou;
+  const Products = carousel;
   const [Saiba, setSaiba] = useState(null);
-  const SlideElements = Products.map((product, index) => (
+  console.log(Products.product[0].productImage.image);
+  const SlideElements = Products.product.map((product, index) => (
     <div key={index}>
       <div
         className={`rounded-xl relative p-4 cursor-pointer transition-all hover:shadow-2xl w-[200px] h-[400px] md:w-[240px] md:h-[450px] flex items-center justify-center flex-col text-center`}
@@ -30,18 +35,20 @@ function Constructor() {
       >
         <div className="w-full h-[140px] md:h-[160px]">
           <img
-            src={require(`../../images/Prods/${product.url}`).default}
+            src={product.productImage.image}
             className="w-full h-full object-contain"
-            alt={product.name}
+            alt={product.productImage.alt}
           />
         </div>
         <div>
           <p className="text-[16px] md:h-8 h-12 text-color-preto mt-4">
-            {product.name}
+            {product.title}
           </p>
         </div>
         <div>
-          <p className="text-[13px] h-14 text-color-preto/70">{product.desc}</p>
+          <p className="text-[13px] h-14 text-color-preto/70">
+            {product.description}
+          </p>
         </div>
         <div>
           <p className="text-[16px] h-10  text-color-preto font-bold">
@@ -84,7 +91,7 @@ function Constructor() {
       <div className="flex lg:max-w-[1120px] md:max-w-[750px] sm:max-w-[600px] max-w-[350px] px-8 w-full overflow-hidden">
         <div className="embla" ref={emblaRef}>
           <div className="embla__container flex justify-start w-full gap-1 py-8 px-8">
-            {SlideElements}
+            {/* {SlideElements} */}
           </div>
         </div>
       </div>

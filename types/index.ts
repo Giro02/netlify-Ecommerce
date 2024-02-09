@@ -24,3 +24,9 @@ export type ProductType = {
   price: string;
   category: Reference[];
 };
+
+export type CarouselType = {
+  _id: String;
+  title: String;
+  product:Array<ProductType>;
+};
