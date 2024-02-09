@@ -1,4 +1,4 @@
-import { Slug } from "sanity";
+import { Slug, Reference } from "sanity";
 
 export type CategoryType = {
   _id: String;
@@ -10,4 +10,17 @@ export type CategoryType = {
     alt: string;
     image: string;
   };
+};
+
+export type ProductType = {
+  _id: String;
+  title: String;
+  slug: Slug;
+  description: String;
+  productImage: {
+    alt: string;
+    image: string;
+  };
+  price: string;
+  category: Reference[];
 };

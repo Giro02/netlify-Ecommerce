@@ -23,8 +23,8 @@ export default async function Home() {
             <div>{category._id}</div>
             <div>{category.title}</div>
             <img
-              src={category.categoryImage.image}
-              alt={category.categoryImage.alt}
+              src={category.categoryImage?.image}
+              alt={category.categoryImage?.alt}
             />
           </div>
         ))}
