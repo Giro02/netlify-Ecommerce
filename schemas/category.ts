@@ -34,6 +34,7 @@ const category = {
       name: "categoryImage",
       title: "Image",
       type: "image",
+      validation: (Rule) => Rule.required(),
       fields: [
         {
           name: "alt",

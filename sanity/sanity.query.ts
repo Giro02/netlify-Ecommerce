@@ -44,7 +44,7 @@ export async function getProducts() {
   );
 }
 
-export async function getSingleProducts(slug: string) {
+export async function getSingleProduct(slug: string) {
   return client.fetch(
     groq`*[_type == "product" && slug.current == $slug][0]{
       _id,

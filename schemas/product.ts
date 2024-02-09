@@ -30,6 +30,7 @@ const product = {
       name: "productImage",
       title: "Image",
       type: "image",
+      validation: (Rule) => Rule.required(),
       fields: [
         {
           name: "alt",
@@ -42,6 +43,7 @@ const product = {
       name: "price",
       title: "Price",
       type: "string",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "category",
