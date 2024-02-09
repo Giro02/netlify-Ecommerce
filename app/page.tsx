@@ -1,6 +1,7 @@
 import { getCategories } from "@/sanity/sanity.query";
 import type { CategoryType } from "@/types";
 import { QiLogo, QiLogoName } from "@/components/Svgs";
+import QiButton from "@/components/QiButton";
 
 export default async function Home() {
   const categories: CategoryType[] = await getCategories();
@@ -16,6 +17,15 @@ export default async function Home() {
       <div className="items-center justify-center flex">
         <div className="font-noto">減肥</div>
         <div className="font-montse"> &nbsp; / Emagrecimento</div>
+      </div>
+      <div className="flex items-center justify-center">
+        <QiButton
+          {...QiButton.variants.lightGreen}
+          leftIcon={QiButton.icons.circle}
+          rightIcon={QiButton.icons.circle}
+        >
+          Aperta aqui pra pegar na minha jeba
+        </QiButton>
       </div>
       {categories &&
         categories.map((category) => (

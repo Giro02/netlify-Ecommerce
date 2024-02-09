@@ -1,4 +1,4 @@
-import { Slug, Reference } from "sanity";
+import { Slug } from "sanity";
 
 export type CategoryType = {
   _id: String;
@@ -22,5 +22,5 @@ export type ProductType = {
     image: string;
   };
   price: string;
-  category: Reference[];
+  categories: Array<CategoryType>;
 };
