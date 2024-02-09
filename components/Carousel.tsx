@@ -23,10 +23,9 @@ export default function Carousel({ carousel }: CarouselProps) {
 
 function Constructor({ carousel }: CarouselProps) {
   const [selected, setSelected] = useState(0);
-  const Products = carousel;
   const [Saiba, setSaiba] = useState(null);
-  console.log(Products.product[0].productImage.image);
-  const SlideElements = Products.product.map((product, index) => (
+  console.log(carousel.product[0].productImage.image);
+  const SlideElements = carousel.product.map((product, index) => (
     <div key={index}>
       <div
         className={`rounded-xl relative p-4 cursor-pointer transition-all hover:shadow-2xl w-[200px] h-[400px] md:w-[240px] md:h-[450px] flex items-center justify-center flex-col text-center`}
@@ -91,7 +90,7 @@ function Constructor({ carousel }: CarouselProps) {
       <div className="flex lg:max-w-[1120px] md:max-w-[750px] sm:max-w-[600px] max-w-[350px] px-8 w-full overflow-hidden">
         <div className="embla" ref={emblaRef}>
           <div className="embla__container flex justify-start w-full gap-1 py-8 px-8">
-            {/* {SlideElements} */}
+            {SlideElements}
           </div>
         </div>
       </div>
