@@ -1,5 +1,6 @@
 "use client";
 import type { CategoryType } from "@/types";
+import QiButton from "./QiButton";
 
 interface CategoryProps {
   category: CategoryType;
