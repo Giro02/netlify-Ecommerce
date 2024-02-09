@@ -62,3 +62,18 @@ export async function getSingleProduct(slug: string) {
     { slug }
   );
 }
+
+export async function getProdForYouCarousel(){
+  return client.fetch(
+    groq `*[_type == "prodForYouCarousel"]{
+      'product': products[]-> {
+        _id,
+        title,
+        description,
+        productImage {alt, "image": asset -> url},
+        price,
+        slug,
+      }
+    }`
+  );
+}
