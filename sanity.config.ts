@@ -4,8 +4,8 @@ import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./schemas";
 
 export default defineConfig({
-  name: "default",
-  title: "essencia-qi",
+  name: "essencia-qi",
+  title: "Essencia Qi",
 
   projectId: "uiga1324",
   dataset: "production",

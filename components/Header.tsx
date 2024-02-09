@@ -1,5 +1,4 @@
 "use client";
-
 import React, { SetStateAction, useState, Dispatch, useEffect } from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
