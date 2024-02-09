@@ -1,13 +1,17 @@
 import { getCategories } from "@/sanity/sanity.query";
 import type { CategoryType } from "@/types";
-import QiLgo from "../components/SVGs/qiLogo";
+import { QiLogo, QiLogoName } from "@/components/Svgs";
 
 export default async function Home() {
   const categories: CategoryType[] = await getCategories();
   return (
     <main>
       <div className="w-[500px]">
-        <QiLgo className="w-full h-auto " />
+        <QiLogo className="text-9xl" colors={["#DFBC64", "#BC64DF"]} />
+        <QiLogoName
+          className="text-9xl"
+          colors={["#BC64DF", "#DFBC64", "#DF7F64"]}
+        />
       </div>
       <div className="items-center justify-center flex">
         <div className="font-noto">減肥</div>
