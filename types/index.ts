@@ -5,6 +5,7 @@ export type CategoryType = {
   title: String;
   slug: Slug;
   description: Text;
+  ogdescription: String;
   categoryImage: {
     alt: string;
     image: string;

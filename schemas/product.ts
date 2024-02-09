@@ -21,6 +21,12 @@ const product = {
       },
     }),
     defineField({
+      name: "description",
+      title: "Description",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "productImage",
       title: "Image",
       type: "image",
@@ -42,12 +48,6 @@ const product = {
       title: "Category",
       type: "array",
       of: [{ type: "reference", to: [{ type: "category" }] }],
-    }),
-    defineField({
-      name: "description",
-      title: "Description",
-      type: "string",
-      validation: (Rule) => Rule.required(),
     }),
   ],
 };

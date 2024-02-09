@@ -26,6 +26,11 @@ const category = {
       type: "text",
     }),
     defineField({
+      name: "ogdescription",
+      title: "Open Graph Description",
+      type: "string",
+    }),
+    defineField({
       name: "categoryImage",
       title: "Image",
       type: "image",

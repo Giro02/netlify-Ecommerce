@@ -1,3 +1,4 @@
+import Category from "@/components/Category";
 import { getSingleCategory } from "@/sanity/sanity.query";
 import type { CategoryType } from "@/types";
 import { Metadata } from "next";
@@ -13,27 +14,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const category: CategoryType = await getSingleCategory(slug);
   return {
     title: `${category.title}`,
+    description: `${category.description}`,
     openGraph: {
+      description: `${category.ogdescription}`,
       images: category.categoryImage.image,
       title: `${category.title}`,
     },
   };
 }
 
-export default async function Category({ params }: Props) {
+export default async function CategoryLayout({ params }: Props) {
   const slug = params.category;
   const category: CategoryType = await getSingleCategory(slug);
   return (
     <main>
-      <div>
-        <div>{category._id}</div>
-        <div>{category.title}</div>
-        <div>{category.slug.current}</div>
-        <img
-          src={category.categoryImage.image}
-          alt={category.categoryImage.alt}
-        />
-      </div>
+      <Category category={category} />
     </main>
   );
 }
