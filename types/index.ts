@@ -28,5 +28,8 @@ export type ProductType = {
 export type CarouselType = {
   _id: String;
   title: String;
-  product:Array<ProductType>;
+  product: Array<ProductType>;
+  type?: String;
 };
+
+export type CarouselArray = Array<CarouselType>;

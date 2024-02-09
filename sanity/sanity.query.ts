@@ -63,9 +63,9 @@ export async function getSingleProduct(slug: string) {
   );
 }
 
-export async function getCarousel(CarouselModel:number){
+export async function getProdCarouselHome() {
   return client.fetch(
-    groq `*[_type == "carousel"][${CarouselModel}]{
+    groq`*[_type == "carousel" && type == "home"]{
       _id,
       title,
       'product': products[]-> {

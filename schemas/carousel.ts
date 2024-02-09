@@ -16,6 +16,14 @@ const carousel = {
       type: "array",
       of: [{ type: "reference", to: [{ type: "product" }] }],
     }),
+    defineField({
+      name: "type",
+      title: "Carousel Type",
+      type: "string",
+      options: {
+        list: [{ title: "Home", value: "home" }],
+      },
+    }),
   ],
 };
 
