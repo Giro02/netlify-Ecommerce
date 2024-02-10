@@ -23,7 +23,7 @@ export default function Carousel({ carousel }: CarouselProps) {
 function Constructor({ carousel }: CarouselProps) {
   const [selected, setSelected] = useState(0);
   const [Saiba, setSaiba] = useState<number | null>(null);
-  const SlideElements = carousel.product.map((product, index) => (
+  const SlideElements = carousel.products.map((product, index) => (
     <div key={index}>
       <div
         className={`rounded-xl relative p-4 cursor-pointer transition-all hover:shadow-2xl w-[200px] h-[400px] md:w-[240px] md:h-[450px] flex items-center justify-center flex-col text-center`}

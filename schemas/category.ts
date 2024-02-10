@@ -12,6 +12,12 @@ const category = {
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "titleChinese",
+      title: "Chinese Title",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
