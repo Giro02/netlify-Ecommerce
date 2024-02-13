@@ -24,6 +24,7 @@ export type ProductType = {
   };
   price: string;
   categories: Array<CategoryType>;
+  unitsSold: number;
 };
 
 export type ProductArray = Array<ProductType>;
