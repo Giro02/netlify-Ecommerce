@@ -3,6 +3,7 @@ import { Slug } from "sanity";
 export type CategoryType = {
   _id: String;
   title: String;
+  titleChinese: String;
   slug: Slug;
   description: Text;
   ogdescription: String;
@@ -25,8 +26,13 @@ export type ProductType = {
   categories: Array<CategoryType>;
 };
 
+export type ProductArray = Array<ProductType>;
+
 export type CarouselType = {
   _id: String;
   title: String;
-  product:Array<ProductType>;
+  products: Array<ProductType>;
+  type?: String;
 };
+
+export type CarouselArray = Array<CarouselType>;
