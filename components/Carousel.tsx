@@ -55,7 +55,7 @@ function Constructor({ carousel }: CarouselProps) {
           </p>
         </div>
         <div
-          className={`h-10 bg-color-verde w-full ${
+          className={`h-10 bg-color-1 w-full ${
             Saiba === index ? "flex" : " flex sm:invisible "
           } items-center justify-center text-color-branco text-[16px]  rounded-lg mt-4 md:mt-8`}
         >
