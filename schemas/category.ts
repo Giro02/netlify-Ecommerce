@@ -49,6 +49,21 @@ const category = {
         },
       ],
     }),
+    defineField({
+      name: "highlightedProducts",
+      title: "Highlighted Products",
+      type: "array",
+      of: [
+        {
+          type: "reference",
+          to: [
+            {
+              type: "product",
+            },
+          ],
+        },
+      ],
+    }),
   ],
 };
 

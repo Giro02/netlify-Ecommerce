@@ -3,6 +3,7 @@ import type { CategoryType, ProductArray } from "@/types";
 import QiButton from "./QiButton";
 import Link from "next/link";
 import { ChangeEvent, useEffect, useState } from "react";
+import CategoryDropdown from "./CategoryDropdown";
 
 interface CategoryProps {
   category: CategoryType;
@@ -10,25 +11,25 @@ interface CategoryProps {
 }
 
 export default function Category({ category, productsArray }: CategoryProps) {
-  const [selectedOption, setSelectedOption] = useState("1");
+  const dropdownOptions = ["Relevância", "Nome", "Preço"];
+  const [selectedOption, setSelectedOption] = useState("0");
   const [products, setProducts] = useState<JSX.Element[]>([]);
-  const handleDropdownChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
+  const handleDropdownChange = (value: string) => {
+    setSelectedOption(value);
   };
-  console.log(productsArray[0].unitsSold);
 
   useEffect(() => {
-    if (selectedOption === "1") {
+    if (selectedOption === "0") {
       const sortedProducts = [...productsArray].sort(
         (a, b) => b.unitsSold - a.unitsSold
       );
       setProducts(GenerateProducts(sortedProducts));
-    } else if (selectedOption === "2") {
+    } else if (selectedOption === "1") {
       const sortedProducts = [...productsArray].sort(
         (a, b) => parseFloat(b.price) - parseFloat(a.price)
       );
       setProducts(GenerateProducts(sortedProducts));
-    } else if (selectedOption === "3") {
+    } else if (selectedOption === "2") {
       const sortedProducts = [...productsArray].sort((a, b) =>
         b.title.localeCompare(`${a.title}`)
       );
@@ -57,7 +58,7 @@ export default function Category({ category, productsArray }: CategoryProps) {
 
   return (
     <div className="container">
-      <ul className="flex items-center justify-start font-montse text-sm text-color-5/75 mt-4">
+      <ul className="flex items-center justify-start font-montse text-sm text-color-5/75 my-5">
         <li>
           <Link href="/"> Início </Link>&nbsp;
         </li>
@@ -65,7 +66,7 @@ export default function Category({ category, productsArray }: CategoryProps) {
         <li className="font-semibold  text-color-5">{category.title}</li>
       </ul>
       <img
-        className="rounded-xl mt-4"
+        className="rounded-xl"
         src={category.categoryImage.image}
         alt={category.categoryImage.alt}
       />
@@ -79,13 +80,11 @@ export default function Category({ category, productsArray }: CategoryProps) {
             {productsArray.length} produtos encontrados
           </div>
         </div>
-        <div>
-          <select value={selectedOption} onChange={handleDropdownChange}>
-            <option value="1">Relevância</option>
-            <option value="2">Nome</option>
-            <option value="3">Preço</option>
-          </select>
-        </div>
+        <CategoryDropdown
+          handleDropdownChange={handleDropdownChange}
+          dropdownOptions={dropdownOptions}
+          selectedOption={selectedOption}
+        />
       </div>
       <div className="grid grid-cols-4 mt-6 gap-6">
         <div className="col-span-1 pr-6">
