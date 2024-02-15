@@ -11,10 +11,24 @@ async function Search() {
   return getCategory;
 }
 
+function MenuCreator({ categData }: { categData: Category[] }) {
+  return (
+    <div className="flex flex-col gap-10 text-color-5 mt-4 mb-2 text-[15px]">
+      {categData &&
+        categData.map((category) => (
+          <DropDownOptions key={category._id} text={category.title} />
+        ))}
+    </div>
+  );
+}
+interface Category {
+  _id: string;
+  title: string;
+}
 export default function Header() {
   const [Down, setDown] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [categData, setCategData] = useState(null);
+  var [categData, setCategData] = useState<Category[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,7 +56,7 @@ export default function Header() {
       <div
         className={`${
           isMenuOpen ? " w-[80%]" : " w-0"
-        } md:hidden z-40 left-0 h-full bg-color-branco fixed overflow-hidden transition-[width] duration-300`}
+        } md:hidden z-40 left-0 h-full bg-color-3 fixed overflow-hidden transition-[width] duration-300`}
       >
         <div className="p-4 border-b border-color-4 w-full h-16">
           <div className="flex font-medium w-full justify-between text-2xl">
@@ -53,14 +67,7 @@ export default function Header() {
           </div>
         </div>
         <div className="p-4 gap-8 flex flex-col font-medium mt-4">
-          {/* Fazer uma função que pega as categorias da const categData e gera pra cada titulo uma div <DropDownOptions text="title"></DropDownOptions>*/}
-          <DropDownOptions text="Beleza"></DropDownOptions>
-          <DropDownOptions text="Saúde Feminina"></DropDownOptions>
-          <DropDownOptions text="Emagrecimendo"></DropDownOptions>
-          <DropDownOptions text="Queda Capilar"></DropDownOptions>
-          <DropDownOptions text="Saúde Sexual"></DropDownOptions>
-          <DropDownOptions text="Desempenho Físico"></DropDownOptions>
-          <DropDownOptions text="Dormir Bem"></DropDownOptions>
+          {MenuCreator({ categData })}
         </div>
       </div>
       <div className="flex justify-center ">
@@ -88,7 +95,11 @@ export default function Header() {
       {/* GREEN MENU, HIDDES IN MOBILE*/}
       <div className="h-12 bg-color-1 w-full mt-[-10px] items-end justify-center relative hidden md:flex">
         <div className=" flex items-center  w-full max-w-[1120px] justify-between text-white px-8 ">
-          <Hamburguer setDown={setDown} Down={Down}></Hamburguer>
+          <Hamburguer
+            setDown={setDown}
+            Down={Down}
+            categData={categData}
+          ></Hamburguer>
           <Menu text="Queda Capilar"></Menu>
           <Menu text="Emagrecimento"></Menu>
           <Menu text="Dormir Bem"></Menu>
@@ -115,8 +126,9 @@ export function Menu({ text }: ItemProps) {
 type MenuProps = {
   setDown: Dispatch<SetStateAction<boolean>>;
   Down: boolean;
+  categData: Category[];
 };
-export function Hamburguer({ Down, setDown }: MenuProps) {
+export function Hamburguer({ Down, setDown, categData }: MenuProps) {
   function Isdropped() {
     setDown(!Down);
   }
@@ -157,13 +169,7 @@ export function Hamburguer({ Down, setDown }: MenuProps) {
         <div
           className={` flex flex-col text-center gap-10 text-color-5 mt-4 mb-2 p-4 text-[15px]`}
         >
-          <DropDownOptions text="Beleza"></DropDownOptions>
-          <DropDownOptions text="Saúde Feminina"></DropDownOptions>
-          <DropDownOptions text="Emagrecimendo"></DropDownOptions>
-          <DropDownOptions text="Queda Capilar"></DropDownOptions>
-          <DropDownOptions text="Saúde Sexual"></DropDownOptions>
-          <DropDownOptions text="Desempenho Físico"></DropDownOptions>
-          <DropDownOptions text="Dormir Bem"></DropDownOptions>
+          {MenuCreator({ categData })}
         </div>
       </div>
     </div>
@@ -174,7 +180,6 @@ type DropDownProps = {
 };
 
 function DropDownOptions({ text }: DropDownProps) {
-  const [hoverMenu, setHoverMenu] = useState({});
   return (
     <div className="cursor-pointer hover:text-color-1 flex items-center justify-between ">
       {text}
