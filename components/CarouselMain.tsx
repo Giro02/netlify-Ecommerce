@@ -4,12 +4,14 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import "../public/static/carousel.css";
 import { IoIosArrowForward } from "react-icons/io";
+import { CarouselType } from "@/types";
 
-export default function CarouselHome() {
+interface CarouselProps {
+  carousel: CarouselType;
+}
+
+export default function CarouselMain(carousel: CarouselProps) {
   const [selected, setSelected] = useState(0);
-
-  //To add new Imgs to the Carousel. Import the image and put the name inside the array;
-
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()]);
 
   const onSelect = useCallback((emblaApi: any) => {
@@ -32,14 +34,14 @@ export default function CarouselHome() {
     <div className="flex justify-center w-full h-full flex-col items-center relative">
       <div className="embla w-full" ref={emblaRef}>
         <div className="embla__container">
-          {/* {imagens.map((i, index) => (
+          {carousel.carousel.map((i, index) => (
             <div key={index} className="embla__slide">
-              <Images Image={i}></Images>
+              <Images Image={i.homeimages.image}></Images>
             </div>
-          ))} */}
+          ))}
         </div>
       </div>
-      {/* <Dots Quantity={imagens.length} Selected={selected}></Dots> */}
+      <Dots Quantity={2} Selected={selected}></Dots>
       <div className="hidden md:block">
         <IoIosArrowForward
           className="w-11 h-11 bg-color-preto/70 absolute right-0 top-1/2 -translate-y-1/2 flex items-center justify-center text-color-branco/90 p-1 cursor-pointer"
@@ -63,7 +65,7 @@ type ItemProps = {
 function Images({ Image }: ItemProps) {
   return (
     <div
-      className="bg-cover bg-center aspect-4.47/1 h-full w-full flex items-center justify-center"
+      className="bg-cover bg-center aspect-4.47/1 flex items-center justify-center"
       style={{ backgroundImage: `url(${Image})` }}
     ></div>
   );
@@ -83,8 +85,8 @@ function Dots({ Quantity, Selected }: Items) {
         key={i}
         className={
           i === Selected
-            ? "h-3 w-3 bg-color-preto rounded-full transition-all"
-            : "h-2 w-2 bg-color-preto/70 rounded-full transition-all"
+            ? "h-3 w-3 bg-color-5 rounded-full transition-all"
+            : "h-2 w-2 bg-color-5/70 rounded-full transition-all"
         }
       ></div>
     );

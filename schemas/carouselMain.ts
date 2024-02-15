@@ -1,8 +1,8 @@
 import { defineField } from "sanity";
 
 const carousel = {
-    name: "carousel-home",
-    title: "Carousel Home",
+    name: "carousel-main",
+    title: "Carousel Main",
     type: "document",
     fields: [
 

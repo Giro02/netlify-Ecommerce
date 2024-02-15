@@ -4,11 +4,27 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
 import Image from "next/image";
 import Logo from "/public/images/LogoQi.png";
+import { getCategories } from "@/sanity/sanity.query";
+
+async function Search() {
+  const getCategory = await getCategories();
+  return getCategory;
+}
 
 export default function Header() {
   const [Down, setDown] = useState(false);
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [categData, setCategData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await Search();
+      setCategData(data);
+    };
+    fetchData();
+  }, []);
+
+  console.log(categData);
 
   function toggleMenu() {
     setIsMenuOpen((prevMobileMenu) => !prevMobileMenu);
@@ -37,6 +53,7 @@ export default function Header() {
           </div>
         </div>
         <div className="p-4 gap-8 flex flex-col font-medium mt-4">
+          {/* Fazer uma função que pega as categorias da const categData e gera pra cada titulo uma div <DropDownOptions text="title"></DropDownOptions>*/}
           <DropDownOptions text="Beleza"></DropDownOptions>
           <DropDownOptions text="Saúde Feminina"></DropDownOptions>
           <DropDownOptions text="Emagrecimendo"></DropDownOptions>
@@ -72,7 +89,6 @@ export default function Header() {
       <div className="h-12 bg-color-1 w-full mt-[-10px] items-end justify-center relative hidden md:flex">
         <div className=" flex items-center  w-full max-w-[1120px] justify-between text-white px-8 ">
           <Hamburguer setDown={setDown} Down={Down}></Hamburguer>
-          <SideMenu></SideMenu>
           <Menu text="Queda Capilar"></Menu>
           <Menu text="Emagrecimento"></Menu>
           <Menu text="Dormir Bem"></Menu>
@@ -90,7 +106,7 @@ type ItemProps = {
 
 export function Menu({ text }: ItemProps) {
   return (
-    <div className="cursor-pointer h-12 flex items-center px-4 hover:bg-color-2 text-color-3">
+    <div className="cursor-pointer h-12 flex items-center px-4 hover:bg-color-2 text-color-3 ">
       {text}
     </div>
   );
@@ -158,6 +174,7 @@ type DropDownProps = {
 };
 
 function DropDownOptions({ text }: DropDownProps) {
+  const [hoverMenu, setHoverMenu] = useState({});
   return (
     <div className="cursor-pointer hover:text-color-1 flex items-center justify-between ">
       {text}
@@ -183,14 +200,6 @@ export function Procure() {
         placeholder="Pesquisar na loja toda..."
       ></input>
       <button className="w-[48px] h-[40px] bg-color-1 rounded-r-md"></button>
-    </div>
-  );
-}
-
-export function SideMenu() {
-  return (
-    <div className="absolute flex bg-color-1 h-24 top-12 w-full max-w-[850px] ml-[205px]">
-      <div></div>
     </div>
   );
 }

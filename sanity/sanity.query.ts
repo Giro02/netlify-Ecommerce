@@ -91,3 +91,25 @@ export async function getProdCarouselHome() {
     }`
   );
 }
+export async function getCarouselMain() {
+  return client.fetch(
+    groq`*[_type == "carousel-main"]{
+      _id,
+      homeimages {alt, "image": asset-> url}
+  }`
+  );
+}
+export async function getBanners(bannerName: string) {
+  try {
+    const data = await client.fetch(
+      groq`*[_type == "banners" && title == "${bannerName}"]{
+        _id,
+        banners {alt, "image": asset-> url}
+      }`
+    );
+    return data;
+  } catch (error) {
+      console.error("Deu merda", error);
+    throw error; 
+  }
+}
