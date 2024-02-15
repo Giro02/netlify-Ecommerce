@@ -51,6 +51,12 @@ const product = {
       type: "array",
       of: [{ type: "reference", to: [{ type: "category" }] }],
     }),
+    defineField({
+      name: "unitsSold",
+      title: "Units Sold",
+      type: "number",
+      validation: (Rule) => Rule.required(),
+    }),
   ],
 };
 

@@ -26,17 +26,15 @@ export async function getSingleCategory(slug: string) {
 export async function getProducts() {
   return client.fetch(
     groq`*[_type == "product"]{
+      ...,
       _id,
-      title,
       slug,
-      description,
-      price,
       productImage {alt, "image": asset -> url},
         'categories': category[]-> {
         _id,
         title,
         slug
-      }
+      },
     }`
   );
 }
@@ -45,6 +43,7 @@ export async function getProductsByCategory(slug: string) {
   return client.fetch(
     groq`*[_type == "product" && $slug in category[]->slug.current]{
       ...,
+      unitsSold,
       productImage {alt, "image": asset -> url},
         category[]-> {
         _id,
@@ -59,11 +58,9 @@ export async function getProductsByCategory(slug: string) {
 export async function getSingleProduct(slug: string) {
   return client.fetch(
     groq`*[_type == "product" && slug.current == $slug][0]{
+      ...,
       _id,
-      title,
       slug,
-      description,
-      price,
       productImage {alt, "image": asset -> url},
         category[]-> {
         _id,

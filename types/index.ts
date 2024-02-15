@@ -11,6 +11,7 @@ export type CategoryType = {
     alt: string;
     image: string;
   };
+  highlightedProducts: Array<ProductType>;
 };
 
 export type ProductType = {
@@ -24,6 +25,7 @@ export type ProductType = {
   };
   price: string;
   categories: Array<CategoryType>;
+  unitsSold: number;
 };
 
 export type ProductArray = Array<ProductType>;

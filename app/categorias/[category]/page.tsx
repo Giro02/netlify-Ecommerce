@@ -1,6 +1,9 @@
 import Category from "@/components/Category";
-import { getSingleCategory } from "@/sanity/sanity.query";
-import type { CategoryType } from "@/types";
+import {
+  getProductsByCategory,
+  getSingleCategory,
+} from "@/sanity/sanity.query";
+import type { CategoryType, ProductArray } from "@/types";
 import { Metadata } from "next";
 
 type Props = {
@@ -26,9 +29,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CategoryLayout({ params }: Props) {
   const slug = params.category;
   const category: CategoryType = await getSingleCategory(slug);
+  const productsArray: ProductArray = await getProductsByCategory(slug);
   return (
     <main>
-      <Category category={category} />
+      <Category category={category} productsArray={productsArray} />
     </main>
   );
 }
