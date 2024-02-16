@@ -2,59 +2,101 @@
 import type { CategoryType, ProductArray } from "@/types";
 import QiButton from "./QiButton";
 import Link from "next/link";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CategoryDropdown from "./CategoryDropdown";
 
 interface CategoryProps {
   category: CategoryType;
   productsArray: ProductArray;
+  order: string;
+  page: string;
 }
 
-export default function Category({ category, productsArray }: CategoryProps) {
-  const dropdownOptions = ["Relevância", "Nome", "Preço"];
-  const [selectedOption, setSelectedOption] = useState("0");
-  const [products, setProducts] = useState<JSX.Element[]>([]);
+export interface DropdownArray {
+  pt: string;
+  en: string;
+}
+
+export default function Category({
+  category,
+  productsArray,
+  order,
+  page,
+}: CategoryProps) {
+  const dropdownOptions = [
+    { pt: "Relevância", en: "Relevance" },
+    { pt: "Preço", en: "Price" },
+    { pt: "Nome", en: "Name" },
+  ];
+  let initialOrder = "0";
+  if (order === dropdownOptions[0].en.toLowerCase()) {
+    initialOrder = "0";
+  } else if (order === dropdownOptions[1].en.toLowerCase()) {
+    initialOrder = "1";
+  } else if (order === dropdownOptions[2].en.toLowerCase()) {
+    initialOrder = "2";
+  }
+  const [selectedOption, setSelectedOption] = useState(initialOrder);
+  // const [products, setProducts] = useState<JSX.Element[]>([]);
+
   const handleDropdownChange = (value: string) => {
     setSelectedOption(value);
   };
 
-  useEffect(() => {
-    if (selectedOption === "0") {
-      const sortedProducts = [...productsArray].sort(
-        (a, b) => b.unitsSold - a.unitsSold
-      );
-      setProducts(GenerateProducts(sortedProducts));
-    } else if (selectedOption === "1") {
-      const sortedProducts = [...productsArray].sort(
-        (a, b) => parseFloat(b.price) - parseFloat(a.price)
-      );
-      setProducts(GenerateProducts(sortedProducts));
-    } else if (selectedOption === "2") {
-      const sortedProducts = [...productsArray].sort((a, b) =>
-        b.title.localeCompare(`${a.title}`)
-      );
-      setProducts(GenerateProducts(sortedProducts));
-    }
-    function GenerateProducts(sortedProducts: ProductArray) {
-      const products = sortedProducts.map((product, index) => {
-        return (
-          <div className="items-center justify-center flex" key={index}>
-            <div className="flex-col bg-color-1 rounded-lg flex w-[400px] h-[500px] items-center justify-center p-6">
-              <img
-                src={product.productImage.image}
-                alt={product.productImage.alt}
-                className="w-full h-[300px] object-contain"
-              />
-              <h4>{product.title}</h4>
-              <h4>{product.price}</h4>
-              <h5>{product.description}</h5>
-            </div>
-          </div>
-        );
-      });
-      return products;
-    }
-  }, [selectedOption]);
+  const products = productsArray.map((product, index) => {
+    return (
+      <div className="items-center justify-center flex" key={index}>
+        <div className="flex-col bg-color-1 rounded-lg flex w-[400px] h-[500px] items-center justify-center p-6">
+          <img
+            src={product.productImage.image}
+            alt={product.productImage.alt}
+            className="w-full h-[300px] object-contain"
+          />
+          <h4>{product.title}</h4>
+          <h4>{product.price}</h4>
+          <h5>{product.description}</h5>
+        </div>
+      </div>
+    );
+  });
+
+  // useEffect(() => {
+  //   if (selectedOption === "0") {
+  //     const sortedProducts = [...productsArray].sort(
+  //       (a, b) => b.unitsSold - a.unitsSold
+  //     );
+  //     setProducts(GenerateProducts(sortedProducts));
+  //   } else if (selectedOption === "1") {
+  //     const sortedProducts = [...productsArray].sort(
+  //       (a, b) => parseFloat(b.price) - parseFloat(a.price)
+  //     );
+  //     setProducts(GenerateProducts(sortedProducts));
+  //   } else if (selectedOption === "2") {
+  //     const sortedProducts = [...productsArray].sort((a, b) =>
+  //       b.title.localeCompare(`${a.title}`)
+  //     );
+  //     setProducts(GenerateProducts(sortedProducts));
+  //   }
+  //   function GenerateProducts(sortedProducts: ProductArray) {
+  //     const products = sortedProducts.map((product, index) => {
+  //       return (
+  //         <div className="items-center justify-center flex" key={index}>
+  //           <div className="flex-col bg-color-1 rounded-lg flex w-[400px] h-[500px] items-center justify-center p-6">
+  //             <img
+  //               src={product.productImage.image}
+  //               alt={product.productImage.alt}
+  //               className="w-full h-[300px] object-contain"
+  //             />
+  //             <h4>{product.title}</h4>
+  //             <h4>{product.price}</h4>
+  //             <h5>{product.description}</h5>
+  //           </div>
+  //         </div>
+  //       );
+  //     });
+  //     return products;
+  //   }
+  // }, [selectedOption]);
 
   return (
     <div className="container">
@@ -86,11 +128,14 @@ export default function Category({ category, productsArray }: CategoryProps) {
           selectedOption={selectedOption}
         />
       </div>
-      <div className="grid grid-cols-4 mt-6 gap-6">
+      <div className="grid grid-cols-5 mt-6 gap-4">
         <div className="col-span-1 pr-6">
-          <h3 className="font-montse text-lg text-center items-center flex justify-center text-color-5 border border-color-5/25 p-5 rounded-xl">{`${category.description}`}</h3>
+          <div className="text-center flex-col flex border border-color-5/25 p-5 rounded-xl ">
+            <h3 className="font-montse text-justify items-center flex justify-center text-color-5 text-base">{`${category.description}`}</h3>
+            <hr className="text-color-5/25 my-4" />
+          </div>
         </div>
-        <div className="col-span-3">
+        <div className="col-span-4">
           <div className="container grid grid-cols-4 justify-center items-start ">
             {products}
           </div>

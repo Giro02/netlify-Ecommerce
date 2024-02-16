@@ -10,6 +10,10 @@ type Props = {
   params: {
     category: string;
   };
+  searchParams: {
+    page: string;
+    order: string;
+  };
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -26,13 +30,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function CategoryLayout({ params }: Props) {
+export default async function CategoryLayout({ params, searchParams }: Props) {
   const slug = params.category;
+
+  const page = searchParams?.page || "";
+  const order = (searchParams?.order || "relevance").toLowerCase();
   const category: CategoryType = await getSingleCategory(slug);
-  const productsArray: ProductArray = await getProductsByCategory(slug);
+  const productsArray: ProductArray = await getProductsByCategory(
+    slug,
+    order,
+    page
+  );
   return (
     <main>
-      <Category category={category} productsArray={productsArray} />
+      <Category
+        category={category}
+        productsArray={productsArray}
+        order={order}
+        page={page}
+      />
     </main>
   );
 }

@@ -17,7 +17,11 @@ export async function getSingleCategory(slug: string) {
     groq`*[_type == "category" && slug.current == $slug][0]{
      ...,
      description,
-      categoryImage {alt, "image": asset-> url}
+      categoryImage {alt, "image": asset-> url},
+      highlightedProducts[]->{
+        ...,
+        productImage {alt, "image": asset -> url},
+       }
     }`,
     { slug }
   );
@@ -39,9 +43,21 @@ export async function getProducts() {
   );
 }
 
-export async function getProductsByCategory(slug: string) {
+export async function getProductsByCategory(
+  slug: string,
+  order: string,
+  page: string
+) {
+  let queryOrder = "";
+  if (order === "name") {
+    queryOrder = "lower(name) desc";
+  } else if (order === "price") {
+    queryOrder = "price asc";
+  } else {
+    queryOrder = "unitsSold desc";
+  }
   return client.fetch(
-    groq`*[_type == "product" && $slug in category[]->slug.current]{
+    groq`*[_type == "product" && $slug in category[]->slug.current] | order(${queryOrder}) {
       ...,
       unitsSold,
       productImage {alt, "image": asset -> url},
@@ -51,7 +67,7 @@ export async function getProductsByCategory(slug: string) {
         slug
       }
     }`,
-    { slug }
+    { slug, queryOrder }
   );
 }
 

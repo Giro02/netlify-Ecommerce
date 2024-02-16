@@ -42,8 +42,8 @@ const product = {
     defineField({
       name: "price",
       title: "Price",
-      type: "string",
-      validation: (Rule) => Rule.required(),
+      type: "number",
+      validation: (Rule) => Rule.required().positive(),
     }),
     defineField({
       name: "category",

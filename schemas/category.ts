@@ -63,6 +63,7 @@ const category = {
           ],
         },
       ],
+      validation: (Rule) => Rule.required().max(5).error("Maximum of 5 items"),
     }),
   ],
 };
