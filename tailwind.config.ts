@@ -11,6 +11,9 @@ const config: Config = {
       center: true,
     },
     extend: {
+      aspectRatio: {
+        '4.47/1': '4.47/1',
+      },
       fontFamily: {
         montse: ["Montserrat", "sans-serif"],
         noto: ["Noto Sans TC"],
