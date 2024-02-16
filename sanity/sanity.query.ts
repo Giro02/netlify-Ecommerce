@@ -56,10 +56,12 @@ export async function getProductsByCategory(
   } else {
     queryOrder = "unitsSold desc";
   }
+  const finalProduct = 12 * parseInt(page);
+  const initialProduct = finalProduct - 12;
   return client.fetch(
-    groq`*[_type == "product" && $slug in category[]->slug.current] | order(${queryOrder}) {
-      ...,
+    groq`{"productsArray" : *[_type == "product" && $slug in category[]->slug.current] | order(${queryOrder}) [${initialProduct}...${finalProduct}]{
       price,
+      ...,
       unitsSold,
       productImage {alt, "image": asset -> url},
         category[]-> {
@@ -67,8 +69,10 @@ export async function getProductsByCategory(
         title,
         slug
       }
-    }`,
-    { slug, queryOrder }
+    },
+    "productCount": count(*[_type == "product" && $slug in category[]->slug.current]), 
+  }`,
+    { slug, queryOrder, page }
   );
 }
 

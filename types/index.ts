@@ -23,7 +23,7 @@ export type ProductType = {
     alt: string;
     image: string;
   };
-  price: string;
+  price: number;
   categories: Array<CategoryType>;
   unitsSold: number;
 };

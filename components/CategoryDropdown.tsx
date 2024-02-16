@@ -1,17 +1,22 @@
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { DropdownArray } from "./Category";
 
 interface CategoryDropdownProps {
   dropdownOptions: Array<DropdownArray>;
-  handleDropdownChange: (option: string) => any;
   selectedOption: string;
+  slug: string;
+}
+
+interface DropdownArray {
+  pt: string;
+  en: string;
 }
 
 export default function CategoryDropdown({
   dropdownOptions,
-  handleDropdownChange,
   selectedOption,
+  slug,
 }: CategoryDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -20,19 +25,20 @@ export default function CategoryDropdown({
   };
   const options = dropdownOptions.map((option, index) => {
     return (
-      <div
-        className={`${
-          parseInt(selectedOption) === index ? "hidden" : "cursor-pointer"
-        }`}
-        key={index}
-        onClick={() => {
-          setIsOpen(false);
-          handleDropdownChange(`${index}`);
-        }}
-      >
-        {option.pt}
-        <hr className="text-color-5/25 mt-3" />
-      </div>
+      <Link href={`/categorias/${slug}?order=${option.en.toLowerCase()}`}>
+        <div
+          className={`${
+            parseInt(selectedOption) === index ? "hidden" : "cursor-pointer"
+          }`}
+          key={index}
+          onClick={() => {
+            setIsOpen(false);
+          }}
+        >
+          {option.pt}
+          <hr className="text-color-5/25 mt-3" />
+        </div>
+      </Link>
     );
   });
 

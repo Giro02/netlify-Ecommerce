@@ -1,20 +1,18 @@
 "use client";
 import type { CategoryType, ProductArray } from "@/types";
-import QiButton from "./QiButton";
+import { IoIosWarning } from "react-icons/io";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import CategoryDropdown from "./CategoryDropdown";
+import { formatCurrency } from "@/utils/UtilityFunctions";
+import CategoryPagination from "./CategoryPagination";
 
 interface CategoryProps {
   category: CategoryType;
   productsArray: ProductArray;
   order: string;
   page: string;
-}
-
-export interface DropdownArray {
-  pt: string;
-  en: string;
+  productCount: number;
 }
 
 export default function Category({
@@ -22,6 +20,7 @@ export default function Category({
   productsArray,
   order,
   page,
+  productCount,
 }: CategoryProps) {
   const dropdownOptions = [
     { pt: "Relevância", en: "Relevance" },
@@ -36,12 +35,10 @@ export default function Category({
   } else if (order === dropdownOptions[2].en.toLowerCase()) {
     initialOrder = "2";
   }
-  const [selectedOption, setSelectedOption] = useState(initialOrder);
-  // const [products, setProducts] = useState<JSX.Element[]>([]);
 
-  const handleDropdownChange = (value: string) => {
-    setSelectedOption(value);
-  };
+  const finalProduct = 2 * parseInt(page);
+  const initialProduct = finalProduct - 2;
+  const pageNumbers = Math.ceil(productCount / 12);
 
   const products = productsArray.map((product, index) => {
     return (
@@ -53,53 +50,15 @@ export default function Category({
             className="w-full h-[300px] object-contain"
           />
           <h4>{product.title}</h4>
-          <h4>{product.price}</h4>
+          <h4>{formatCurrency(product.price)}</h4>
           <h5>{product.description}</h5>
         </div>
       </div>
     );
   });
 
-  // useEffect(() => {
-  //   if (selectedOption === "0") {
-  //     const sortedProducts = [...productsArray].sort(
-  //       (a, b) => b.unitsSold - a.unitsSold
-  //     );
-  //     setProducts(GenerateProducts(sortedProducts));
-  //   } else if (selectedOption === "1") {
-  //     const sortedProducts = [...productsArray].sort(
-  //       (a, b) => parseFloat(b.price) - parseFloat(a.price)
-  //     );
-  //     setProducts(GenerateProducts(sortedProducts));
-  //   } else if (selectedOption === "2") {
-  //     const sortedProducts = [...productsArray].sort((a, b) =>
-  //       b.title.localeCompare(`${a.title}`)
-  //     );
-  //     setProducts(GenerateProducts(sortedProducts));
-  //   }
-  //   function GenerateProducts(sortedProducts: ProductArray) {
-  //     const products = sortedProducts.map((product, index) => {
-  //       return (
-  //         <div className="items-center justify-center flex" key={index}>
-  //           <div className="flex-col bg-color-1 rounded-lg flex w-[400px] h-[500px] items-center justify-center p-6">
-  //             <img
-  //               src={product.productImage.image}
-  //               alt={product.productImage.alt}
-  //               className="w-full h-[300px] object-contain"
-  //             />
-  //             <h4>{product.title}</h4>
-  //             <h4>{product.price}</h4>
-  //             <h5>{product.description}</h5>
-  //           </div>
-  //         </div>
-  //       );
-  //     });
-  //     return products;
-  //   }
-  // }, [selectedOption]);
-
   return (
-    <div className="container">
+    <div className="container font-montse">
       <ul className="flex items-center justify-start font-montse text-sm text-color-5/75 my-5">
         <li>
           <Link href="/"> Início </Link>&nbsp;
@@ -118,14 +77,37 @@ export default function Category({
             <span className="font-montse">{category.title} /&nbsp;</span>
             <span className="font-noto text-3xl">{category.titleChinese}</span>
           </h1>
-          <div className="text-base text-color-5/50">
-            {productsArray.length} produtos encontrados
-          </div>
+          {productsArray.length ? (
+            <div className="text-base text-color-5/50">
+              {productCount <= 12 ? (
+                <div>
+                  {productCount === 1
+                    ? `${productCount} item encontrado`
+                    : `${productCount} itens encontrados`}
+                </div>
+              ) : productCount > 12 && productsArray.length < 12 ? (
+                <div>
+                  {productsArray.length === 1
+                    ? `Item ${productCount} de ${productCount}`
+                    : `Itens ${
+                        productCount - productsArray.length
+                      } - ${productCount} de ${productCount} encontrados`}
+                </div>
+              ) : (
+                <div>
+                  Itens {initialProduct + 1} - {finalProduct} de {productCount}{" "}
+                  encontrados
+                </div>
+              )}
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
         <CategoryDropdown
-          handleDropdownChange={handleDropdownChange}
           dropdownOptions={dropdownOptions}
-          selectedOption={selectedOption}
+          selectedOption={initialOrder}
+          slug={category.slug.current}
         />
       </div>
       <div className="grid grid-cols-5 mt-6 gap-4">
@@ -136,9 +118,26 @@ export default function Category({
           </div>
         </div>
         <div className="col-span-4">
-          <div className="container grid grid-cols-4 justify-center items-start ">
-            {products}
-          </div>
+          {productsArray.length ? (
+            <div className="flex flex-col justify-center">
+              <div className="grid grid-cols-4 justify-center items-start ">
+                {products}
+              </div>
+              {pageNumbers === 1 ? (
+                <></>
+              ) : (
+                <CategoryPagination
+                  currentPage={page}
+                  pageNumbers={pageNumbers}
+                />
+              )}
+            </div>
+          ) : (
+            <div className="bg-color-6 items-center justify-center rounded-md p-4 flex gap-4 text-base text-color-5">
+              <IoIosWarning className="text-2xl" />
+              Não encontramos produtos correspondentes a seleção
+            </div>
+          )}
         </div>
       </div>
     </div>
