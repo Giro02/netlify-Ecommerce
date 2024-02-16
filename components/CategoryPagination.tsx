@@ -54,8 +54,8 @@ export default function CategoryPagination({
             {number}
           </div>
         ) : (
-          <Link href={`${pathname}?p=${number}&order=${currentOrder}`}>
-            <div key={number}>{number}</div>
+          <Link key={i} href={`${pathname}?p=${number}&order=${currentOrder}`}>
+            {number}
           </Link>
         )
       )}

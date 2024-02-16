@@ -13,6 +13,7 @@ interface CategoryProps {
   order: string;
   page: string;
   productCount: number;
+  itemsPerPage: number;
 }
 
 export default function Category({
@@ -21,6 +22,7 @@ export default function Category({
   order,
   page,
   productCount,
+  itemsPerPage,
 }: CategoryProps) {
   const dropdownOptions = [
     { pt: "Relevância", en: "Relevance" },
@@ -38,7 +40,7 @@ export default function Category({
 
   const finalProduct = 2 * parseInt(page);
   const initialProduct = finalProduct - 2;
-  const pageNumbers = Math.ceil(productCount / 12);
+  const pageNumbers = Math.ceil(productCount / itemsPerPage);
 
   const products = productsArray.map((product, index) => {
     return (
@@ -79,16 +81,17 @@ export default function Category({
           </h1>
           {productsArray.length ? (
             <div className="text-base text-color-5/50">
-              {productCount <= 12 ? (
+              {productCount <= itemsPerPage ? (
                 <div>
                   {productCount === 1
                     ? `${productCount} item encontrado`
                     : `${productCount} itens encontrados`}
                 </div>
-              ) : productCount > 12 && productsArray.length < 12 ? (
+              ) : productCount > itemsPerPage &&
+                productsArray.length < itemsPerPage ? (
                 <div>
                   {productsArray.length === 1
-                    ? `Item ${productCount} de ${productCount}`
+                    ? `Item ${productCount} de ${productCount} encontrado`
                     : `Itens ${
                         productCount - productsArray.length
                       } - ${productCount} de ${productCount} encontrados`}

@@ -38,12 +38,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CategoryLayout({ params, searchParams }: Props) {
   const slug = params.category;
   const page = searchParams?.p?.replace("-", "") || "1";
+  const itemsPerPage = 2;
   const order = (
     searchParams?.order?.replace("ç", "c").replace(" ", "-") || "relevance"
   ).toLowerCase();
   const category: CategoryType = await getSingleCategory(slug);
   const { productsArray, productCount }: CategoryQueryResponse =
-    await getProductsByCategory(slug, order, page);
+    await getProductsByCategory(slug, order, page, itemsPerPage);
   return (
     <main>
       <Category
@@ -52,6 +53,7 @@ export default async function CategoryLayout({ params, searchParams }: Props) {
         order={order}
         page={page}
         productCount={productCount}
+        itemsPerPage={itemsPerPage}
       />
     </main>
   );

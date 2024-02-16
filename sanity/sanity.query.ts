@@ -46,7 +46,8 @@ export async function getProducts() {
 export async function getProductsByCategory(
   slug: string,
   order: string,
-  page: string
+  page: string,
+  itemsPerPage: number
 ) {
   let queryOrder = "";
   if (order === "name") {
@@ -56,8 +57,8 @@ export async function getProductsByCategory(
   } else {
     queryOrder = "unitsSold desc";
   }
-  const finalProduct = 12 * parseInt(page);
-  const initialProduct = finalProduct - 12;
+  const finalProduct = itemsPerPage * parseInt(page);
+  const initialProduct = finalProduct - itemsPerPage;
   return client.fetch(
     groq`{"productsArray" : *[_type == "product" && $slug in category[]->slug.current] | order(${queryOrder}) [${initialProduct}...${finalProduct}]{
       price,
