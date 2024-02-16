@@ -59,6 +59,7 @@ export async function getProductsByCategory(
   return client.fetch(
     groq`*[_type == "product" && $slug in category[]->slug.current] | order(${queryOrder}) {
       ...,
+      price,
       unitsSold,
       productImage {alt, "image": asset -> url},
         category[]-> {

@@ -27,6 +27,12 @@ const product = {
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "price",
+      title: "Price",
+      type: "number",
+      validation: (Rule) => Rule.required().positive(),
+    }),
+    defineField({
       name: "productImage",
       title: "Image",
       type: "image",
@@ -38,12 +44,6 @@ const product = {
           validation: (Rule) => Rule.required(),
         },
       ],
-    }),
-    defineField({
-      name: "price",
-      title: "Price",
-      type: "number",
-      validation: (Rule) => Rule.required().positive(),
     }),
     defineField({
       name: "category",
