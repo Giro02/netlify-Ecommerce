@@ -94,12 +94,9 @@ export async function getProdCarouselHome() {
       _id,
       title,
       products[]-> {
-        _id,
-        title,
-        description,
+      ...,
         productImage {alt, "image": asset -> url},
-        price,
-        slug,
+
       }
     }`
   );
@@ -122,7 +119,7 @@ export async function getBanners(bannerName: string) {
     );
     return data;
   } catch (error) {
-      console.error("Deu merda", error);
-    throw error; 
+    console.error("Deu merda", error);
+    throw error;
   }
 }
