@@ -6,7 +6,6 @@ import { IoIosArrowForward } from "react-icons/io";
 import Image from "next/image";
 import Logo from "/public/images/LogoQi.png";
 import { getCategories } from "@/sanity/sanity.query";
-import { useRouter } from "next/router";
 
 async function Search() {
   const getCategory = await getCategories();
@@ -164,8 +163,14 @@ export function Hamburguer({ Down, setDown, categData }: MenuProps) {
     slugs.push({ [current]: false });
   });
 
-  const [toggleSecondMenu, setToggleSecondMenu] = useState(slugs);
+  const [toggleSecondMenu, setToggleSecondMenu] = useState(() =>
+    categData.map((name) => ({ [name.slug.current]: false }))
+  );
+  console.log(toggleSecondMenu);
   // FAZER AQU A FUNÇÂO DO MENUISECUNDARIO
+  const secondMenu = () => {
+    return <div>asdasdasdasdadas</div>;
+  };
   return (
     <div
       onMouseEnter={() => Isdropped()}
@@ -206,7 +211,8 @@ export function Hamburguer({ Down, setDown, categData }: MenuProps) {
         </div>
       </div>
       <div className="container z-30 absolute left-[200px]">
-        {/* AQUI VAO SECONDARY MENU */}
+        {/* AQUI VAI O SECONDARY MENU */}
+        <div>{secondMenu()}</div>
       </div>
     </div>
   );
@@ -242,6 +248,7 @@ function DropDownOptions({
       }))
     );
     console.log(`SeteiFalse: ${slug}`);
+    console.log(slugs);
   };
 
   return (
