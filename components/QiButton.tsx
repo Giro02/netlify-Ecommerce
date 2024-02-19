@@ -20,7 +20,7 @@ export default function QiButton({
     <div>
       <button
         className={clsx(
-          "rounded-full min-w-[4rem] flex items-center text-lg leading-none min-h-[4rem] gap-3  place-content-center [&>div]:shrink-0",
+          " min-w-[4rem] flex items-center text-lg leading-none min-h-[4rem] gap-3  place-content-center [&>div]:shrink-0",
           { "px-7 py-5": !!children },
           className
         )}
@@ -35,7 +35,7 @@ export default function QiButton({
 
 QiButton.variants = {
   lightGreen: {
-    className: "text-color-3 bg-color-1 hover:bg-color-2",
+    className: "text-color-3 bg-color-1 hover:bg-color-2 rounded-xl",
   },
 };
 

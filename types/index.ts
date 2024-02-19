@@ -24,9 +24,23 @@ export type ProductType = {
     image: string;
   };
   price: number;
-  categories: Array<CategoryType>;
+  category: Array<CategoryType>;
   unitsSold: number;
 };
+
+export type SearchProduct = {
+  _id: String;
+  title: String;
+  slug: Slug;
+  description: String;
+  productImage: {
+    alt: string;
+    image: string;
+  };
+  category: Array<{ _id: string; title: string }>;
+};
+
+export type SearchProductArray = Array<SearchProduct>;
 
 export type ProductArray = Array<ProductType>;
 

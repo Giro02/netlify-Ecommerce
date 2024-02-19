@@ -94,6 +94,22 @@ export async function getSingleProduct(slug: string) {
   );
 }
 
+export async function getProductsForSearch() {
+  return client.fetch(
+    groq`*[_type == "product"]{
+      _id,
+      title,
+      slug,
+      description,
+      productImage {alt, "image": asset -> url},
+      category[] -> {
+        _id,
+        title
+      }
+    }`
+  );
+}
+
 export async function getProdCarouselHome() {
   return client.fetch(
     groq`*[_type == "carousel" && type == "home"]{

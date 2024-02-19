@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import Header from "./Header";
-
+import DBLayout from "./DataBaseLayout";
 export default function Layout({
   children,
 }: Readonly<{
@@ -14,8 +14,7 @@ export default function Layout({
   } else {
     return (
       <>
-        <Header />
-        {children}
+        <DBLayout>{children}</DBLayout>
       </>
     );
   }
