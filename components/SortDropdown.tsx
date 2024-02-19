@@ -1,11 +1,11 @@
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
-interface CategoryDropdownProps {
+interface SortDropdownProps {
   dropdownOptions: Array<DropdownArray>;
   selectedOption: string;
-  slug: string;
 }
 
 interface DropdownArray {
@@ -13,11 +13,11 @@ interface DropdownArray {
   en: string;
 }
 
-export default function CategoryDropdown({
+export default function SortDropdown({
   dropdownOptions,
   selectedOption,
-  slug,
-}: CategoryDropdownProps) {
+}: SortDropdownProps) {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const handleToggle = () => {
@@ -25,7 +25,7 @@ export default function CategoryDropdown({
   };
   const options = dropdownOptions.map((option, index) => {
     return (
-      <Link href={`/categorias/${slug}?order=${option.en.toLowerCase()}`}>
+      <Link href={`${pathname}?order=${option.en.toLowerCase()}`}>
         <div
           className={`${
             parseInt(selectedOption) === index ? "hidden" : "cursor-pointer"

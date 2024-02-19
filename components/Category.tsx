@@ -2,10 +2,10 @@
 import type { CategoryType, ProductArray } from "@/types";
 import { IoIosWarning } from "react-icons/io";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import CategoryDropdown from "./CategoryDropdown";
-import { formatCurrency } from "@/utils/UtilityFunctions";
 import CategoryPagination from "./CategoryPagination";
+import { QiLogoName } from "./Svgs";
+import ProductComponent from "./ProductComponent";
+import SortDropdown from "./SortDropdown";
 
 interface CategoryProps {
   category: CategoryType;
@@ -43,20 +43,7 @@ export default function Category({
   const pageNumbers = Math.ceil(productCount / itemsPerPage);
 
   const products = productsArray.map((product, index) => {
-    return (
-      <div className="items-center justify-center flex" key={index}>
-        <div className="flex-col bg-color-1 rounded-lg flex w-[400px] h-[500px] items-center justify-center p-6">
-          <img
-            src={product.productImage.image}
-            alt={product.productImage.alt}
-            className="w-full h-[300px] object-contain"
-          />
-          <h4>{product.title}</h4>
-          <h4>{formatCurrency(product.price)}</h4>
-          <h5>{product.description}</h5>
-        </div>
-      </div>
-    );
+    return <ProductComponent product={product} key={index} />;
   });
 
   return (
@@ -107,10 +94,9 @@ export default function Category({
             <></>
           )}
         </div>
-        <CategoryDropdown
+        <SortDropdown
           dropdownOptions={dropdownOptions}
           selectedOption={initialOrder}
-          slug={category.slug.current}
         />
       </div>
       <div className="grid grid-cols-5 mt-6 gap-4">
@@ -118,12 +104,15 @@ export default function Category({
           <div className="text-center flex-col flex border border-color-5/25 p-5 rounded-xl ">
             <h3 className="font-montse text-justify items-center flex justify-center text-color-5 text-base">{`${category.description}`}</h3>
             <hr className="text-color-5/25 my-4" />
+            <div className="flex justify-center">
+              <QiLogoName className="text-2xl my-2" />
+            </div>
           </div>
         </div>
         <div className="col-span-4">
           {productsArray.length ? (
             <div className="flex flex-col justify-center">
-              <div className="grid grid-cols-4 justify-center items-start ">
+              <div className="grid grid-cols-4 justify-center items-start gap-4">
                 {products}
               </div>
               {pageNumbers === 1 ? (

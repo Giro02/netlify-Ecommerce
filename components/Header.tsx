@@ -6,6 +6,9 @@ import { IoIosArrowForward } from "react-icons/io";
 import Image from "next/image";
 import Logo from "/public/images/LogoQi.png";
 import { getCategories } from "@/sanity/sanity.query";
+import { useRouter } from "next/router";
+import Procure from "./Procure";
+import { SearchProductArray } from "@/types";
 
 async function Search() {
   const getCategory = await getCategories();
@@ -44,7 +47,12 @@ interface Category {
   title: string;
   [slug: string]: any;
 }
-export default function Header() {
+
+type HeaderProps = {
+  productsSearch: SearchProductArray;
+};
+
+export default function Header({ productsSearch }: HeaderProps) {
   const [Down, setDown] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   var [categData, setCategData] = useState<Category[]>([]);
@@ -98,7 +106,7 @@ export default function Header() {
 
           <Image src={Logo} alt="Logo"></Image>
           <div className=" max-w-[520px] w-full hidden md:flex ">
-            <Procure></Procure>
+            <Procure productsSearch={productsSearch} />
           </div>
           <div className="md:ml-4">
             <MdOutlineShoppingCart size={38}></MdOutlineShoppingCart>
@@ -107,7 +115,7 @@ export default function Header() {
       </div>
       {/* MOBILE SEARCH BAR */}
       <div className=" w-full flex items center justify-center md:hidden mb-4">
-        <Procure></Procure>
+        <Procure productsSearch={productsSearch} />
       </div>
 
       {/* GREEN MENU, HIDDES IN MOBILE*/}
@@ -163,14 +171,8 @@ export function Hamburguer({ Down, setDown, categData }: MenuProps) {
     slugs.push({ [current]: false });
   });
 
-  const [toggleSecondMenu, setToggleSecondMenu] = useState(() =>
-    categData.map((name) => ({ [name.slug.current]: false }))
-  );
-  console.log(toggleSecondMenu);
+  const [toggleSecondMenu, setToggleSecondMenu] = useState(slugs);
   // FAZER AQU A FUNÇÂO DO MENUISECUNDARIO
-  const secondMenu = () => {
-    return <div>asdasdasdasdadas</div>;
-  };
   return (
     <div
       onMouseEnter={() => Isdropped()}
@@ -211,8 +213,7 @@ export function Hamburguer({ Down, setDown, categData }: MenuProps) {
         </div>
       </div>
       <div className="container z-30 absolute left-[200px]">
-        {/* AQUI VAI O SECONDARY MENU */}
-        <div>{secondMenu()}</div>
+        {/* AQUI VAO SECONDARY MENU */}
       </div>
     </div>
   );
@@ -248,7 +249,6 @@ function DropDownOptions({
       }))
     );
     console.log(`SeteiFalse: ${slug}`);
-    console.log(slugs);
   };
 
   return (
@@ -268,18 +268,6 @@ export function HamburguerPhone() {
       <div className="border border-color-5 w-7 rounded-md"></div>
       <div className="border border-color-5 w-7 rounded-md"></div>
       <div className="border border-color-5 w-7 rounded-md"></div>
-    </div>
-  );
-}
-
-export function Procure() {
-  return (
-    <div className="flex w-full ">
-      <input
-        className="h-[40px] border border-color-4 w-full px-4 rounded-l-md "
-        placeholder="Pesquisar na loja toda..."
-      ></input>
-      <button className="w-[48px] h-[40px] bg-color-1 rounded-r-md"></button>
     </div>
   );
 }

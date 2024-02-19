@@ -37,6 +37,9 @@ const product = {
       title: "Image",
       type: "image",
       validation: (Rule) => Rule.required(),
+      options: {
+        accept: "image/png",
+      },
       fields: [
         {
           name: "alt",

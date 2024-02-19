@@ -6,7 +6,7 @@ interface ProductProps {
 }
 
 export default async function Product({ product }: ProductProps) {
-  const test = product.categories.map((category, index) => (
+  const test = product.category.map((category, index) => (
     <div key={index}>
       <div>{category.title}</div>
     </div>
