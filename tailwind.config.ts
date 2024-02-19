@@ -13,7 +13,7 @@ const config: Config = {
     },
     extend: {
       aspectRatio: {
-        '4.47/1': '4.47/1',
+        "4.47/1": "4.47/1",
       },
       fontFamily: {
         montse: ["Montserrat", "sans-serif"],
@@ -27,6 +27,8 @@ const config: Config = {
         3: "#ffffff",
         4: "#e5e7eb",
         5: "#373737",
+        6: "#fae0a7",
+        7: "#B75454",
       },
     },
   },

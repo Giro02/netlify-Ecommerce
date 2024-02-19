@@ -1,16 +1,22 @@
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 interface CategoryDropdownProps {
-  dropdownOptions: Array<string>;
-  handleDropdownChange: (option: string) => any;
+  dropdownOptions: Array<DropdownArray>;
   selectedOption: string;
+  slug: string;
+}
+
+interface DropdownArray {
+  pt: string;
+  en: string;
 }
 
 export default function CategoryDropdown({
   dropdownOptions,
-  handleDropdownChange,
   selectedOption,
+  slug,
 }: CategoryDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -19,19 +25,20 @@ export default function CategoryDropdown({
   };
   const options = dropdownOptions.map((option, index) => {
     return (
-      <div
-        className={`${
-          parseInt(selectedOption) === index ? "hidden" : "cursor-pointer"
-        }`}
-        key={index}
-        onClick={() => {
-          setIsOpen(false);
-          handleDropdownChange(`${index}`);
-        }}
-      >
-        {option}
-        <hr className="text-color-5/25 mt-3" />
-      </div>
+      <Link href={`/categorias/${slug}?order=${option.en.toLowerCase()}`}>
+        <div
+          className={`${
+            parseInt(selectedOption) === index ? "hidden" : "cursor-pointer"
+          }`}
+          key={index}
+          onClick={() => {
+            setIsOpen(false);
+          }}
+        >
+          {option.pt}
+          <hr className="text-color-5/25 mt-3" />
+        </div>
+      </Link>
     );
   });
 
@@ -62,11 +69,12 @@ export default function CategoryDropdown({
         onClick={handleToggle}
         className="flex items-center gap-3 border border-color-5/25 w-44 justify-between px-4 py-2 rounded-xl cursor-pointer"
       >
-        {dropdownOptions[parseInt(selectedOption)]}
+        {dropdownOptions[parseInt(selectedOption)].pt}
         {isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
       </div>
       {isOpen && (
         <div className="absolute flex flex-col border border-color-5/25 w-64 right-0 shadow-lg rounded-xl gap-3 p-5 mt-1 bg-color-3">
+          <div className="font-semibold">Ordenar por</div>
           {options}
         </div>
       )}

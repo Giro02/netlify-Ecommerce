@@ -17,7 +17,11 @@ export async function getSingleCategory(slug: string) {
     groq`*[_type == "category" && slug.current == $slug][0]{
      ...,
      description,
-      categoryImage {alt, "image": asset-> url}
+      categoryImage {alt, "image": asset-> url},
+      highlightedProducts[]->{
+        ...,
+        productImage {alt, "image": asset -> url},
+       }
     }`,
     { slug }
   );
@@ -39,9 +43,25 @@ export async function getProducts() {
   );
 }
 
-export async function getProductsByCategory(slug: string) {
+export async function getProductsByCategory(
+  slug: string,
+  order: string,
+  page: string,
+  itemsPerPage: number
+) {
+  let queryOrder = "";
+  if (order === "name") {
+    queryOrder = "lower(name) desc";
+  } else if (order === "price") {
+    queryOrder = "price asc";
+  } else {
+    queryOrder = "unitsSold desc";
+  }
+  const finalProduct = itemsPerPage * parseInt(page);
+  const initialProduct = finalProduct - itemsPerPage;
   return client.fetch(
-    groq`*[_type == "product" && $slug in category[]->slug.current]{
+    groq`{"productsArray" : *[_type == "product" && $slug in category[]->slug.current] | order(${queryOrder}) [${initialProduct}...${finalProduct}]{
+      price,
       ...,
       unitsSold,
       productImage {alt, "image": asset -> url},
@@ -50,8 +70,10 @@ export async function getProductsByCategory(slug: string) {
         title,
         slug
       }
-    }`,
-    { slug }
+    },
+    "productCount": count(*[_type == "product" && $slug in category[]->slug.current]), 
+  }`,
+    { slug, queryOrder, page }
   );
 }
 
@@ -78,12 +100,9 @@ export async function getProdCarouselHome() {
       _id,
       title,
       products[]-> {
-        _id,
-        title,
-        description,
+      ...,
         productImage {alt, "image": asset -> url},
-        price,
-        slug,
+
       }
     }`
   );
@@ -106,7 +125,7 @@ export async function getBanners(bannerName: string) {
     );
     return data;
   } catch (error) {
-      console.error("Deu merda", error);
-    throw error; 
+    console.error("Deu merda", error);
+    throw error;
   }
 }
