@@ -7,7 +7,7 @@ export default function Benefits() {
   return (
     // Add Font
     <div className="flex justify-center">
-      <div className="px-8 grid grid-cols-3 justify-between gap-2 lg:gap-32 xl:gap-40">
+      <div className="grid grid-cols-3 justify-between gap-2 lg:gap-32 xl:gap-40">
         <CreateBenefits
           Title="Politica de Entrega"
           Entrega={true}

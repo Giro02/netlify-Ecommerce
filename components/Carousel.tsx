@@ -85,9 +85,9 @@ function Constructor({ carousel }: CarouselProps) {
   }, [emblaApi]);
   return (
     <div className="relative">
-      <div className="flex lg:max-w-[1120px] md:max-w-[750px] sm:max-w-[600px] max-w-[350px] px-8 w-full overflow-hidden">
+      <div className="flex lg:max-w-[1120px] md:max-w-[750px] sm:max-w-[600px] max-w-[350px]  overflow-hidden">
         <div className="embla" ref={emblaRef}>
-          <div className="embla__container flex justify-start w-full gap-1 py-8 px-8">
+          <div className="embla__container flex justify-start gap-1 py-8">
             {SlideElements}
           </div>
         </div>

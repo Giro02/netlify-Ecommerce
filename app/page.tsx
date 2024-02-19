@@ -18,31 +18,30 @@ export default async function Home() {
   const carouselMain: CarouselArray = await getCarouselMain();
   const banner1 = await getBanners("Banner1");
   const banner2 = await getBanners("Banner2");
-  const getCategory = await getCategories();
-
-  console.log(getCategory);
 
   return (
     <main>
       <div>
         <CarouselMain carousel={carouselMain}></CarouselMain>
       </div>
-      <div className="mt-2">
-        <Benefits></Benefits>
-      </div>
-      <TitleHome title={"PRODUTOS PARA VOCÊ"}></TitleHome>
-      <div>
-        <Carousel carousel={carouselArray[1]}></Carousel>
-      </div>
-      <div>
-        <BannersHome BannerName={banner1}></BannersHome>
-      </div>
-      <TitleHome title={"MELHORES PREÇOS"}></TitleHome>
-      <div>
-        <Carousel carousel={carouselArray[0]}></Carousel>
-      </div>
-      <div>
-        <BannersHome BannerName={banner2}></BannersHome>
+      <div className="container">
+        <div className="mt-2">
+          <Benefits></Benefits>
+        </div>
+        <TitleHome title={"PRODUTOS PARA VOCÊ"}></TitleHome>
+        <div>
+          <Carousel carousel={carouselArray[1]}></Carousel>
+        </div>
+        <div>
+          <BannersHome BannerName={banner1}></BannersHome>
+        </div>
+        <TitleHome title={"MELHORES PREÇOS"}></TitleHome>
+        <div>
+          <Carousel carousel={carouselArray[0]}></Carousel>
+        </div>
+        <div>
+          <BannersHome BannerName={banner2}></BannersHome>
+        </div>
       </div>
     </main>
   );
@@ -50,7 +49,7 @@ export default async function Home() {
 
 function TitleHome({ title }: { title: string }) {
   return (
-    <div className="container mt-24 max-w-[1100px] font-normal text-[32px] text-color-5 px-8">
+    <div className="container mt-24 font-normal text-[32px] text-center md:text-start text-color-5 border-b-color-4 border-b-2 ">
       {title}
     </div>
   );

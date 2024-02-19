@@ -9,6 +9,7 @@ const config: Config = {
   theme: {
     container: {
       center: true,
+      
     },
     extend: {
       aspectRatio: {

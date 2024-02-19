@@ -1,22 +1,41 @@
 "use client";
 import React, { SetStateAction, useState, Dispatch, useEffect } from "react";
+import Link from "next/link";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
 import Image from "next/image";
 import Logo from "/public/images/LogoQi.png";
 import { getCategories } from "@/sanity/sanity.query";
+import { useRouter } from "next/router";
 
 async function Search() {
   const getCategory = await getCategories();
   return getCategory;
 }
 
-function MenuCreator({ categData }: { categData: Category[] }) {
+type SlugObject = { [key: string]: boolean };
+type MenuCreatorProps = {
+  categData: Category[];
+  toggleSecondMenu: SlugObject[];
+  setToggleSecondMenu: React.Dispatch<React.SetStateAction<SlugObject[]>>;
+};
+
+function MenuCreator({
+  categData,
+  toggleSecondMenu,
+  setToggleSecondMenu,
+}: MenuCreatorProps) {
   return (
     <div className="flex flex-col gap-10 text-color-5 mt-4 mb-2 text-[15px]">
       {categData &&
         categData.map((category) => (
-          <DropDownOptions key={category._id} text={category.title} />
+          <DropDownOptions
+            key={category._id}
+            text={category.title}
+            slug={category.slug.current}
+            toggleSecondMenu={toggleSecondMenu}
+            setToggleSecondMenu={setToggleSecondMenu}
+          />
         ))}
     </div>
   );
@@ -24,6 +43,7 @@ function MenuCreator({ categData }: { categData: Category[] }) {
 interface Category {
   _id: string;
   title: string;
+  [slug: string]: any;
 }
 export default function Header() {
   const [Down, setDown] = useState(false);
@@ -37,8 +57,6 @@ export default function Header() {
     };
     fetchData();
   }, []);
-
-  console.log(categData);
 
   function toggleMenu() {
     setIsMenuOpen((prevMobileMenu) => !prevMobileMenu);
@@ -67,11 +85,12 @@ export default function Header() {
           </div>
         </div>
         <div className="p-4 gap-8 flex flex-col font-medium mt-4">
-          {MenuCreator({ categData })}
+          {/* CONCERTAR O MENU DE MOBILE */}
+          {""}
         </div>
       </div>
       <div className="flex justify-center ">
-        <div className="max-w-[1120px] w-full h-[100px] flex justify-between items-center px-8 overflow-hidden ">
+        <div className=" container h-[100px] flex justify-between items-center  overflow-hidden ">
           <div className="md:hidden mr-4">
             <div onClick={toggleMenu}>
               <HamburguerPhone></HamburguerPhone>
@@ -88,13 +107,13 @@ export default function Header() {
         </div>
       </div>
       {/* MOBILE SEARCH BAR */}
-      <div className="px-8 w-full flex items center justify-center md:hidden mb-4">
+      <div className=" w-full flex items center justify-center md:hidden mb-4">
         <Procure></Procure>
       </div>
 
       {/* GREEN MENU, HIDDES IN MOBILE*/}
       <div className="h-12 bg-color-1 w-full mt-[-10px] items-end justify-center relative hidden md:flex">
-        <div className=" flex items-center  w-full max-w-[1120px] justify-between text-white px-8 ">
+        <div className=" flex items-center container justify-between text-white ">
           <Hamburguer
             setDown={setDown}
             Down={Down}
@@ -133,6 +152,20 @@ export function Hamburguer({ Down, setDown, categData }: MenuProps) {
     setDown(!Down);
   }
 
+  interface Slug {
+    current: string;
+  }
+
+  const slugs: { [key: string]: boolean }[] = [];
+  categData.forEach((name, j) => {
+    const {
+      slug: { current },
+    } = name;
+    slugs.push({ [current]: false });
+  });
+
+  const [toggleSecondMenu, setToggleSecondMenu] = useState(slugs);
+  // FAZER AQU A FUNÇÂO DO MENUISECUNDARIO
   return (
     <div
       onMouseEnter={() => Isdropped()}
@@ -164,26 +197,61 @@ export function Hamburguer({ Down, setDown, categData }: MenuProps) {
 
       <div
         className={` ${Down ? "DropDown" : " invisible"}
-        }  left-0 top-[42px] bg-color-3 rounded-b-xl absolute w-full z-30 overflow-hidden shadow-xl cursor-default`}
+        }  left-0 top-[42px] bg-color-3 rounded-b-xl absolute w-full z-40 overflow-hidden shadow-xl cursor-default`}
       >
         <div
           className={` flex flex-col text-center gap-10 text-color-5 mt-4 mb-2 p-4 text-[15px]`}
         >
-          {MenuCreator({ categData })}
+          {MenuCreator({ categData, toggleSecondMenu, setToggleSecondMenu })}
         </div>
+      </div>
+      <div className="container z-30 absolute left-[200px]">
+        {/* AQUI VAO SECONDARY MENU */}
       </div>
     </div>
   );
 }
 type DropDownProps = {
   text: string;
+  slug: string;
+  toggleSecondMenu: SlugObject[];
+  setToggleSecondMenu: React.Dispatch<React.SetStateAction<SlugObject[]>>;
 };
 
-function DropDownOptions({ text }: DropDownProps) {
+function DropDownOptions({
+  text,
+  slug,
+  setToggleSecondMenu,
+  toggleSecondMenu,
+}: DropDownProps) {
+  var hrefi = `/categorias/${slug}`;
+  const openSecondMenu = () => {
+    setToggleSecondMenu((prevState) =>
+      prevState.map((element) => ({
+        ...element,
+        [slug]: true,
+      }))
+    );
+    console.log(`SeteiTrue: ${slug}`);
+  };
+  const closeSecondMenu = () => {
+    setToggleSecondMenu((prevState) =>
+      prevState.map((element) => ({
+        ...element,
+        [slug]: false,
+      }))
+    );
+    console.log(`SeteiFalse: ${slug}`);
+  };
+
   return (
-    <div className="cursor-pointer hover:text-color-1 flex items-center justify-between ">
-      {text}
-      <IoIosArrowForward></IoIosArrowForward>
+    <div onMouseEnter={openSecondMenu} onMouseLeave={closeSecondMenu}>
+      <Link href={hrefi}>
+        <div className="cursor-pointer hover:text-color-1 flex items-center justify-between ">
+          {text}
+          <IoIosArrowForward></IoIosArrowForward>
+        </div>
+      </Link>
     </div>
   );
 }
