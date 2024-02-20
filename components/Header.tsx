@@ -8,7 +8,6 @@ import Logo from "/public/images/LogoQi.png";
 import { getCategories } from "@/sanity/sanity.query";
 import { useRouter } from "next/router";
 import Procure from "./Procure";
-import { SearchProductArray } from "@/types";
 
 async function Search() {
   const getCategory = await getCategories();
@@ -48,11 +47,7 @@ interface Category {
   [slug: string]: any;
 }
 
-type HeaderProps = {
-  productsSearch: SearchProductArray;
-};
-
-export default function Header({ productsSearch }: HeaderProps) {
+export default function Header() {
   const [Down, setDown] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   var [categData, setCategData] = useState<Category[]>([]);
@@ -106,7 +101,7 @@ export default function Header({ productsSearch }: HeaderProps) {
 
           <Image src={Logo} className="overflow-hidden" alt="Logo"></Image>
 
-          <Procure productsSearch={productsSearch} />
+          <Procure />
           <div className="md:ml-4 overflow-hidden ">
             <MdOutlineShoppingCart size={38}></MdOutlineShoppingCart>
           </div>
@@ -114,7 +109,7 @@ export default function Header({ productsSearch }: HeaderProps) {
       </div>
       {/* MOBILE SEARCH BAR */}
       <div className=" w-full flex items-center justify-center md:hidden mb-4">
-        <Procure productsSearch={productsSearch} />
+        <Procure />
       </div>
 
       {/* GREEN MENU, HIDDES IN MOBILE*/}

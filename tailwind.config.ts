@@ -9,7 +9,6 @@ const config: Config = {
   theme: {
     container: {
       center: true,
-      
     },
     extend: {
       aspectRatio: {
@@ -18,6 +17,9 @@ const config: Config = {
       fontFamily: {
         montse: ["Montserrat", "sans-serif"],
         noto: ["Noto Sans TC"],
+      },
+      animation: {
+        "spin-slower": "spin 2s linear infinite",
       },
     },
     colors: {

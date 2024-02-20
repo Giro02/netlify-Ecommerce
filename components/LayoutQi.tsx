@@ -1,7 +1,11 @@
 "use client";
 import { usePathname } from "next/navigation";
-import Header from "./Header";
 import DBLayout from "./DataBaseLayout";
+import { createContext } from "react";
+import { ProductPreviewArray } from "@/types";
+
+export const ProductContext = createContext<ProductPreviewArray>([]);
+
 export default function Layout({
   children,
 }: Readonly<{
@@ -9,6 +13,7 @@ export default function Layout({
 }>) {
   const pathName = usePathname();
   const studio = pathName.startsWith("/studio");
+
   if (studio) {
     return <>{children}</>;
   } else {

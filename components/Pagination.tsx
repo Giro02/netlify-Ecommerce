@@ -3,15 +3,17 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
-type CategoryPaginationProps = {
+type PaginationProps = {
   currentPage: string;
   pageNumbers: number;
+  query?: string;
 };
 
-export default function CategoryPagination({
+export default function Pagination({
   currentPage,
   pageNumbers,
-}: CategoryPaginationProps) {
+  query,
+}: PaginationProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentOrder = searchParams.get("order") || "relevance";
@@ -35,9 +37,15 @@ export default function CategoryPagination({
         <></>
       ) : (
         <Link
-          href={`${pathname}?p=${
-            parseInt(currentPage) - 1
-          }&order=${currentOrder}`}
+          href={
+            query
+              ? `${pathname}?q=${query}&p=${
+                  parseInt(currentPage) - 1
+                }&order=${currentOrder}`
+              : `${pathname}?p=${
+                  parseInt(currentPage) - 1
+                }&order=${currentOrder}`
+          }
         >
           <IoIosArrowBack className="text-xl" />
         </Link>
@@ -54,7 +62,14 @@ export default function CategoryPagination({
             {number}
           </div>
         ) : (
-          <Link key={i} href={`${pathname}?p=${number}&order=${currentOrder}`}>
+          <Link
+            key={i}
+            href={
+              query
+                ? `${pathname}?q=${query}&p=${number}&order=${currentOrder}`
+                : `${pathname}?p=${number}&order=${currentOrder}`
+            }
+          >
             {number}
           </Link>
         )
@@ -63,9 +78,15 @@ export default function CategoryPagination({
         <></>
       ) : (
         <Link
-          href={`${pathname}?p=${
-            parseInt(currentPage) + 1
-          }&order=${currentOrder}`}
+          href={
+            query
+              ? `${pathname}?q=${query}&p=${
+                  parseInt(currentPage) + 1
+                }&order=${currentOrder}`
+              : `${pathname}?p=${
+                  parseInt(currentPage) + 1
+                }&order=${currentOrder}`
+          }
         >
           <IoIosArrowForward className="text-xl" />
         </Link>

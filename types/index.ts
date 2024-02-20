@@ -11,7 +11,7 @@ export type CategoryType = {
     alt: string;
     image: string;
   };
-  highlightedProducts: Array<ProductType>;
+  highlightedProducts: Array<ProductPreview>;
 };
 
 export type ProductType = {
@@ -28,34 +28,35 @@ export type ProductType = {
   unitsSold: number;
 };
 
-export type SearchProduct = {
+export type ProductArray = Array<ProductType>;
+
+export type ProductPreview = {
   _id: String;
   title: String;
   slug: Slug;
   description: String;
+  unitsSold: number;
   productImage: {
     alt: string;
     image: string;
   };
   price: number;
-  category: Array<{ _id: string; title: string }>;
+  category: Array<{ _id: string; title: string; slug: Slug }>;
 };
 
-export type SearchProductArray = Array<SearchProduct>;
+export type ProductPreviewArray = Array<ProductPreview>;
 
-export type SearchProductResult = {
-  item: SearchProduct;
+export type FuseProductResult = {
+  item: ProductPreview;
   refIndex: number;
 };
 
-export type SearchProductResultArray = Array<SearchProductResult>;
-
-export type ProductArray = Array<ProductType>;
+export type FuseProductResultArray = Array<FuseProductResult>;
 
 export type CarouselType = {
   _id: String;
   title: String;
-  products: Array<ProductType>;
+  products: Array<ProductPreview>;
   type?: String;
 };
 

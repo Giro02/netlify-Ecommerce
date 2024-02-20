@@ -6,6 +6,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 interface SortDropdownProps {
   dropdownOptions: Array<DropdownArray>;
   selectedOption: string;
+  query?: string;
 }
 
 interface DropdownArray {
@@ -16,6 +17,7 @@ interface DropdownArray {
 export default function SortDropdown({
   dropdownOptions,
   selectedOption,
+  query,
 }: SortDropdownProps) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +27,14 @@ export default function SortDropdown({
   };
   const options = dropdownOptions.map((option, index) => {
     return (
-      <Link href={`${pathname}?order=${option.en.toLowerCase()}`}>
+      <Link
+        key={index}
+        href={
+          query
+            ? `${pathname}?q=${query}&order=${option.en.toLowerCase()}`
+            : `${pathname}?order=${option.en.toLowerCase()}`
+        }
+      >
         <div
           className={`${
             parseInt(selectedOption) === index ? "hidden" : "cursor-pointer"

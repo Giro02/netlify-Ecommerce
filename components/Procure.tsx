@@ -1,23 +1,24 @@
-import { SearchProductArray, SearchProductResultArray } from "@/types";
+import { FuseProductResultArray } from "@/types";
 import { formatCurrency } from "@/utils/UtilityFunctions";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { KeyboardEvent, useContext, useEffect, useState } from "react";
+import { IoIosSearch } from "react-icons/io";
+import { ProductContext } from "./LayoutQi";
 
-type ProcureProps = {
-  productsSearch: SearchProductArray;
-};
-
-export default function Procure({ productsSearch }: ProcureProps) {
+export default function Procure() {
+  const productsSearch = useContext(ProductContext);
   const Fuse = require("fuse.js");
   const options = {
     keys: ["title", "description", "category.title"],
   };
   const fuse = new Fuse(productsSearch, options);
-  const [query, setQuery] = useState<SearchProductResultArray>();
+  const [query, setQuery] = useState<FuseProductResultArray>();
+  const [searchInput, setSearchInput] = useState("");
   const [fetchedProducts, setFetchedProducts] = useState<JSX.Element[]>([]);
   const [visible, setVisible] = useState(false);
   function handleSearchInput(e: React.ChangeEvent<HTMLInputElement>) {
     setQuery(fuse.search(e.target.value).slice(0, 5));
+    setSearchInput(e.target.value);
   }
 
   const handleFocus = () => {
@@ -35,16 +36,15 @@ export default function Procure({ productsSearch }: ProcureProps) {
       setFetchedProducts(GenerateFetchedProducts(query));
     }
 
-    function GenerateFetchedProducts(queryResult: SearchProductResultArray) {
+    function GenerateFetchedProducts(queryResult: FuseProductResultArray) {
       const productComponent = queryResult.map((product, index) => {
         const value = formatCurrency(product.item.price);
         return (
-          <Link
-            href={`/produtos/${product.item.slug.current}`}
-            key={index}
-            className="px-6 py-1"
-          >
-            <div className="items-center grid grid-cols-6 border border-color-1 border-opacity-0 hover:border-opacity-100 transition rounded-lg px-2 py-2">
+          <div key={index} className="px-6 py-1">
+            <Link
+              href={`/produtos/${product.item.slug.current}`}
+              className="items-center grid grid-cols-6 border border-color-1 border-opacity-0 hover:border-opacity-100 transition rounded-lg px-2 py-2"
+            >
               <img
                 src={product.item.productImage.image}
                 alt={product.item.productImage.alt}
@@ -54,13 +54,22 @@ export default function Procure({ productsSearch }: ProcureProps) {
               <div className="col-span-1 items-center flex justify-center font-semibold  text-sm">
                 {value}
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         );
       });
       return productComponent;
     }
   }, [query]);
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && searchInput) {
+      document.getElementById("searchLink")?.click();
+      setTimeout(() => {
+        setVisible(false);
+      }, 200);
+    }
+  };
 
   return (
     <div
@@ -73,8 +82,22 @@ export default function Procure({ productsSearch }: ProcureProps) {
           className="h-[40px] border border-color-4 w-full px-4 rounded-l-md "
           placeholder="Pesquisar na loja toda..."
           onChange={handleSearchInput}
+          autoComplete="off"
+          onKeyDown={handleKeyDown}
         ></input>
-        <button className="w-[48px] h-[40px] bg-color-1 rounded-r-md"></button>
+        {searchInput ? (
+          <Link
+            id="searchLink"
+            href={`/buscacatalogada?q=${searchInput}`}
+            className="w-[48px] h-[40px] bg-color-1 rounded-r-md flex items-center justify-center text-2xl text-color-3"
+          >
+            <IoIosSearch />
+          </Link>
+        ) : (
+          <button className="w-[48px] h-[40px] bg-color-1 rounded-r-md flex items-center justify-center text-2xl text-color-3">
+            <IoIosSearch />
+          </button>
+        )}
       </div>
       {visible ? (
         <div className="flex w-full relative">
@@ -88,7 +111,7 @@ export default function Procure({ productsSearch }: ProcureProps) {
       <div
         className={` ${
           visible ? " opacity-100 " : "opacity-0 invisible"
-        } fixed z-10 bg-color-5/60 w-full h-full transition-all duration-500 top-0 left-0`}
+        } fixed z-10 bg-color-5/60 w-full h-full transition-all duration-700 top-0 left-0`}
       />
     </div>
   );

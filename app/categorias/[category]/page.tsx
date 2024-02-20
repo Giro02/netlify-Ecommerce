@@ -3,7 +3,7 @@ import {
   getProductsByCategory,
   getSingleCategory,
 } from "@/sanity/sanity.query";
-import type { CategoryType, ProductArray } from "@/types";
+import type { CategoryType, ProductArray, ProductPreviewArray } from "@/types";
 import { Metadata } from "next";
 
 type Props = {
@@ -17,7 +17,7 @@ type Props = {
 };
 
 type CategoryQueryResponse = {
-  productsArray: ProductArray;
+  productsArray: ProductPreviewArray;
   productCount: number;
 };
 
