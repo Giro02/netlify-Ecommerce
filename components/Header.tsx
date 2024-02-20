@@ -97,24 +97,23 @@ export default function Header({ productsSearch }: HeaderProps) {
         </div>
       </div>
       <div className="flex justify-center ">
-        <div className=" container h-[100px] flex justify-between items-center  overflow-hidden ">
-          <div className="md:hidden mr-4">
+        <div className=" container h-[100px] flex justify-between items-center">
+          <div className="md:hidden mr-4 overflow-hidden">
             <div onClick={toggleMenu}>
               <HamburguerPhone></HamburguerPhone>
             </div>
           </div>
 
-          <Image src={Logo} alt="Logo"></Image>
-          <div className=" max-w-[520px] w-full hidden md:flex ">
-            <Procure productsSearch={productsSearch} />
-          </div>
-          <div className="md:ml-4">
+          <Image src={Logo} className="overflow-hidden" alt="Logo"></Image>
+
+          <Procure productsSearch={productsSearch} />
+          <div className="md:ml-4 overflow-hidden ">
             <MdOutlineShoppingCart size={38}></MdOutlineShoppingCart>
           </div>
         </div>
       </div>
       {/* MOBILE SEARCH BAR */}
-      <div className=" w-full flex items center justify-center md:hidden mb-4">
+      <div className=" w-full flex items-center justify-center md:hidden mb-4">
         <Procure productsSearch={productsSearch} />
       </div>
 

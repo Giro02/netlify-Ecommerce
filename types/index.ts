@@ -37,10 +37,18 @@ export type SearchProduct = {
     alt: string;
     image: string;
   };
+  price: number;
   category: Array<{ _id: string; title: string }>;
 };
 
 export type SearchProductArray = Array<SearchProduct>;
+
+export type SearchProductResult = {
+  item: SearchProduct;
+  refIndex: number;
+};
+
+export type SearchProductResultArray = Array<SearchProductResult>;
 
 export type ProductArray = Array<ProductType>;
 

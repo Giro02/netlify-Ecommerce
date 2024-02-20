@@ -101,6 +101,7 @@ export async function getProductsForSearch() {
       title,
       slug,
       description,
+      price,
       productImage {alt, "image": asset -> url},
       category[] -> {
         _id,
