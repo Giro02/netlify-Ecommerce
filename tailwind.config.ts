@@ -9,7 +9,10 @@ const config: Config = {
   theme: {
     container: {
       center: true,
+<<<<<<< HEAD
       padding:'2rem',
+=======
+>>>>>>> 07982dd77c73355573398d337aee262bc009f713
     },
     extend: {
       aspectRatio: {
@@ -18,6 +21,9 @@ const config: Config = {
       fontFamily: {
         montse: ["Montserrat", "sans-serif"],
         noto: ["Noto Sans TC"],
+      },
+      animation: {
+        "spin-slower": "spin 2s linear infinite",
       },
     },
     colors: {

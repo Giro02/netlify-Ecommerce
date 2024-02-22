@@ -1,15 +1,15 @@
 "use client";
-import type { CategoryType, ProductArray } from "@/types";
+import type { CategoryType, ProductArray, ProductPreviewArray } from "@/types";
 import { IoIosWarning } from "react-icons/io";
 import Link from "next/link";
-import CategoryPagination from "./CategoryPagination";
 import { QiLogoName } from "./Svgs";
 import ProductComponent from "./ProductComponent";
 import SortDropdown from "./SortDropdown";
+import Pagination from "./Pagination";
 
 interface CategoryProps {
   category: CategoryType;
-  productsArray: ProductArray;
+  productsArray: ProductPreviewArray;
   order: string;
   page: string;
   productCount: number;
@@ -38,8 +38,8 @@ export default function Category({
     initialOrder = "2";
   }
 
-  const finalProduct = 2 * parseInt(page);
-  const initialProduct = finalProduct - 2;
+  const finalProduct = itemsPerPage * parseInt(page);
+  const initialProduct = finalProduct - itemsPerPage;
   const pageNumbers = Math.ceil(productCount / itemsPerPage);
 
   const products = productsArray.map((product, index) => {
@@ -102,11 +102,14 @@ export default function Category({
       <div className="grid grid-cols-5 mt-6 gap-4">
         <div className="col-span-1 pr-6">
           <div className="text-center flex-col flex border border-color-5/25 p-5 rounded-xl ">
+            <h3 className="font-montse items-center font-semibold flex text-color-5 text-lg justify-center mb-2">
+              Descrição
+            </h3>
             <h3 className="font-montse text-justify items-center flex justify-center text-color-5 text-base">{`${category.description}`}</h3>
             <hr className="text-color-5/25 my-4" />
-            <div className="flex justify-center">
+            <Link href="/" className="flex justify-center">
               <QiLogoName className="text-2xl my-2" />
-            </div>
+            </Link>
           </div>
         </div>
         <div className="col-span-4">
@@ -118,10 +121,7 @@ export default function Category({
               {pageNumbers === 1 ? (
                 <></>
               ) : (
-                <CategoryPagination
-                  currentPage={page}
-                  pageNumbers={pageNumbers}
-                />
+                <Pagination currentPage={page} pageNumbers={pageNumbers} />
               )}
             </div>
           ) : (

@@ -1,8 +1,8 @@
 "use client";
-import type { ProductType } from "@/types";
+import type { ProductPreview } from "@/types";
 
 interface ProductProps {
-  product: ProductType;
+  product: ProductPreview;
 }
 
 export default async function Product({ product }: ProductProps) {

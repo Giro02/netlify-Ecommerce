@@ -1,10 +1,10 @@
-import { ProductType } from "@/types";
+import { ProductPreview } from "@/types";
 import { formatCurrency } from "@/utils/UtilityFunctions";
 import Link from "next/link";
 import QiButton from "./QiButton";
 
 type ProductComponentProps = {
-  product: ProductType;
+  product: ProductPreview;
 };
 
 export default function ProductComponent({ product }: ProductComponentProps) {

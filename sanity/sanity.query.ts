@@ -94,17 +94,20 @@ export async function getSingleProduct(slug: string) {
   );
 }
 
-export async function getProductsForSearch() {
+export async function getProductsForContext() {
   return client.fetch(
     groq`*[_type == "product"]{
       _id,
       title,
       slug,
       description,
+      price,
       productImage {alt, "image": asset -> url},
+      unitsSold,
       category[] -> {
         _id,
-        title
+        title,
+        slug
       }
     }`
   );

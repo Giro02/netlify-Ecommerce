@@ -1,17 +1,18 @@
-import { SearchProductArray } from "@/types";
+import { ProductPreviewArray } from "@/types";
 import Header from "./Header";
-import { getProductsForSearch } from "@/sanity/sanity.query";
+import { getProductsForContext } from "@/sanity/sanity.query";
+import { ProductContext } from "./LayoutQi";
 
 export default async function DBLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const allProductsSearch: SearchProductArray = await getProductsForSearch();
+  const allProductsQuery: ProductPreviewArray = await getProductsForContext();
   return (
-    <>
-      <Header productsSearch={allProductsSearch} />
+    <ProductContext.Provider value={allProductsQuery}>
+      <Header />
       {children}
-    </>
+    </ProductContext.Provider>
   );
 }
