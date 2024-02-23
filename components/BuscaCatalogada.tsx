@@ -5,7 +5,7 @@ import SortDropdown from "@/components/SortDropdown";
 import { QiLogoName } from "@/components/Svgs";
 import { FuseProductResultArray, ProductPreviewArray } from "@/types";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosWarning } from "react-icons/io";
 import { IoIosRefresh } from "react-icons/io";
 

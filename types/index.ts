@@ -24,7 +24,9 @@ export type ProductType = {
     image: string;
   };
   price: number;
+  priceBundle: Array<{ unitPrice: number; unitsNumber: number }>;
   category: Array<CategoryType>;
+  similarProducts: Array<ProductPreview>;
   unitsSold: number;
 };
 

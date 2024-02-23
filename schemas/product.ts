@@ -33,6 +33,20 @@ const product = {
       validation: (Rule) => Rule.required().positive(),
     }),
     defineField({
+      name: "priceBundle",
+      title: "Bundle Price",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "unitPrice", type: "number", title: "Price per Unit" },
+            { name: "unitsNumber", type: "number", title: "Number of Units" },
+          ],
+        },
+      ],
+    }),
+    defineField({
       name: "productImage",
       title: "Image",
       type: "image",
@@ -53,6 +67,13 @@ const product = {
       title: "Category",
       type: "array",
       of: [{ type: "reference", to: [{ type: "category" }] }],
+    }),
+    defineField({
+      name: "similarProducts",
+      title: "Similar Products",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "product" }] }],
+      validation: (rule) => rule.max(5),
     }),
     defineField({
       name: "unitsSold",
