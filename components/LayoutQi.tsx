@@ -1,26 +1,18 @@
-"use client";
-import { usePathname } from "next/navigation";
-import DBLayout from "./DataBaseLayout";
-import { createContext } from "react";
 import { ProductPreviewArray } from "@/types";
+import Header from "./Header";
+import { getProductsForContext } from "@/sanity/sanity.query";
 
-export const ProductContext = createContext<ProductPreviewArray>([]);
-
-export default function Layout({
+export default async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathName = usePathname();
-  const studio = pathName.startsWith("/studio");
+  const allProductsPreview: ProductPreviewArray = await getProductsForContext();
 
-  if (studio) {
-    return <>{children}</>;
-  } else {
-    return (
-      <>
-        <DBLayout>{children}</DBLayout>
-      </>
-    );
-  }
+  return (
+    <>
+      <Header allProductsPreview={allProductsPreview} />
+      {children}
+    </>
+  );
 }

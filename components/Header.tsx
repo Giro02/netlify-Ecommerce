@@ -8,6 +8,8 @@ import Logo from "/public/images/LogoQi.png";
 import { getCategories } from "@/sanity/sanity.query";
 import { useRouter } from "next/router";
 import Procure from "./Procure";
+import { usePathname } from "next/navigation";
+import { ProductPreviewArray } from "@/types";
 
 async function Search() {
   const getCategory = await getCategories();
@@ -47,7 +49,13 @@ interface Category {
   [slug: string]: any;
 }
 
-export default function Header() {
+type HeaderProps = {
+  allProductsPreview: ProductPreviewArray;
+};
+
+export default function Header({ allProductsPreview }: HeaderProps) {
+  const pathName = usePathname();
+  const studio = pathName.startsWith("/studio");
   const [Down, setDown] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   var [categData, setCategData] = useState<Category[]>([]);
@@ -64,71 +72,74 @@ export default function Header() {
     setIsMenuOpen((prevMobileMenu) => !prevMobileMenu);
   }
 
-  return (
-    // Add Font
-    <div>
-      <div
-        onClick={toggleMenu}
-        className={` ${
-          isMenuOpen ? " opacity-100 " : "opacity-0 invisible"
-        } fixed z-30 bg-color-5/60 w-full h-full  md:hidden transition-all duration-300`}
-      ></div>
-      <div
-        className={`${
-          isMenuOpen ? " w-[80%]" : " w-0"
-        } md:hidden z-40 left-0 h-full bg-color-3 fixed overflow-hidden transition-[width] duration-300`}
-      >
-        <div className="p-4 border-b border-color-4 w-full h-16">
-          <div className="flex font-medium w-full justify-between text-2xl">
-            <p>Explorar</p>
-            <p className="cursor-pointer" onClick={toggleMenu}>
-              x
-            </p>
-          </div>
-        </div>
-        <div className="p-4 gap-8 flex flex-col font-medium mt-4">
-          {/* CONCERTAR O MENU DE MOBILE */}
-          {""}
-        </div>
-      </div>
-      <div className="flex justify-center ">
-        <div className=" container h-[100px] flex justify-between items-center">
-          <div className="md:hidden mr-4 overflow-hidden">
-            <div onClick={toggleMenu}>
-              <HamburguerPhone></HamburguerPhone>
+  if (studio) {
+    return;
+  } else
+    return (
+      // Add Font
+      <div>
+        <div
+          onClick={toggleMenu}
+          className={` ${
+            isMenuOpen ? " opacity-100 " : "opacity-0 invisible"
+          } fixed z-30 bg-color-5/60 w-full h-full  md:hidden transition-all duration-300`}
+        ></div>
+        <div
+          className={`${
+            isMenuOpen ? " w-[80%]" : " w-0"
+          } md:hidden z-40 left-0 h-full bg-color-3 fixed overflow-hidden transition-[width] duration-300`}
+        >
+          <div className="p-4 border-b border-color-4 w-full h-16">
+            <div className="flex font-medium w-full justify-between text-2xl">
+              <p>Explorar</p>
+              <p className="cursor-pointer" onClick={toggleMenu}>
+                x
+              </p>
             </div>
           </div>
+          <div className="p-4 gap-8 flex flex-col font-medium mt-4">
+            {/* CONCERTAR O MENU DE MOBILE */}
+            {""}
+          </div>
+        </div>
+        <div className="flex justify-center ">
+          <div className=" container h-[100px] flex justify-between items-center">
+            <div className="md:hidden mr-4 overflow-hidden">
+              <div onClick={toggleMenu}>
+                <HamburguerPhone></HamburguerPhone>
+              </div>
+            </div>
 
-          <Image src={Logo} className="overflow-hidden" alt="Logo"></Image>
+            <Image src={Logo} className="overflow-hidden" alt="Logo"></Image>
 
-          <Procure />
-          <div className="md:ml-4 overflow-hidden ">
-            <MdOutlineShoppingCart size={38}></MdOutlineShoppingCart>
+            <Procure productsSearch={allProductsPreview} />
+            <div className="md:ml-4 overflow-hidden ">
+              <MdOutlineShoppingCart size={38}></MdOutlineShoppingCart>
+            </div>
+          </div>
+        </div>
+        {/* MOBILE SEARCH BAR */}
+        <div className=" w-full flex items-center justify-center md:hidden mb-4">
+          <Procure productsSearch={allProductsPreview} />
+        </div>
+
+        {/* GREEN MENU, HIDDES IN MOBILE*/}
+        <div className="h-12 bg-color-1 w-full mt-[-10px] items-end justify-center relative hidden md:flex">
+          <div className=" flex items-center container justify-between text-white ">
+            <Hamburguer
+              setDown={setDown}
+              Down={Down}
+              categData={categData}
+            ></Hamburguer>
+            <Menu text="Queda Capilar"></Menu>
+            <Menu text="Emagrecimento"></Menu>
+            <Menu text="Dormir Bem"></Menu>
+            <Menu text="Saúde Sexual"></Menu>
+            <Menu text="Desempenho Físico"></Menu>
           </div>
         </div>
       </div>
-      {/* MOBILE SEARCH BAR */}
-      <div className=" w-full flex items-center justify-center md:hidden mb-4">
-        <Procure />
-      </div>
-
-      {/* GREEN MENU, HIDDES IN MOBILE*/}
-      <div className="h-12 bg-color-1 w-full mt-[-10px] items-end justify-center relative hidden md:flex">
-        <div className=" flex items-center container justify-between text-white ">
-          <Hamburguer
-            setDown={setDown}
-            Down={Down}
-            categData={categData}
-          ></Hamburguer>
-          <Menu text="Queda Capilar"></Menu>
-          <Menu text="Emagrecimento"></Menu>
-          <Menu text="Dormir Bem"></Menu>
-          <Menu text="Saúde Sexual"></Menu>
-          <Menu text="Desempenho Físico"></Menu>
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 type ItemProps = {

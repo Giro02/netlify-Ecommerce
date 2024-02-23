@@ -1,12 +1,14 @@
-import { FuseProductResultArray } from "@/types";
+import { FuseProductResultArray, ProductPreviewArray } from "@/types";
 import { formatCurrency } from "@/utils/UtilityFunctions";
 import Link from "next/link";
 import { KeyboardEvent, useContext, useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-import { ProductContext } from "./LayoutQi";
 
-export default function Procure() {
-  const productsSearch = useContext(ProductContext);
+type ProcureProps = {
+  productsSearch: ProductPreviewArray;
+};
+
+export default function Procure({ productsSearch }: ProcureProps) {
   const Fuse = require("fuse.js");
   const options = {
     keys: ["title", "description", "category.title"],
