@@ -5,14 +5,6 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
 import Image from "next/image";
 import Logo from "/public/images/LogoQi.png";
-import { getCategories } from "@/sanity/sanity.query";
-import { useRouter } from "next/router";
-import Procure from "./Procure";
-
-async function Search() {
-  const getCategory = await getCategories();
-  return getCategory;
-}
 
 type SlugObject = { [key: string]: boolean };
 type MenuCreatorProps = {
@@ -46,19 +38,25 @@ interface Category {
   title: string;
   [slug: string]: any;
 }
-
-export default function Header() {
+export default function Header(categories) {
   const [Down, setDown] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  var [categData, setCategData] = useState<Category[]>([]);
+  const [categData, setCategData] = useState<{ [key: string]: boolean }[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await Search();
-      setCategData(data);
-    };
-    fetchData();
-  }, []);
+  interface Slug {
+    current: string;
+  }
+
+  const slugs: { [key: string]: boolean }[] = [];
+  console.log(categories);
+
+  // categories.categories.forEach((name, j) => {
+  //   const {
+  //     slug: { current },
+  //   } = name;
+  //   slugs.push({ [current]: false });
+  // });
+  // setCategData(slugs);
 
   function toggleMenu() {
     setIsMenuOpen((prevMobileMenu) => !prevMobileMenu);
@@ -92,33 +90,34 @@ export default function Header() {
         </div>
       </div>
       <div className="flex justify-center ">
-        <div className=" container h-[100px] flex justify-between items-center">
-          <div className="md:hidden mr-4 overflow-hidden">
+        <div className=" container h-[100px] flex justify-between items-center  overflow-hidden ">
+          <div className="md:hidden mr-4">
             <div onClick={toggleMenu}>
               <HamburguerPhone></HamburguerPhone>
             </div>
           </div>
 
-          <Image src={Logo} className="overflow-hidden" alt="Logo"></Image>
-
-          <Procure />
-          <div className="md:ml-4 overflow-hidden ">
+          <Image src={Logo} alt="Logo"></Image>
+          <div className=" max-w-[520px] w-full hidden md:flex ">
+            <Procure></Procure>
+          </div>
+          <div className="md:ml-4">
             <MdOutlineShoppingCart size={38}></MdOutlineShoppingCart>
           </div>
         </div>
       </div>
       {/* MOBILE SEARCH BAR */}
-      <div className=" w-full flex items-center justify-center md:hidden mb-4">
-        <Procure />
+      <div className=" w-full flex items center justify-center md:hidden mb-4">
+        <Procure></Procure>
       </div>
 
       {/* GREEN MENU, HIDDES IN MOBILE*/}
-      <div className="h-12 bg-color-1 w-full mt-[-10px] items-end justify-center relative hidden md:flex">
+      <div className="h-12 bg-color-1 w-full mt-[-10px] items-end justify-center relative hidden md:flex z-50">
         <div className=" flex items-center container justify-between text-white ">
           <Hamburguer
             setDown={setDown}
             Down={Down}
-            categData={categData}
+            categData={categories}
           ></Hamburguer>
           <Menu text="Queda Capilar"></Menu>
           <Menu text="Emagrecimento"></Menu>
@@ -148,25 +147,21 @@ type MenuProps = {
   Down: boolean;
   categData: Category[];
 };
-export function Hamburguer({ Down, setDown, categData }: MenuProps) {
+export function Hamburguer({ Down, setDown }: MenuProps) {
   function Isdropped() {
     setDown(!Down);
   }
 
-  interface Slug {
-    current: string;
-  }
-
-  const slugs: { [key: string]: boolean }[] = [];
-  categData.forEach((name, j) => {
-    const {
-      slug: { current },
-    } = name;
-    slugs.push({ [current]: false });
-  });
-
-  const [toggleSecondMenu, setToggleSecondMenu] = useState(slugs);
+  // const [toggleSecondMenu, setToggleSecondMenu] = useState(() =>
+  //   categData.map((name) => ({ [name.slug.current]: false }))
+  // );
+  // console.log(toggleSecondMenu);
   // FAZER AQU A FUNÇÂO DO MENUISECUNDARIO
+  const secondMenu = () => {
+    return (
+      <div className="absolute top-[16px] bg-color-5 left-0 w-full h-[150px] z-30"></div>
+    );
+  };
   return (
     <div
       onMouseEnter={() => Isdropped()}
@@ -203,11 +198,12 @@ export function Hamburguer({ Down, setDown, categData }: MenuProps) {
         <div
           className={` flex flex-col text-center gap-10 text-color-5 mt-4 mb-2 p-4 text-[15px]`}
         >
-          {MenuCreator({ categData, toggleSecondMenu, setToggleSecondMenu })}
+          {/* {MenuCreator({ categData, toggleSecondMenu, setToggleSecondMenu })} */}
         </div>
       </div>
       <div className="container z-30 absolute left-[200px]">
-        {/* AQUI VAO SECONDARY MENU */}
+        {/* AQUI VAI O SECONDARY MENU */}
+        <div>{secondMenu()}</div>
       </div>
     </div>
   );
@@ -243,6 +239,7 @@ function DropDownOptions({
       }))
     );
     console.log(`SeteiFalse: ${slug}`);
+    console.log(toggleSecondMenu);
   };
 
   return (
@@ -262,6 +259,18 @@ export function HamburguerPhone() {
       <div className="border border-color-5 w-7 rounded-md"></div>
       <div className="border border-color-5 w-7 rounded-md"></div>
       <div className="border border-color-5 w-7 rounded-md"></div>
+    </div>
+  );
+}
+
+export function Procure() {
+  return (
+    <div className="flex w-full ">
+      <input
+        className="h-[40px] border border-color-4 w-full px-4 rounded-l-md "
+        placeholder="Pesquisar na loja toda..."
+      ></input>
+      <button className="w-[48px] h-[40px] bg-color-1 rounded-r-md"></button>
     </div>
   );
 }
