@@ -7,6 +7,7 @@ type QiButtonProps = PropsWithChildren<{
   rightIcon?: ReactNode;
   iconClassName?: string;
   className?: string;
+  wfull?: boolean;
 }>;
 
 export default function QiButton({
@@ -15,12 +16,14 @@ export default function QiButton({
   children,
   className,
   iconClassName,
+  wfull,
 }: QiButtonProps) {
   return (
     <div>
       <button
         className={clsx(
           " min-w-[4rem] flex items-center text-lg leading-none min-h-[4rem] gap-3  place-content-center [&>div]:shrink-0",
+          wfull ? "w-full" : "",
           { "px-7 py-5": !!children },
           className
         )}

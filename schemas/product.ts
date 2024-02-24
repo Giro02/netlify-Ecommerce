@@ -21,12 +21,6 @@ const product = {
       },
     }),
     defineField({
-      name: "description",
-      title: "Description",
-      type: "string",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: "price",
       title: "Price",
       type: "number",
@@ -44,6 +38,28 @@ const product = {
             { name: "unitsNumber", type: "number", title: "Number of Units" },
           ],
         },
+      ],
+    }),
+    defineField({
+      name: "description",
+      title: "Description",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "informations",
+      title: "Informations",
+      type: "object",
+      fields: [
+        {
+          name: "explicacao",
+          type: "text",
+          title: "O que é e para que serve?",
+        },
+        { name: "beneficios", type: "text", title: "Benefícios" },
+        { name: "composicao", type: "text", title: "Composição" },
+        { name: "uso", type: "text", title: "Como Usar" },
+        { name: "advertencias", type: "text", title: "Advertências" },
       ],
     }),
     defineField({

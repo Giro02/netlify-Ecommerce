@@ -89,7 +89,14 @@ export async function getSingleProduct(slug: string) {
         title,
         slug
       },
-      priceBundle[] -> {
+      informations {
+        beneficios,
+          uso,
+          explicacao,
+          composicao,
+          advertencias
+      },
+      priceBundle[] {
         ...,
       },
       similarProducts[] -> {

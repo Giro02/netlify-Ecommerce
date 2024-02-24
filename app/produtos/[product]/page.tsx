@@ -1,6 +1,6 @@
 import Product from "@/components/Product";
 import { getSingleProduct } from "@/sanity/sanity.query";
-import { ProductPreview } from "@/types";
+import { ProductType } from "@/types";
 import { Metadata } from "next";
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = params.product;
-  const product: ProductPreview = await getSingleProduct(slug);
+  const product: ProductType = await getSingleProduct(slug);
   return {
     title: `${product.title}`,
     description: `${product.description}`,
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductLayout({ params }: Props) {
   const slug = params.product;
-  const product: ProductPreview = await getSingleProduct(slug);
+  const product: ProductType = await getSingleProduct(slug);
   return (
     <main>
       <Product product={product} />
