@@ -144,7 +144,17 @@ export async function getBanners(bannerName: string) {
     );
     return data;
   } catch (error) {
-    console.error("Deu merda", error);
     throw error;
   }
+}
+
+export async function getCarouselCategory(){
+  return client.fetch(
+    groq`*[_type == 'carouselCategory']{
+      _id,
+      title,
+      categ->{slug},
+      image {alt, "image": asset-> url}
+    }`
+  );
 }

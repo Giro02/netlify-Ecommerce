@@ -5,6 +5,7 @@ import Autoplay from "embla-carousel-autoplay";
 import "../public/static/carousel.css";
 import { IoIosArrowForward } from "react-icons/io";
 import { CarouselType } from "@/types";
+import Link from "next/link";
 
 interface CarouselProps {
   carousel: CarouselType;
@@ -12,7 +13,7 @@ interface CarouselProps {
 
 export default function Carousel({ carousel }: CarouselProps) {
   return (
-    <div className="flex justify-center w-full overflow-hidden">
+    <div className="flex justify-center w-full mt-6 overflow-hidden">
       <div>
         <Constructor carousel={carousel}></Constructor>
       </div>
@@ -26,7 +27,7 @@ function Constructor({ carousel }: CarouselProps) {
   const SlideElements = carousel.products.map((product, index) => (
     <div key={index}>
       <div
-        className={`rounded-xl relative p-4 cursor-pointer transition-all hover:shadow-2xl w-[200px] h-[400px] md:w-[240px] md:h-[450px] flex items-center justify-center flex-col text-center`}
+        className={`rounded-xl relative p-4 cursor-pointer transition-all hover:shadow-xl w-[200px] h-[400px] md:w-[240px] md:h-[450px] flex items-center justify-center flex-col text-center`}
         onMouseEnter={() => setSaiba(index)}
         onMouseLeave={() => setSaiba(null)}
       >
@@ -52,13 +53,15 @@ function Constructor({ carousel }: CarouselProps) {
             R$ {product.price}
           </p>
         </div>
-        <div
-          className={`h-10 bg-color-1 w-full ${
-            Saiba === index ? "flex" : " flex sm:invisible "
-          } items-center justify-center text-color-branco text-[16px]  rounded-lg mt-4 md:mt-8`}
-        >
-          Saiba Mais
-        </div>
+        <Link className="w-full" href={`/produtos/${product.slug.current}`}>
+          <div
+            className={`h-10 bg-color-1 ${
+              Saiba === index ? "flex" : " flex sm:invisible "
+            } items-center justify-center text-color-branco text-[16px] w-full  rounded-lg mt-4 md:mt-8 text-color-3`}
+          >
+            Saiba Mais
+          </div>
+        </Link>
       </div>
     </div>
   ));
@@ -83,6 +86,14 @@ function Constructor({ carousel }: CarouselProps) {
   const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
+
+  const carouselSize = useCallback(
+    (emblaApi: any) => {
+      emblaApi.scrollSnapList();
+    },
+    [emblaApi]
+  );
+
   return (
     <div className="relative">
       <div className="flex lg:max-w-[1120px] md:max-w-[750px] sm:max-w-[600px] max-w-[350px]  overflow-hidden">
@@ -96,8 +107,8 @@ function Constructor({ carousel }: CarouselProps) {
         onClick={scrollPrev}
         className={`${
           selected === 0
-            ? "text-color-preto/20 cursor-default"
-            : "text-color-preto cursor-pointer"
+            ? "text-color-5/20 cursor-default"
+            : "text-color-5 cursor-pointer"
         } rounded-full w-11 h-11 flex absolute left-[-15px] top-1/2 rotate-180  -translate-y-1/2  items-center justify-center text-color-branco/90 `}
       >
         <IoIosArrowForward size={25}></IoIosArrowForward>
@@ -105,9 +116,9 @@ function Constructor({ carousel }: CarouselProps) {
       <div
         onClick={scrollNext}
         className={`${
-          selected === 4
-            ? "text-color-preto/20 cursor-default"
-            : "text-color-preto cursor-pointer"
+          selected === carouselSize.length
+            ? "text-color-5/20 cursor-default"
+            : "text-color-5 cursor-pointer"
         } rounded-full w-11 h-11  absolute right-[-15px] top-1/2 -translate-y-1/2 flex items-center justify-center text-color-branco/90 `}
       >
         <IoIosArrowForward size={25}></IoIosArrowForward>

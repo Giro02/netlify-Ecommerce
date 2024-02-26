@@ -94,7 +94,7 @@ function Dots({ Quantity, Selected }: Items) {
 
   return (
     <div className=" relative">
-      <div className="flex items-center justify-center gap-2 absolute bottom-4 ">
+      <div className="flex items-center justify-center gap-2 absolute bottom-[-32px] ">
         {dots}
       </div>
     </div>

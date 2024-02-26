@@ -3,7 +3,7 @@ import {
   getProductsByCategory,
   getSingleCategory,
 } from "@/sanity/sanity.query";
-import type { CategoryType, ProductArray, ProductPreviewArray } from "@/types";
+import type { CategoryType, ProductPreviewArray } from "@/types";
 import { Metadata } from "next";
 
 type Props = {

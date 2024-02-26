@@ -2,23 +2,29 @@ import React from "react";
 import { FaTruckArrowRight } from "react-icons/fa6";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { BiSolidLock } from "react-icons/bi";
+import { FaRegCreditCard } from "react-icons/fa";
 
 export default function Benefits() {
   return (
     // Add Font
     <div className="flex justify-center">
-      <div className="grid grid-cols-3 justify-between gap-2 lg:gap-32 xl:gap-40">
+      <div className="flex flex-row justify-between gap-2">
         <CreateBenefits
           Title="Politica de Entrega"
           Entrega={true}
           Description="* Consulte condições"
           Icon={<FaTruckArrowRight size={32} />}
         ></CreateBenefits>
-
+        <CreateBenefits
+          Title="Parcele em até 12X"
+          Entrega={false}
+          Description="Com o Melhor Preço"
+          Icon={<FaRegCreditCard size={32} />}
+        ></CreateBenefits>
         <CreateBenefits
           Title="Seu Melhor Encapsulado"
           Entrega={false}
-          Description="Com o Melhor Preço"
+          Description="Com o Menor Preço"
           Icon={<FaMoneyBillWave size={32} />}
         ></CreateBenefits>
         <CreateBenefits
@@ -42,7 +48,7 @@ type ItemProps = {
 function CreateBenefits({ Title, Description, Icon, Entrega }: ItemProps) {
   return (
     // Add Font
-    <div className="hidden sm:flex container">
+    <div className="hidden sm:flex container mt-16">
       <div
         className={`${
           Entrega ? "cursor-pointer" : "cursor-default"
