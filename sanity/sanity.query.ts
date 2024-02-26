@@ -4,10 +4,10 @@ import client from "./sanity.client";
 export async function getCategories() {
   return client.fetch(
     groq`*[_type == "category"]{
-        _id,
-        title,
-        slug,
-        description,
+      _id,
+      title,
+      slug,
+      description,
         categoryImage {alt, "image": asset-> url}}`
   );
 }
@@ -139,7 +139,6 @@ export async function getProdCarouselHome() {
       products[]-> {
       ...,
         productImage {alt, "image": asset -> url},
-
       }
     }`
   );
@@ -166,7 +165,7 @@ export async function getBanners(bannerName: string) {
   }
 }
 
-export async function getCarouselCategory(){
+export async function getCarouselCategory() {
   return client.fetch(
     groq`*[_type == 'carouselCategory']{
       _id,

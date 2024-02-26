@@ -5,6 +5,7 @@ import {
 } from "@/sanity/sanity.query";
 import type { CategoryType, ProductPreviewArray } from "@/types";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: {
@@ -24,15 +25,19 @@ type CategoryQueryResponse = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = params.category;
   const category: CategoryType = await getSingleCategory(slug);
-  return {
-    title: `${category.title}`,
-    description: `${category.description}`,
-    openGraph: {
-      description: `${category.ogdescription}`,
-      images: category.categoryImage.image,
+  if (!category) {
+    notFound();
+  } else {
+    return {
       title: `${category.title}`,
-    },
-  };
+      description: `${category.description}`,
+      openGraph: {
+        description: `${category.ogdescription}`,
+        images: category.categoryImage.image,
+        title: `${category.title}`,
+      },
+    };
+  }
 }
 
 export default async function CategoryLayout({ params, searchParams }: Props) {
@@ -45,16 +50,20 @@ export default async function CategoryLayout({ params, searchParams }: Props) {
   const category: CategoryType = await getSingleCategory(slug);
   const { productsArray, productCount }: CategoryQueryResponse =
     await getProductsByCategory(slug, order, page, itemsPerPage);
-  return (
-    <main>
-      <Category
-        category={category}
-        productsArray={productsArray}
-        order={order}
-        page={page}
-        productCount={productCount}
-        itemsPerPage={itemsPerPage}
-      />
-    </main>
-  );
+  if (!category) {
+    notFound();
+  } else {
+    return (
+      <main>
+        <Category
+          category={category}
+          productsArray={productsArray}
+          order={order}
+          page={page}
+          productCount={productCount}
+          itemsPerPage={itemsPerPage}
+        />
+      </main>
+    );
+  }
 }

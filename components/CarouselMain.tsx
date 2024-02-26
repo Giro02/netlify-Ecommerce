@@ -7,7 +7,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { CarouselType } from "@/types";
 
 interface CarouselProps {
-  carousel: CarouselType;
+  carousel: Array<CarouselType>;
 }
 
 export default function CarouselMain(carousel: CarouselProps) {
@@ -36,7 +36,7 @@ export default function CarouselMain(carousel: CarouselProps) {
         <div className="embla__container">
           {carousel.carousel.map((i, index) => (
             <div key={index} className="embla__slide">
-              <Images Image={i.homeimages.image}></Images>
+              <Images Image={i.homeimages?.image || ""}></Images>
             </div>
           ))}
         </div>

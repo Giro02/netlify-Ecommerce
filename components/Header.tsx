@@ -9,11 +9,11 @@ import { getCategories } from "@/sanity/sanity.query";
 import { useRouter } from "next/router";
 import Procure from "./Procure";
 import { usePathname } from "next/navigation";
-import { ProductPreviewArray } from "@/types";
+import { CategoryType, ProductPreviewArray } from "@/types";
 
 type SlugObject = { [key: string]: boolean };
 type MenuCreatorProps = {
-  allCategData: Category[];
+  allCategData: Array<CategoryType>;
   toggleSecondMenu: SlugObject[];
   setToggleSecondMenu: React.Dispatch<React.SetStateAction<SlugObject[]>>;
 };
@@ -38,14 +38,10 @@ function PrimaryMenu({
     </div>
   );
 }
-interface Category {
-  _id: string;
-  title: string;
-  [slug: string]: any;
-}
 
 type HeaderProps = {
   allProductsPreview: ProductPreviewArray;
+  allCategData: Array<CategoryType>;
 };
 
 export default function Header({
@@ -179,7 +175,7 @@ export function Menu({ text }: ItemProps) {
 type MenuProps = {
   setDown: Dispatch<SetStateAction<boolean>>;
   Down: boolean;
-  allCategData: Category[];
+  allCategData: Array<CategoryType>;
 };
 export function Hamburguer({
   Down,

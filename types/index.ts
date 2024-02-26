@@ -1,12 +1,13 @@
+import { SubresourceIntegrityAlgorithm } from "next/dist/build/webpack/plugins/subresource-integrity-plugin";
 import { Slug } from "sanity";
 
 export type CategoryType = {
-  _id: String;
-  title: String;
-  titleChinese: String;
+  _id: string;
+  title: string;
+  titleChinese: string;
   slug: Slug;
   description: Text;
-  ogdescription: String;
+  ogdescription: string;
   categoryImage: {
     alt: string;
     image: string;
@@ -69,6 +70,10 @@ export type CarouselType = {
   title: String;
   products: Array<ProductPreview>;
   type?: String;
+  homeimages?: {
+    alt: string;
+    image: string;
+  };
 };
 
 export type CarouselArray = Array<CarouselType>;
