@@ -88,6 +88,24 @@ export async function getSingleProduct(slug: string) {
         _id,
         title,
         slug
+      },
+      informations {
+        beneficios,
+          uso,
+          explicacao,
+          composicao,
+          advertencias
+      },
+      priceBundle[] {
+        ...,
+      },
+      similarProducts[] -> {
+        _id,
+        title,
+        productImage {alt, "image": asset -> url},
+        slug,
+        description,
+        price
       }
     }`,
     { slug }

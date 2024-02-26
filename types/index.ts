@@ -14,17 +14,28 @@ export type CategoryType = {
   highlightedProducts: Array<ProductPreview>;
 };
 
+export type ProductInfoType = {
+  explicacao: string;
+  beneficios: string;
+  composicao: string;
+  uso: string;
+  advertencias: string;
+};
+
 export type ProductType = {
   _id: String;
-  title: String;
+  title: string;
   slug: Slug;
-  description: String;
+  description: string;
+  informations: ProductInfoType;
   productImage: {
     alt: string;
     image: string;
   };
   price: number;
+  priceBundle: Array<{ unitPrice: number; unitsNumber: number }>;
   category: Array<CategoryType>;
+  similarProducts: Array<ProductPreview>;
   unitsSold: number;
 };
 

@@ -21,16 +21,46 @@ const product = {
       },
     }),
     defineField({
+      name: "price",
+      title: "Price",
+      type: "number",
+      validation: (Rule) => Rule.required().positive(),
+    }),
+    defineField({
+      name: "priceBundle",
+      title: "Bundle Price",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "unitPrice", type: "number", title: "Price per Unit" },
+            { name: "unitsNumber", type: "number", title: "Number of Units" },
+          ],
+        },
+      ],
+    }),
+    defineField({
       name: "description",
       title: "Description",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "price",
-      title: "Price",
-      type: "number",
-      validation: (Rule) => Rule.required().positive(),
+      name: "informations",
+      title: "Informations",
+      type: "object",
+      fields: [
+        {
+          name: "explicacao",
+          type: "text",
+          title: "O que é e para que serve?",
+        },
+        { name: "beneficios", type: "text", title: "Benefícios" },
+        { name: "composicao", type: "text", title: "Composição" },
+        { name: "uso", type: "text", title: "Como Usar" },
+        { name: "advertencias", type: "text", title: "Advertências" },
+      ],
     }),
     defineField({
       name: "productImage",
@@ -53,6 +83,13 @@ const product = {
       title: "Category",
       type: "array",
       of: [{ type: "reference", to: [{ type: "category" }] }],
+    }),
+    defineField({
+      name: "similarProducts",
+      title: "Similar Products",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "product" }] }],
+      validation: (rule) => rule.max(5),
     }),
     defineField({
       name: "unitsSold",

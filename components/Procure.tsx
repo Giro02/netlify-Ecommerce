@@ -1,7 +1,7 @@
 import { FuseProductResultArray, ProductPreviewArray } from "@/types";
 import { formatCurrency } from "@/utils/UtilityFunctions";
 import Link from "next/link";
-import { KeyboardEvent, useContext, useEffect, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 
 type ProcureProps = {

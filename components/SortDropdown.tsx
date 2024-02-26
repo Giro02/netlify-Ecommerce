@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 interface SortDropdownProps {
-  dropdownOptions: Array<DropdownArray>;
+  dropdownOptions: Array<SortDropdownArray>;
   selectedOption: string;
   query?: string;
 }
 
-interface DropdownArray {
+interface SortDropdownArray {
   pt: string;
   en: string;
 }
