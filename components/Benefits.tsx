@@ -7,8 +7,8 @@ import { FaRegCreditCard } from "react-icons/fa";
 export default function Benefits() {
   return (
     // Add Font
-    <div className="flex justify-center">
-      <div className="flex flex-row justify-between gap-2">
+    <div className="flex justify-center overflow-hidden">
+      <div className="flex flex-row justify-between container">
         <CreateBenefits
           Title="Politica de Entrega"
           Entrega={true}
@@ -48,7 +48,7 @@ type ItemProps = {
 function CreateBenefits({ Title, Description, Icon, Entrega }: ItemProps) {
   return (
     // Add Font
-    <div className="hidden sm:flex container mt-16">
+    <div className="hidden lg:flex mt-16">
       <div
         className={`${
           Entrega ? "cursor-pointer" : "cursor-default"

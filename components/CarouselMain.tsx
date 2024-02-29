@@ -31,7 +31,7 @@ export default function CarouselMain(carousel: CarouselProps) {
   }, [emblaApi]);
 
   return (
-    <div className="flex justify-center w-full h-full flex-col items-center relative">
+    <div className="flex justify-center w-full h-full flex-col items-center relative text-color-5">
       <div className="embla w-full" ref={emblaRef}>
         <div className="embla__container">
           {carousel.carousel.map((i, index) => (
@@ -41,16 +41,16 @@ export default function CarouselMain(carousel: CarouselProps) {
           ))}
         </div>
       </div>
-      <Dots Quantity={2} Selected={selected}></Dots>
-      <div className="hidden md:block">
+      <Dots Quantity={carousel.carousel.length} Selected={selected}></Dots>
+      <div className="hidden md:block ">
         <IoIosArrowForward
-          className="w-11 h-11 bg-color-preto/70 absolute right-0 top-1/2 -translate-y-1/2 flex items-center justify-center text-color-branco/90 p-1 cursor-pointer"
+          className="w-11 h-11  absolute right-0 top-1/2 -translate-y-1/2 flex items-center justify-center text-color-branco/90 p-1 cursor-pointer"
           onClick={scrollNext}
         ></IoIosArrowForward>
       </div>
       <div className="hidden md:block">
         <IoIosArrowForward
-          className="w-11 h-11 bg-color-preto/70 absolute left-0 top-1/2 -translate-y-1/2 flex items-center justify-center text-color-branco/90 rotate-180 p-1 cursor-pointer"
+          className="w-11 h-11  absolute left-0 top-1/2 -translate-y-1/2 flex items-center justify-center text-color-branco/90 rotate-180 p-1 cursor-pointer"
           onClick={scrollPrev}
         ></IoIosArrowForward>
       </div>

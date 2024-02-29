@@ -2,6 +2,7 @@ import { ProductPreviewArray } from "@/types";
 import Header from "./Header";
 import { getProductsForContext } from "@/sanity/sanity.query";
 import { getCategories } from "@/sanity/sanity.query";
+import Footer from "./Footer";
 
 export default async function Layout({
   children,
@@ -18,6 +19,7 @@ export default async function Layout({
         allCategData={allCategData}
       />
       {children}
+      <Footer allCategData={allCategData}></Footer>
     </>
   );
 }

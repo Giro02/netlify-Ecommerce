@@ -19,7 +19,6 @@ export default async function Home() {
   const carouselCategory = await getCarouselCategory();
   const banner1 = await getBanners("Banner1");
   const banner2 = await getBanners("Banner2");
-  console.log(carouselCategory);
 
   return (
     <main>
