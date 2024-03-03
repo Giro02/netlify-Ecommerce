@@ -103,7 +103,16 @@ export default function Header({
           </div>
           <div className="p-4 gap-8 flex flex-col font-medium mt-4">
             {/* CONCERTAR O MENU DE MOBILE */}
-            {""}
+            {allCategData &&
+              allCategData.map((category) => (
+                <DropDownMobile
+                  key={category._id}
+                  text={category.title}
+                  slug={category.slug.current}
+                  setIsMenuOpen={setIsMenuOpen}
+                  isMenuOpen={isMenuOpen}
+                />
+              ))}
           </div>
         </div>
         <div className="flex justify-center ">
@@ -306,6 +315,28 @@ function DropDownOptions({
         className="w-full h-16"
       >
         <Link href={hrefi}>
+          <div className="cursor-pointer px-4 hover:text-color-1 flex items-center justify-between ">
+            {text}
+            <IoIosArrowForward></IoIosArrowForward>
+          </div>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+type DropDownMobile = {
+  text: string;
+  slug: string;
+  setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+function DropDownMobile({ text, slug, setIsMenuOpen }: DropDownMobile) {
+  var hrefi = `/categorias/${slug}`;
+  return (
+    <div>
+      <div className="w-full">
+        <Link href={hrefi} onClick={() => setIsMenuOpen(false)}>
           <div className="cursor-pointer px-4 hover:text-color-1 flex items-center justify-between ">
             {text}
             <IoIosArrowForward></IoIosArrowForward>

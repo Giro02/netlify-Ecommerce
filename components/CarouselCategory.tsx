@@ -29,35 +29,37 @@ export default function CarouselCategory(images) {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
+  const canScrollNext = useCallback(() => {
+    if (emblaApi) return emblaApi.canScrollNext();
+  }, [emblaApi]);
+
   return (
     <div className="mt-32 container">
       <div className=" relative px-[15px] lg:hidden">
         <div className="embla" ref={emblaRef}>
-          <div className="embla__container">
-            <div className="flex gap-20 text-center justify-between">
-              {Object.keys(images.images).map((key) => (
-                <div key={key}>
-                  <div>
-                    <div className="cursor-pointer md:w-[115px] md:h-[115px] w-[105px] h-[105px]">
-                      <Link
-                        href={`/categorias/${images.images[key].categ.slug.current}`}
-                      >
-                        <Image
-                          src={images.images[key].image.image}
-                          alt={images.images[key].image.alt}
-                          width={115}
-                          height={115}
-                        ></Image>
-                      </Link>
+          <div className="embla__container flex text-center gap-4">
+            {Object.keys(images.images).map((key) => (
+              <div key={key}>
+                <div className="cursor-pointer w-[100px] h-[100px]">
+                  <Link
+                    href={`/categorias/${images.images[key].categ.slug.current}`}
+                  >
+                    <div>
+                      <Image
+                        src={images.images[key].image.image}
+                        alt={images.images[key].image.alt}
+                        width={100}
+                        height={100}
+                      ></Image>
                     </div>
-
-                    <h1 className="text-color-5 mt-2 font-semibold">
-                      {images.images[key].title}
-                    </h1>
-                  </div>
+                  </Link>
                 </div>
-              ))}
-            </div>
+
+                <h1 className="text-color-5 mt-2 font-semibold">
+                  {images.images[key].title}
+                </h1>
+              </div>
+            ))}
           </div>
         </div>
         <div
@@ -73,7 +75,7 @@ export default function CarouselCategory(images) {
         <div
           onClick={scrollNext}
           className={`${
-            selected === 10
+            canScrollNext() == false
               ? "text-color-5/20 cursor-default"
               : "text-color-5 cursor-pointer"
           } rounded-full w-11 h-11  absolute right-[-45px] top-1/2 -translate-y-1/2 flex items-center justify-center text-color-branco/90 `}

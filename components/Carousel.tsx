@@ -49,9 +49,9 @@ function Constructor({ carousel }: CarouselProps) {
           </p>
         </div>
         <div>
-          <p className="text-[16px] h-10 items-center text-center flex text-color-5 font-bold">
+          <div className="text-[16px] h-10 items-center text-center flex text-color-5 font-bold">
             <p>R$ {product.price}</p>
-          </p>
+          </div>
         </div>
         <Link className="w-full" href={`/produtos/${product.slug.current}`}>
           <div
@@ -87,7 +87,7 @@ function Constructor({ carousel }: CarouselProps) {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
-  const ScrollNext = useCallback(() => {
+  const canScrollNext = useCallback(() => {
     if (emblaApi) return emblaApi.canScrollNext();
   }, [emblaApi]);
 
@@ -119,7 +119,7 @@ function Constructor({ carousel }: CarouselProps) {
         <div
           onClick={scrollNext}
           className={`${
-            ScrollNext() == false
+            canScrollNext() == false
               ? "text-color-5/20 cursor-default"
               : "text-color-5 cursor-pointer"
           } rounded-full w-11 h-11  absolute right-[-35px] top-1/2 -translate-y-1/2 flex items-center justify-center text-color-branco/90 `}
