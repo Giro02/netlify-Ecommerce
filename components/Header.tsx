@@ -5,8 +5,6 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
 import Image from "next/image";
 import Logo from "/public/images/LogoQi.png";
-import { getCategories } from "@/sanity/sanity.query";
-import { useRouter } from "next/router";
 import Procure from "./Procure";
 import { usePathname } from "next/navigation";
 import { CategoryType, ProductPreviewArray } from "@/types";
@@ -14,8 +12,8 @@ import { CategoryType, ProductPreviewArray } from "@/types";
 type SlugObject = { [key: string]: boolean };
 type MenuCreatorProps = {
   allCategData: Array<CategoryType>;
-  toggleSecondMenu: SlugObject[];
-  setToggleSecondMenu: React.Dispatch<React.SetStateAction<SlugObject[]>>;
+  toggleSecondMenu: SlugObject;
+  setToggleSecondMenu: React.Dispatch<React.SetStateAction<SlugObject>>;
 };
 
 function PrimaryMenu({
@@ -57,11 +55,6 @@ export default function Header({
   function toggleMenu() {
     setIsMenuOpen((prevMobileMenu) => !prevMobileMenu);
   }
-  interface Slug {
-    current: string;
-  }
-
-  const slugs: { [key: string]: boolean }[] = [];
 
   useEffect(() => {
     const slugs = allCategData.map((name) => {
@@ -110,7 +103,6 @@ export default function Header({
                   text={category.title}
                   slug={category.slug.current}
                   setIsMenuOpen={setIsMenuOpen}
-                  isMenuOpen={isMenuOpen}
                 />
               ))}
           </div>
@@ -185,6 +177,8 @@ type MenuProps = {
   setDown: Dispatch<SetStateAction<boolean>>;
   Down: boolean;
   allCategData: Array<CategoryType>;
+  toggleSecondMenu: SlugObject;
+  setToggleSecondMenu: React.Dispatch<React.SetStateAction<SlugObject>>;
 };
 export function Hamburguer({
   Down,

@@ -37,7 +37,7 @@ export default function CarouselCategory(images) {
     <div className="mt-32 container">
       <div className=" relative px-[15px] lg:hidden">
         <div className="embla" ref={emblaRef}>
-          <div className="embla__container flex text-center gap-4">
+          <div className="embla__container flex text-center gap-1">
             {Object.keys(images.images).map((key) => (
               <div key={key}>
                 <div className="cursor-pointer w-[100px] h-[100px]">
