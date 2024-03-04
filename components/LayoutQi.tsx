@@ -3,6 +3,7 @@ import Header from "./Header";
 import { getProductsForContext } from "@/sanity/sanity.query";
 import { getCategories } from "@/sanity/sanity.query";
 import Footer from "./Footer";
+import ChatBot from "./ChatBot";
 
 export default async function Layout({
   children,
@@ -20,6 +21,8 @@ export default async function Layout({
       />
       {children}
       <Footer allCategData={allCategData}></Footer>
+
+      <ChatBot></ChatBot>
     </>
   );
 }
