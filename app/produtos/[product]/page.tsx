@@ -8,6 +8,9 @@ type Props = {
   params: {
     product: string;
   };
+  searchParams: {
+    bundle: string;
+  };
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -27,15 +30,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 }
 
-export default async function ProductLayout({ params }: Props) {
+export default async function ProductLayout({ params, searchParams }: Props) {
   const slug = params.product;
+  let bundle = Number(searchParams?.bundle?.replace("-", "") || "0");
+  if (isNaN(bundle)) {
+    bundle = 0;
+  }
   const product: ProductType = await getSingleProduct(slug);
+  if (bundle > product.priceBundle.length) {
+    bundle = product.priceBundle.length - 1;
+  }
   if (!product) {
     notFound();
   } else {
     return (
       <main>
-        <Product product={product} />
+        <Product product={product} bundle={bundle} />
       </main>
     );
   }

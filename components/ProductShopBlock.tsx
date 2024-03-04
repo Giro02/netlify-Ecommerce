@@ -5,15 +5,14 @@ import QiButton from "./QiButton";
 import { Link as Scroll } from "react-scroll";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { ProductType } from "@/types";
+import Link from "next/link";
 
 type ProductShopBlockProps = {
-  updateSelectedOption: (option: number) => void;
   selectedOption: number;
   product: ProductType;
 };
 
 export default function ProductShopBlock({
-  updateSelectedOption,
   selectedOption,
   product,
 }: ProductShopBlockProps) {
@@ -30,19 +29,32 @@ export default function ProductShopBlock({
         <div>
           <h1 className="text-color-5 text-[28px]">{product.title}</h1>
           <div className="h-[2px] w-[400px] bg-gradient-to-r from-color-1" />
-          <div className="text-3xl mt-7">{formatCurrency(product.price)}</div>
+          <div className="text-3xl mt-7">
+            {formatCurrency(product.priceBundle[selectedOption].unitPrice)}
+          </div>
           <div className="flex text-base items-center gap-1 text-color-5/75 mt-7 mb-2">
             <TbPigMoney /> Compre mais e economize:
           </div>
           <BundleDropdown
             priceBundle={product.priceBundle}
-            updateSelectedOption={updateSelectedOption}
             selectedOption={selectedOption}
           />
-          <div className="mt-24">
-            <QiButton wfull {...QiButton.variants.lightGreen}>
-              Adicionar ao Carrinho
-            </QiButton>
+          <div className="text-color-5/75 flex mt-5 text-lg">
+            Valor total :{" "}
+            {formatCurrency(
+              product.priceBundle[selectedOption].unitPrice *
+                product.priceBundle[selectedOption].unitsNumber
+            )}
+          </div>
+          <div className="mt-14">
+            <Link
+              href={`${product.priceBundle[selectedOption].bundleURL}`}
+              target="_blank"
+            >
+              <QiButton wfull {...QiButton.variants.lightGreen}>
+                Comprar
+              </QiButton>
+            </Link>
           </div>
         </div>
         <Scroll

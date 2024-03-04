@@ -40,7 +40,7 @@ export default function Procure({ productsSearch }: ProcureProps) {
 
     function GenerateFetchedProducts(queryResult: FuseProductResultArray) {
       const productComponent = queryResult.map((product, index) => {
-        const value = formatCurrency(product.item.price);
+        const value = formatCurrency(product.item.priceBundle[0].unitPrice);
         return (
           <div key={index} className="px-6 py-1">
             <Link

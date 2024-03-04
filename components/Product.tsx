@@ -13,14 +13,11 @@ import RelatedProducts from "./RelatedProducts";
 
 interface ProductProps {
   product: ProductType;
+  bundle: number;
 }
 
-export default function Product({ product }: ProductProps) {
-  const [selectedOption, setSelectedOption] = useState(0);
-
-  const updateSelectedOption = (option: number) => {
-    setSelectedOption(option);
-  };
+export default function Product({ product, bundle }: ProductProps) {
+  const selectedOption = bundle;
 
   return (
     <div className="container font-montse text-color-5">
@@ -31,19 +28,23 @@ export default function Product({ product }: ProductProps) {
         <li>{">"}&nbsp;</li>
         <li className="font-semibold  text-color-5">{product.title}</li>
       </ul>
-      <ProductShopBlock
-        selectedOption={selectedOption}
-        updateSelectedOption={updateSelectedOption}
-        product={product}
-      />
-      <div id="InfoSection">
-        <ProductInformations
-          productName={product.title}
-          informations={product.informations}
-          description={product.description}
-        />
-      </div>
-      <RelatedProducts similarProducts={product.similarProducts} />
+      <ProductShopBlock selectedOption={selectedOption} product={product} />
+      {product.informations ? (
+        <div id="InfoSection">
+          <ProductInformations
+            productName={product.title}
+            informations={product.informations}
+            description={product.description}
+          />
+        </div>
+      ) : (
+        <></>
+      )}
+      {product.similarProducts ? (
+        <RelatedProducts similarProducts={product.similarProducts} />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

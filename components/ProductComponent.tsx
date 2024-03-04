@@ -20,14 +20,14 @@ export default function ProductComponent({ product }: ProductComponentProps) {
           {product.title}
         </h4>
         <h4 className="my-6 text-2xl font-semibold">
-          {formatCurrency(product.price)}
+          {formatCurrency(product.priceBundle[0].unitPrice)}
         </h4>
         <h5 className="text-color-5/50 text-sm h-10 overflow-hidden">
           {product.description}
         </h5>
         <div className="justify-center flex mt-6">
-          <QiButton {...QiButton.variants.lightGreen}>
-            Adicionar ao Carrinho
+          <QiButton {...QiButton.variants.lightGreen} wfull>
+            Saiba Mais
           </QiButton>
         </div>
       </div>

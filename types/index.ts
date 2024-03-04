@@ -33,8 +33,11 @@ export type ProductType = {
     alt: string;
     image: string;
   };
-  price: number;
-  priceBundle: Array<{ unitPrice: number; unitsNumber: number }>;
+  priceBundle: Array<{
+    unitPrice: number;
+    bundleURL: URL;
+    unitsNumber: number;
+  }>;
   category: Array<CategoryType>;
   similarProducts: Array<ProductPreview>;
   unitsSold: number;
@@ -52,7 +55,11 @@ export type ProductPreview = {
     alt: string;
     image: string;
   };
-  price: number;
+  priceBundle: Array<{
+    unitPrice: number;
+    bundleURL: URL;
+    unitsNumber: number;
+  }>;
   category: Array<{ _id: string; title: string; slug: Slug }>;
 };
 

@@ -19,7 +19,7 @@ export default function QiButton({
   wfull,
 }: QiButtonProps) {
   return (
-    <div>
+    <div className={clsx(wfull ? "w-full" : "")}>
       <button
         className={clsx(
           " min-w-[4rem] flex items-center text-lg leading-none min-h-[4rem] gap-3  place-content-center [&>div]:shrink-0",

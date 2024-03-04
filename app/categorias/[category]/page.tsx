@@ -42,7 +42,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CategoryLayout({ params, searchParams }: Props) {
   const slug = params.category;
-  const page = searchParams?.p?.replace("-", "") || "1";
+  let page = searchParams?.p?.replace("-", "") || "1";
+  if (isNaN(Number(page))) {
+    page = "1";
+  }
   const itemsPerPage = 12;
   const order = (
     searchParams?.order?.replace("ç", "c").replace(" ", "-") || "relevance"

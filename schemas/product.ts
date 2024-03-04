@@ -21,21 +21,31 @@ const product = {
       },
     }),
     defineField({
-      name: "price",
-      title: "Price",
-      type: "number",
-      validation: (Rule) => Rule.required().positive(),
-    }),
-    defineField({
       name: "priceBundle",
       title: "Bundle Price",
       type: "array",
+      validation: (Rule) => Rule.required().min(1),
       of: [
         {
           type: "object",
           fields: [
-            { name: "unitPrice", type: "number", title: "Price per Unit" },
-            { name: "unitsNumber", type: "number", title: "Number of Units" },
+            {
+              name: "unitPrice",
+              type: "number",
+              title: "Price per Unit",
+              validation: (Rule) => Rule.positive(),
+            },
+            {
+              name: "unitsNumber",
+              type: "number",
+              title: "Number of Units",
+              validation: (Rule) => Rule.positive(),
+            },
+            {
+              name: "bundleURL",
+              type: "url",
+              title: "Bundle URL",
+            },
           ],
         },
       ],

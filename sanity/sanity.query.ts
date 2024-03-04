@@ -53,7 +53,7 @@ export async function getProductsByCategory(
   if (order === "name") {
     queryOrder = "lower(name) desc";
   } else if (order === "price") {
-    queryOrder = "price asc";
+    queryOrder = "priceBundle[0].unitPrice asc";
   } else {
     queryOrder = "unitsSold desc";
   }
@@ -61,7 +61,6 @@ export async function getProductsByCategory(
   const initialProduct = finalProduct - itemsPerPage;
   return client.fetch(
     groq`{"productsArray" : *[_type == "product" && $slug in category[]->slug.current] | order(${queryOrder}) [${initialProduct}...${finalProduct}]{
-      price,
       ...,
       unitsSold,
       productImage {alt, "image": asset -> url},
@@ -83,6 +82,7 @@ export async function getSingleProduct(slug: string) {
       ...,
       _id,
       slug,
+      priceBundle,
       productImage {alt, "image": asset -> url},
         category[]-> {
         _id,
@@ -96,16 +96,13 @@ export async function getSingleProduct(slug: string) {
           composicao,
           advertencias
       },
-      priceBundle[] {
-        ...,
-      },
       similarProducts[] -> {
         _id,
         title,
         productImage {alt, "image": asset -> url},
         slug,
         description,
-        price
+        priceBundle,
       }
     }`,
     { slug }
@@ -119,7 +116,7 @@ export async function getProductsForContext() {
       title,
       slug,
       description,
-      price,
+      priceBundle,
       productImage {alt, "image": asset -> url},
       unitsSold,
       category[] -> {

@@ -76,7 +76,8 @@ export default function BuscaCatalogada({
         );
       } else if (initialOrder === "1") {
         const sortedResults = [...results].sort(
-          (a, b) => a.item.price - b.item.price
+          (a, b) =>
+            a.item.priceBundle[0].unitPrice - b.item.priceBundle[0].unitPrice
         );
         setProductsResult(
           GenerateProducts(sortedResults.slice(initialProduct, finalProduct))

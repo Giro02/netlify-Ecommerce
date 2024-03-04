@@ -1,29 +1,30 @@
 import { formatCurrency } from "@/utils/UtilityFunctions";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 type BundleDropdownProps = {
   priceBundle: Array<{ unitPrice: number; unitsNumber: number }>;
-  updateSelectedOption: (option: number) => void;
   selectedOption: number;
 };
 
 export default function BundleDropdown({
   priceBundle,
-  updateSelectedOption,
   selectedOption,
 }: BundleDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   const bundles = priceBundle.map((bundle, index) => {
     return (
-      <div
+      <Link
+        href={`${pathname}?bundle=${index}`}
         className="cursor-pointer"
         key={index}
         onClick={() => {
-          updateSelectedOption(index);
           setIsOpen(false);
         }}
       >
@@ -39,7 +40,7 @@ export default function BundleDropdown({
           />
         </div>
         <hr className="text-color-5/25 mt-3" />
-      </div>
+      </Link>
     );
   });
 

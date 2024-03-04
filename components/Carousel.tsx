@@ -5,6 +5,7 @@ import "../public/static/carousel.css";
 import { IoIosArrowForward } from "react-icons/io";
 import { CarouselType } from "@/types";
 import Link from "next/link";
+import { formatCurrency } from "@/utils/UtilityFunctions";
 
 interface CarouselProps {
   carousel: CarouselType;
@@ -51,7 +52,7 @@ function Constructor({ carousel }: CarouselProps) {
           </div>
           <div>
             <div className="text-[16px] h-10 items-center text-center flex text-color-5 font-bold">
-              <p>R$ {product.price}</p>
+              <p>{formatCurrency(product.priceBundle[0].unitPrice)}</p>
             </div>
           </div>
 
