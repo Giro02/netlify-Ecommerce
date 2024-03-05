@@ -2,24 +2,36 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import AvatarImg from "@/public/images/Avatar.png";
+import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 
 export default function ChatBot() {
   const [toggleBtn, setToggleBtn] = useState(false);
   const [toggleShadow, setToggleShadow] = useState(false);
   return (
-    <div className="fixed bottom-12 right-12 ">
+    <div className="fixed bottom-6 right-6 ">
       <div
         onClick={() => setToggleBtn(true)}
         className={` ${
           toggleBtn
-            ? "w-[400px] h-[700px] border-1 border-color-5 rounded-xl cursor-default shadow-2xl space-y-3 bg-color-3"
-            : "rounded-full h-20 w-20 cursor-pointer shadow-lg flex items-center bg-color-1"
-        }     transition-all duration-300 `}
+            ? "w-[400px] h-[560px] border-1 border-color-5 rounded-xl cursor-default shadow-2xl space-y-3 bg-color-3 overflow-hidden"
+            : "rounded-full h-16 w-16 cursor-pointer shadow-lg flex items-center justify-center text-center bg-color-1/90"
+        }     transition-all  duration-300 `}
       >
         <div
           className={`${
+            toggleBtn ? "hidden" : "flex text-color-3 text-center"
+          }`}
+        >
+          <IoChatbubbleEllipsesSharp
+            className="ml-[60px]"
+            size={35}
+          ></IoChatbubbleEllipsesSharp>
+        </div>
+
+        <div
+          className={`${
             toggleBtn
-              ? "container flex flex-col p-4 h-full transition-all duration-500"
+              ? "container flex flex-col p-6 h-full transition-all duration-500"
               : "invisible"
           }  `}
         >
@@ -39,24 +51,22 @@ export default function ChatBot() {
             Assistênte Virtual Bernardo.
           </h2>
           {/* CHAT WINDOW */}
-          <div className="h-full">
+          <div className="h-full flex mt-4 w-full">
+            <iframe
+              className="h-full w-full mb-4 text-[11px]"
+              src="https://typebot.co/faq-zau0hah"
+            ></iframe>
             {/* BOT RESPONSE */}
-            <div className="flex gap-3 text-sm mt-4 ">
+            {/* <div className="flex gap-3 text-sm mt-4 ">
               <div className="w-[40px] h-[40px]  rounded-full overflow-hidden ">
                 <Image src={AvatarImg} width={60} alt="Avataar"></Image>
               </div>
               <div className="leading-relaxed max-w-[265px] py-2 p-4 border shadow-sm rounded-xl border-color-4">
                 <span className="block font-bold text-color-5">Bernardo:</span>
-                <p className="mt-1">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Veniam nostrum blanditiis nobis, dolorem tempore fugit atque.
-                  Cupiditate vel doloremque dignissimos, in enim quas neque sint
-                  soluta nobis est sit error!
-                </p>
               </div>
-            </div>
+            </div> */}
             {/* USER RESPONSE */}
-            <div className="flex gap-3 text-sm mt-4 text-right justify-end">
+            {/* <div className="flex gap-3 text-sm mt-4 text-right justify-end">
               <div className="leading-relaxed max-w-[265px] py-2 px-4 border shadow-sm rounded-xl border-color-4">
                 <span className="block font-bold  text-color-5 ">Você:</span>
                 <p className="p-1 text-pretty">
@@ -67,10 +77,10 @@ export default function ChatBot() {
               <div className="w-[40px] h-[40px]  rounded-full overflow-hidden ">
                 <Image src={AvatarImg} width={60} alt="Avataar"></Image>
               </div>
-            </div>
+            </div> */}
           </div>
           {/* CHAT FOOTER */}
-          <div className="flex">
+          {/* <div className="flex">
             <input
               onSelect={() => setToggleShadow(!toggleShadow)}
               placeholder="Digite..."
@@ -81,7 +91,7 @@ export default function ChatBot() {
             <div className="py-2 px-4 flex items-center justify-center text-color-3 bg-color-1 shadow-md rounded-e-xl cursor-pointer">
               Enviar
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
