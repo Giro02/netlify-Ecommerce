@@ -23,7 +23,7 @@ export default function ChatBot() {
           }`}
         >
           <IoChatbubbleEllipsesSharp
-            className="ml-[60px]"
+            className="ml-[63px]"
             size={35}
           ></IoChatbubbleEllipsesSharp>
         </div>

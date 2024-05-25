@@ -16,6 +16,7 @@ import { CategoryType, ProductPreviewArray } from "@/types";
 export default function Footer(allCategData: CategoryType) {
   const pathName = usePathname();
   const studio = pathName.startsWith("/studio");
+
   if (studio) {
     return null;
   } else {
@@ -33,8 +34,11 @@ export default function Footer(allCategData: CategoryType) {
               </Link>
               <div className="flex flex-col gap-2">
                 <h1 className="font-bold text-color-5">Essência QI</h1>
-                <h2 className="mt-2">Fale Conosco</h2>
-                <h2>Sobre Nós</h2>
+                <h2 className="mt-2 ">Fale Conosco</h2>
+
+                <Link href={"/quem-somos"}>
+                  <h2>Sobre a Empresa</h2>
+                </Link>
               </div>
 
               <div className="flex ">

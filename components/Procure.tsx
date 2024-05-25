@@ -1,3 +1,4 @@
+"use client";
 import { FuseProductResultArray, ProductPreviewArray } from "@/types";
 import { formatCurrency } from "@/utils/UtilityFunctions";
 import Link from "next/link";
@@ -74,14 +75,10 @@ export default function Procure({ productsSearch }: ProcureProps) {
   };
 
   return (
-    <div
-      className=" max-w-[520px] w-full hidden md:flex md:flex-col"
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-    >
-      <div className="flex w-full overflow-hidden z-20">
+    <div onFocus={handleFocus} onBlur={handleBlur}>
+      <div className="flex overflow-hidden z-20 ">
         <input
-          className="h-[40px] border border-color-4 w-full px-4 rounded-l-md "
+          className="h-[40px] border w-full border-color-4 px-4 rounded-l-md "
           placeholder="Pesquisar na loja toda..."
           onChange={handleSearchInput}
           autoComplete="off"

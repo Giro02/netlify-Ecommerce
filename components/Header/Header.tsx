@@ -1,11 +1,7 @@
 "use client";
 import React, { SetStateAction, useState, Dispatch, useEffect } from "react";
 import Link from "next/link";
-import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
-import Image from "next/image";
-import Logo from "/public/images/LogoQi.png";
-import Procure from "./Procure";
 import { usePathname } from "next/navigation";
 import { CategoryType, ProductPreviewArray } from "@/types";
 
@@ -106,28 +102,6 @@ export default function Header({
                 />
               ))}
           </div>
-        </div>
-        <div className="flex justify-center ">
-          <div className=" container h-[100px] flex justify-between items-center">
-            <div className="md:hidden mr-4 overflow-hidden">
-              <div onClick={toggleMenu}>
-                <HamburguerPhone></HamburguerPhone>
-              </div>
-            </div>
-
-            <Link href={"/"}>
-              <Image src={Logo} className="overflow-hidden" alt="Logo"></Image>
-            </Link>
-
-            <Procure productsSearch={allProductsPreview} />
-            <div className="md:ml-4 overflow-hidden ">
-              <MdOutlineShoppingCart size={38}></MdOutlineShoppingCart>
-            </div>
-          </div>
-        </div>
-        {/* MOBILE SEARCH BAR */}
-        <div className=" w-full flex items-center justify-center md:hidden mb-4">
-          <Procure productsSearch={allProductsPreview} />
         </div>
 
         {/* GREEN MENU, HIDDES IN MOBILE*/}
@@ -300,7 +274,6 @@ function DropDownOptions({
       return { ...prevState, [slug]: false };
     });
   };
-
   return (
     <div>
       <div
@@ -318,7 +291,6 @@ function DropDownOptions({
     </div>
   );
 }
-
 type DropDownMobile = {
   text: string;
   slug: string;
