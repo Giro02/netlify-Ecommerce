@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import MasterLogo from "/public/images/MasterLogo.svg";
 import VisaLogo from "/public/images/visa.svg";
-import BarCode from "/public/images/BarCode.svg";
 import GoogleLogo from "/public/images/GoogleLogo.png";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
@@ -76,7 +75,6 @@ export default function Footer(allCategData: CategoryType) {
                     width={65}
                   ></Image>
                   <Image src={VisaLogo} alt="mastercardLogo" width={65}></Image>
-                  <Image src={BarCode} alt="mastercardLogo" width={45}></Image>
                 </div>
               </div>
               <div className="font-bold text-color-5">

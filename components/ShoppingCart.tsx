@@ -9,7 +9,7 @@ import { FaCheckSquare } from "react-icons/fa";
 import Image from "next/image";
 import MasterLogo from "/public/images/MasterLogo.svg";
 import VisaLogo from "/public/images/visa.svg";
-import BarCode from "/public/images/BarCode.svg";
+
 import Pix from "/public/images/Pix.svg";
 import { useCart } from "@/app/context/CartContext";
 import Link from "next/link";
@@ -161,7 +161,6 @@ export default function ShoppingCart() {
             <div className="flex gap-4 mt-2">
               <Image src={MasterLogo} alt="MastercardLogo" width={45}></Image>
               <Image src={VisaLogo} alt="VisaLogo" width={45}></Image>
-              <Image src={BarCode} alt="BoletoLogo" width={25}></Image>
               <Image src={Pix} alt="PixLogo" width={65}></Image>
             </div>
             <p className="text-sm text-color-5/50 mt-2">
