@@ -14,7 +14,7 @@ export default function RelatedProducts({
   return (
     <div>
       <h4 className="text-color-5 text-2xl my-6">Produtos Relacionados</h4>
-      <div className={`grid grid-cols-5 justify-center items-start gap-4`}>
+      <div className={`grid xl:grid-cols-5 justify-center items-start gap-4`}>
         {products}
       </div>
     </div>

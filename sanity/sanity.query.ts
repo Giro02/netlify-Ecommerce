@@ -1,8 +1,10 @@
 import { groq } from "next-sanity";
 import client from "./sanity.client";
 
+
+
 export async function getCategories() {
-  return client.fetch(
+  return await client.fetch(
     groq`*[_type == "category"]{
       _id,
       title,
@@ -13,7 +15,7 @@ export async function getCategories() {
 }
 
 export async function getSingleCategory(slug: string) {
-  return client.fetch(
+  return await client.fetch(
     groq`*[_type == "category" && slug.current == $slug][0]{
      ...,
      description,
@@ -28,7 +30,7 @@ export async function getSingleCategory(slug: string) {
 }
 
 export async function getProducts() {
-  return client.fetch(
+  return await client.fetch(
     groq`*[_type == "product"]{
       ...,
       _id,
@@ -59,7 +61,7 @@ export async function getProductsByCategory(
   }
   const finalProduct = itemsPerPage * parseInt(page);
   const initialProduct = finalProduct - itemsPerPage;
-  return client.fetch(
+  return await client.fetch(
     groq`{"productsArray" : *[_type == "product" && $slug in category[]->slug.current] | order(${queryOrder}) [${initialProduct}...${finalProduct}]{
       ...,
       unitsSold,
@@ -77,7 +79,8 @@ export async function getProductsByCategory(
 }
 
 export async function getSingleProduct(slug: string) {
-  return client.fetch(
+
+  return  client.fetch(
     groq`*[_type == "product" && slug.current == $slug][0]{
       ...,
       _id,
@@ -110,7 +113,7 @@ export async function getSingleProduct(slug: string) {
 }
 
 export async function getProductsForContext() {
-  return client.fetch(
+  return await client.fetch(
     groq`*[_type == "product"]{
       _id,
       title,
@@ -129,7 +132,7 @@ export async function getProductsForContext() {
 }
 
 export async function getProdCarouselHome() {
-  return client.fetch(
+  return await client.fetch(
     groq`*[_type == "carousel" && type == "home"]{
       _id,
       title,
@@ -141,10 +144,11 @@ export async function getProdCarouselHome() {
   );
 }
 export async function getCarouselMain() {
-  return client.fetch(
+  return await client.fetch(
     groq`*[_type == "carousel-main"]{
       _id,
-      homeimages {alt, "image": asset-> url}
+      homeimages {alt, "image": asset-> url},
+      homeimagesmobile {alt, "image": asset-> url}
   }`
   );
 }
@@ -163,7 +167,7 @@ export async function getBanners(bannerName: string) {
 }
 
 export async function getCarouselCategory() {
-  return client.fetch(
+  return await client.fetch(
     groq`*[_type == 'carouselCategory']{
       _id,
       title,

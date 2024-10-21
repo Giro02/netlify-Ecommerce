@@ -15,7 +15,6 @@ const category = {
       name: "titleChinese",
       title: "Chinese Title",
       type: "string",
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "slug",
@@ -63,7 +62,7 @@ const category = {
           ],
         },
       ],
-      validation: (Rule) => Rule.required().max(5).error("Maximum of 5 items"),
+      validation: (Rule) => Rule.required().max(15).error("Maximum of 15 items"),
     }),
   ],
 };

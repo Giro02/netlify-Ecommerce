@@ -1,3 +1,4 @@
+"use client";
 import clsx from "clsx";
 import { PropsWithChildren, ReactNode } from "react";
 import { FaCircle } from "react-icons/fa";
@@ -22,9 +23,9 @@ export default function QiButton({
     <div className={clsx(wfull ? "w-full" : "")}>
       <button
         className={clsx(
-          " min-w-[4rem] flex items-center text-lg leading-none min-h-[4rem] gap-3  place-content-center [&>div]:shrink-0",
+          " flex items-center text-lg leading-none  place-content-center [&>div]:shrink-0",
           wfull ? "w-full" : "",
-          { "px-7 py-5": !!children },
+          { "py-4": !!children },
           className
         )}
       >

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Logo from "/public/images/LogoQi.png";
+import { ConectaMais } from "@/components/Svgs";
 import Image from "next/image";
 import Link from "next/link";
 import MasterLogo from "/public/images/MasterLogo.svg";
@@ -22,18 +22,14 @@ export default function Footer(allCategData: CategoryType) {
   } else {
     return (
       <div>
-        <div className=" bg-color-4 mt-16 text-color-5/90">
+        <div className=" bg-color-4 text-color-5/90 mt-16">
           <div className="container p-8 py-16 md:p-16">
             <div className="flex flex-col md:flex-row gap-20">
               <Link href={"/"}>
-                <Image
-                  src={Logo}
-                  className="overflow-hidden"
-                  alt="Logo"
-                ></Image>
+                <ConectaMais></ConectaMais>
               </Link>
               <div className="flex flex-col gap-2">
-                <h1 className="font-bold text-color-5">Essência QI</h1>
+                <h1 className="font-bold text-color-5">Conecta +</h1>
                 <h2 className="mt-2 ">Fale Conosco</h2>
 
                 <Link href={"/quem-somos"}>

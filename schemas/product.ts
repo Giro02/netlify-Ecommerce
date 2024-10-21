@@ -62,6 +62,9 @@ const product = {
       type: "object",
       fields: [
         {
+          options: {
+            list: ['break', 'readMore']
+          },
           name: "explicacao",
           type: "text",
           title: "O que é e para que serve?",

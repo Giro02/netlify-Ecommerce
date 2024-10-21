@@ -14,6 +14,8 @@ const config: Config = {
     extend: {
       aspectRatio: {
         "4.47/1": "4.47/1",
+        "1.16/1":"1.16/1",
+        "0.96/1":"0.96/1"
       },
       fontFamily: {
         montse: ["Montserrat", "sans-serif"],
@@ -26,10 +28,10 @@ const config: Config = {
     },
     colors: {
       color: {
-        1: "#73925B",
-        2: "#36452B",
+        1: "#076AA2",
+        2: "#022f57",
         3: "#ffffff",
-        4: "#e5e7eb",
+        4: "#DBDBDB",
         5: "#373737",
         6: "#fae0a7",
         7: "#B75454",

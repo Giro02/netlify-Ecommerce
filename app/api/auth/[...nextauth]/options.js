@@ -1,4 +1,3 @@
-
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Users from "@/app/(modules)/Users";
@@ -10,50 +9,43 @@ export const options = {
         CredentialsProvider({
             async authorize(credentials){
                 try{
-                    const foundUser = await checkEmailExists(credentials.email)
+                    const foundUser = await checkEmailExists(credentials.email);
                     if(foundUser){
                         const match = await bcrypt.compare(credentials.password, foundUser.password);
                         if(match){
                             delete foundUser.password;
-                            foundUser["role"] = "Unverified Email";
                             return foundUser;
                         }
                     }
-
                 }catch (error){
                     console.log(error);
-                    
                 }
                 return null;
-                
             },
-          }),
-
+        }),
         GoogleProvider({
-            // Adding roles
             async profile(profile){
-                // console.log("Profile Google", profile);
                 let userRole = "Google User";
                 if(profile?.email == "pedroarendt02@hotmail.com"){
                     userRole = "admin";
                 }
                 const existingUser = await checkEmailExists(profile.email);
-                console.log(existingUser)
-
-                if(!existingUser){ 
-                    // Se o email n esxiste no DB é criado um novo usuario com as info que retornam da api do google
+                
+                if(!existingUser){
+                    console.log("usuario nao existe")
                     try {
                         const newUser = new Users({
                             name: profile.name,
                             email: profile.email,
-                            password: '', 
+                            orders:"",
+                            role:"Google User"
                         });
-                        console.log(newUser)
+                        console.log("Salvando usuario do google")
                         await newUser.save();
                         newUser.role = "Google User";
                         return newUser;
                     } catch (error) {
-                        console.error("Error creating new user:", error);
+                        console.error("Deu erro criando o usuario:", error);
                     }
                 }
                 if(profile){
@@ -69,20 +61,23 @@ export const options = {
             clientSecret: process.env.GOOGLE_SECRET,
         }),
     ],
-    
-    // Callback customizada para ter certeza que os roles vao funcionar
-    callbacks:{
-        async jwt({token,user}){
-            if(user) token.role = user.role;
+    callbacks: {
+        async redirect({ url, baseUrl }) {
+            if (url.startsWith("/")) return `${baseUrl}${url}`;
+            else if (new URL(url).origin === baseUrl) return url;
+            return baseUrl;
+        },
+        async jwt({ token, user }) {
+            if (user) token.role = user.role;
             return token;
         },
-        async session({session, token}){
-            if(session?.user) session.user.role = token.role;
+        async session({ session, token }) {
+            if (session?.user) session.user.role = token.role;
             return session;
         },
     },
     pages: {
         signIn: '/costumer/account/login',
-        newUser: '/costumer/account/register', 
-      }             
+        newUser: '/costumer/account/register',
+    }
 };

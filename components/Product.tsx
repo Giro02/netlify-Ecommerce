@@ -1,12 +1,6 @@
 "use client";
 import type { ProductType } from "@/types";
-import { TbPigMoney } from "react-icons/tb";
-import { IoIosArrowDropdownCircle } from "react-icons/io";
 import Link from "next/link";
-import { useState } from "react";
-import BundleDropdown from "./BundleDropdown";
-import { formatCurrency } from "@/utils/UtilityFunctions";
-import QiButton from "./QiButton";
 import ProductInformations from "./ProductInformations";
 import ProductShopBlock from "./ProductShopBlock";
 import RelatedProducts from "./RelatedProducts";
@@ -18,16 +12,16 @@ interface ProductProps {
 
 export default function Product({ product, bundle }: ProductProps) {
   const selectedOption = bundle;
-
   return (
-    <div className="container font-montse text-color-5">
+    <div className="px-4 md:container overflow-hidden font-montse text-color-5">
       <ul className="flex items-center justify-start font-montse text-sm text-color-5/75 my-5">
-        <li>
+        <li className="flex items-center">
           <Link href="/"> Início </Link>&nbsp;
         </li>
         <li>{">"}&nbsp;</li>
-        <li className="font-semibold  text-color-5">{product.title}</li>
+        <li className="font-semibold  text-color-5 ">&nbsp;{product.title}</li>
       </ul>
+      <div></div>
       <ProductShopBlock selectedOption={selectedOption} product={product} />
       {product.informations ? (
         <div id="InfoSection">

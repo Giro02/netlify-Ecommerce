@@ -81,6 +81,10 @@ export type CarouselType = {
     alt: string;
     image: string;
   };
+  homeimagesmobile?: {
+    alt: string;
+    image: string;
+  };
 };
 
 export type CarouselArray = Array<CarouselType>;

@@ -1,0 +1,28 @@
+@keyframes slideIn {
+    from {
+        max-height: 0px;
+      }
+      to {
+        max-height: 500px;
+
+      }
+  }
+  
+  @keyframes slideOut {
+    from {
+        max-height: 500px;
+      }
+      to {
+        max-height: 0px;
+
+      }
+  }
+  
+  .slide-in {
+
+    animation: slideIn 1s ;
+  }
+  
+  .slide-out {
+    animation: slideOut 1s ;
+  }

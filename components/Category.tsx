@@ -2,7 +2,7 @@
 import type { CategoryType, ProductArray, ProductPreviewArray } from "@/types";
 import { IoIosWarning } from "react-icons/io";
 import Link from "next/link";
-import { QiLogoName } from "./Svgs";
+import { ConectaMais } from "./Svgs";
 import ProductComponent from "./ProductComponent";
 import SortDropdown from "./SortDropdown";
 import Pagination from "./Pagination";
@@ -47,7 +47,7 @@ export default function Category({
   });
 
   return (
-    <div className="container font-montse">
+    <div className="px-4 md:container font-montse">
       <ul className="flex items-center justify-start font-montse text-sm text-color-5/75 my-5">
         <li>
           <Link href="/"> Início </Link>&nbsp;
@@ -60,62 +60,65 @@ export default function Category({
         src={category.categoryImage.image}
         alt={category.categoryImage.alt}
       />
-      <div className="flex  mt-6 justify-between items-center">
-        <div className="flex justify-start items-end gap-3">
+      <div className="flex mt-6 flex-col">
+        <div className="flex flex-col gap-4">
           <h1 className="text-4xl items-center flex justify-start text-color-5">
-            <span className="font-montse">{category.title} /&nbsp;</span>
-            <span className="font-noto text-3xl">{category.titleChinese}</span>
+            <span className="font-montse">{category.title} </span>
           </h1>
-          {productsArray.length ? (
-            <div className="text-base text-color-5/50">
-              {productCount <= itemsPerPage ? (
-                <div>
-                  {productCount === 1
-                    ? `${productCount} item encontrado`
-                    : `${productCount} itens encontrados`}
-                </div>
-              ) : productCount > itemsPerPage &&
-                productsArray.length < itemsPerPage ? (
-                <div>
-                  {productsArray.length === 1
-                    ? `Item ${productCount} de ${productCount} encontrado`
-                    : `Itens ${
-                        productCount - productsArray.length
-                      } - ${productCount} de ${productCount} encontrados`}
-                </div>
-              ) : (
-                <div>
-                  Itens {initialProduct + 1} - {finalProduct} de {productCount}{" "}
-                  encontrados
-                </div>
-              )}
+          <div className="flex w-full justify-between">
+            {productsArray.length ? (
+              <div className="text-base text-color-5/50">
+                {productCount <= itemsPerPage ? (
+                  <div>
+                    {productCount === 1
+                      ? `${productCount} item encontrado`
+                      : `${productCount} itens encontrados`}
+                  </div>
+                ) : productCount > itemsPerPage &&
+                  productsArray.length < itemsPerPage ? (
+                  <div>
+                    {productsArray.length === 1
+                      ? `Item ${productCount} de ${productCount} encontrado`
+                      : `Itens ${
+                          productCount - productsArray.length
+                        } - ${productCount} de ${productCount} encontrados`}
+                  </div>
+                ) : (
+                  <div>
+                    Itens {initialProduct + 1} - {finalProduct} de{" "}
+                    {productCount} encontrados
+                  </div>
+                )}
+              </div>
+            ) : (
+              <></>
+            )}
+            <div>
+              <SortDropdown
+                dropdownOptions={dropdownOptions}
+                selectedOption={initialOrder}
+              />
             </div>
-          ) : (
-            <></>
-          )}
+          </div>
         </div>
-        <SortDropdown
-          dropdownOptions={dropdownOptions}
-          selectedOption={initialOrder}
-        />
       </div>
-      <div className="grid grid-cols-5 mt-6 gap-4">
-        <div className="col-span-1 pr-6">
-          <div className="text-center flex-col flex border border-color-5/25 p-5 rounded-xl ">
+      <div className="mt-6 flex flex-col lg:flex-row gap-4">
+        <div>
+          {/* <div className="text-center flex-col hidden 2xl:flex border border-color-5/25 p-5 rounded-xl ">
             <h3 className="font-montse items-center font-semibold flex text-color-5 text-lg justify-center mb-2">
               Descrição
             </h3>
             <h3 className="font-montse text-justify items-center flex justify-center text-color-5 text-base">{`${category.description}`}</h3>
             <hr className="text-color-5/25 my-4" />
             <Link href="/" className="flex justify-center">
-              <QiLogoName className="text-2xl my-2" />
+              <ConectaMais className="text-xl my-2" />
             </Link>
-          </div>
+          </div> */}
         </div>
-        <div className="col-span-4">
+        <div className="w-full">
           {productsArray.length ? (
-            <div className="flex flex-col justify-center">
-              <div className="grid grid-cols-4 justify-center items-start gap-4">
+            <div>
+              <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-20">
                 {products}
               </div>
               {pageNumbers === 1 ? (

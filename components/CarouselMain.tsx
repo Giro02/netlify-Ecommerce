@@ -8,15 +8,28 @@ import { CarouselType } from "@/types";
 
 interface CarouselProps {
   carousel: Array<CarouselType>;
+  // homeimagesmobile: Array<CarouselType>;
 }
 
 export default function CarouselMain(carousel: CarouselProps) {
   const [selected, setSelected] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()]);
+  const [emblaIsActive, setEmblaIsActive] = useState(false);
+
+  const initEmblaBelow768px = useCallback(() => {
+    const isActive = window.innerWidth < 768;
+    setEmblaIsActive(isActive);
+  }, [setEmblaIsActive]);
 
   const onSelect = useCallback((emblaApi: any) => {
     setSelected(emblaApi.selectedScrollSnap());
   }, []);
+
+  useEffect(() => {
+    initEmblaBelow768px();
+    window.addEventListener("resize", initEmblaBelow768px);
+    return () => window.removeEventListener("resize", initEmblaBelow768px);
+  }, [initEmblaBelow768px]);
 
   useEffect(() => {
     if (emblaApi) emblaApi.on("select", onSelect);
@@ -32,11 +45,23 @@ export default function CarouselMain(carousel: CarouselProps) {
 
   return (
     <div className="flex justify-center w-full h-full flex-col items-center relative text-color-5">
-      <div className="embla w-full" ref={emblaRef}>
+      <div className="embla w-full" ref={emblaIsActive ? emblaRef : null}>
         <div className="embla__container">
           {carousel.carousel.map((i, index) => (
             <div key={index} className="embla__slide">
-              <Images Image={i.homeimages?.image || ""}></Images>
+              <Images
+                Image={i.homeimagesmobile?.image}
+                size={"mobile"}
+              ></Images>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="embla w-full" ref={emblaIsActive ? null : emblaRef}>
+        <div className="embla__container">
+          {carousel.carousel.map((i, index) => (
+            <div key={index} className="embla__slide">
+              <Images Image={i.homeimages?.image} size={"desktop"}></Images>
             </div>
           ))}
         </div>
@@ -60,12 +85,21 @@ export default function CarouselMain(carousel: CarouselProps) {
 
 type ItemProps = {
   Image: string;
+  size: string;
 };
 
-function Images({ Image }: ItemProps) {
+function Images({ Image, size }: ItemProps) {
+  if (size === "mobile") {
+    return (
+      <div
+        className=" md:hidden bg-cover bg-center aspect-0.96/1 flex items-center justify-center"
+        style={{ backgroundImage: `url(${Image})` }}
+      ></div>
+    );
+  }
   return (
     <div
-      className="bg-cover bg-center aspect-4.47/1 flex items-center justify-center"
+      className="bg-cover bg-center hidden aspect-4.47/1 md:flex items-center justify-center"
       style={{ backgroundImage: `url(${Image})` }}
     ></div>
   );

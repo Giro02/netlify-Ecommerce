@@ -15,7 +15,7 @@ export async function generateMetadata({
   searchParams,
 }: BuscaCatalogadaProps): Promise<Metadata> {
   return {
-    title: `${searchParams.q}`,
+    title: `${searchParams.q} `,
     description: "Descricao da EssenciaQi",
     // openGraph: {
     //   description: `${category.ogdescription}`,

@@ -12,6 +12,9 @@ import BannersHome from "@/components/BannersHome";
 import Benefits from "@/components/Benefits";
 import BannerBottomHome from "@/components/BannerBottomHome";
 import CarouselCategory from "@/components/CarouselCategory";
+import { HiShoppingBag } from "react-icons/hi2";
+import { AiOutlineLike } from "react-icons/ai";
+import { TbPigMoney } from "react-icons/tb";
 
 export default async function Home() {
   const carouselArray: CarouselArray = await getProdCarouselHome();
@@ -25,15 +28,18 @@ export default async function Home() {
       <div>
         <CarouselMain carousel={carouselMain}></CarouselMain>
       </div>
-      <div className="container">
+      <div className="px-2 md:container">
         <div className="mt-2">
           <Benefits></Benefits>
         </div>
         <div>
           <CarouselCategory images={carouselCategory}></CarouselCategory>
         </div>
-        <div className="mt-24">
-          <TitleHome title={"PRODUTOS PARA VOCÊ"}></TitleHome>
+        <div className="mt-24 flex gap-4 text-color-1">
+          <TitleHome
+            title={"PRODUTOS PARA VOCÊ"}
+            iconType={"shoppingBag"}
+          ></TitleHome>
         </div>
 
         <div>
@@ -43,13 +49,13 @@ export default async function Home() {
           <BannersHome BannerName={banner1}></BannersHome>
         </div>
         <div className="mt-24">
-          <TitleHome title={"ESSÊNCIA QI INDICA"}></TitleHome>
+          <TitleHome title={"CONECTA+ INDICA"} iconType={"like"}></TitleHome>
         </div>
 
         <div>
           <Carousel carousel={carouselArray[2]}></Carousel>
         </div>
-        <TitleHome title={"MELHORES PREÇOS"}></TitleHome>
+        <TitleHome title={"MELHORES PREÇOS"} iconType={"pig"}></TitleHome>
         <div>
           <Carousel carousel={carouselArray[0]}></Carousel>
         </div>
@@ -59,11 +65,31 @@ export default async function Home() {
   );
 }
 
-function TitleHome({ title }: { title: string }) {
+type TitleHomeProps = {
+  title: string;
+  iconType?: "shoppingBag" | "like" | "pig";
+};
+
+function TitleHome({ title, iconType = "shoppingBag" }: TitleHomeProps) {
+  const renderIcon = () => {
+    switch (iconType) {
+      case "like":
+        return <AiOutlineLike size={32} className="text-color-1" />;
+      case "pig":
+        return <TbPigMoney size={32} className="text-color-1" />;
+      case "shoppingBag":
+      default:
+        return <HiShoppingBag size={32} className="text-color-1" />;
+    }
+  };
+
   return (
-    <div className="container font-medium  text-[32px] text-center md:text-start text-color-5/80 border-b-color-4 border-b-1 ">
-      {title}
-      <hr className="text-color-4 mt-2"></hr>
+    <div className="md:container">
+      <div className=" flex w-full gap-2 items-center py-2 font-medium text-[18px]  md:text-[28px] text-center md:text-start text-color-5 ">
+        {renderIcon()}
+        {title}
+      </div>
+      {/* <hr className=" w-full border-none h-[1px] bg-color-5/50"></hr> */}
     </div>
   );
 }

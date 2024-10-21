@@ -19,6 +19,19 @@ const carousel = {
           },
         ],
       }),
+      defineField({
+        name: "homeimagesmobile",
+        title: "Home Images Mobile",
+        type: "image",
+        validation: (Rule) => Rule.required(),
+        fields: [
+          {
+            name: "alt",
+            type: "string",
+            validation: (Rule) => Rule.required(),
+          },
+        ],
+      }),
     ]
 
 };

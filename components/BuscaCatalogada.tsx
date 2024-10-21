@@ -2,7 +2,7 @@
 import Pagination from "@/components/Pagination";
 import ProductComponent from "@/components/ProductComponent";
 import SortDropdown from "@/components/SortDropdown";
-import { QiLogoName } from "@/components/Svgs";
+import { ConectaMais } from "@/components/Svgs";
 import { FuseProductResultArray, ProductPreviewArray } from "@/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -165,7 +165,7 @@ export default function BuscaCatalogada({
           <div className="col-span-1 pr-6">
             <div className="text-center flex-col flex border border-color-5/25 p-5 rounded-xl ">
               <Link href="/" className="flex justify-center">
-                <QiLogoName className="text-2xl my-2" />
+                <ConectaMais className="text-2xl my-2" />
               </Link>
             </div>
           </div>

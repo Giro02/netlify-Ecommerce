@@ -13,10 +13,8 @@ interface CarouselProps {
 
 export default function Carousel({ carousel }: CarouselProps) {
   return (
-    <div className="mt-6">
-      <div>
-        <Constructor carousel={carousel}></Constructor>
-      </div>
+    <div>
+      <Constructor carousel={carousel}></Constructor>
     </div>
   );
 }
@@ -29,11 +27,11 @@ function Constructor({ carousel }: CarouselProps) {
     <div key={index}>
       <Link className="w-full" href={`/produtos/${product.slug.current}`}>
         <div
-          className={`rounded-xl relative p-4 cursor-pointer transition-all hover:shadow-xl w-[200px] h-[400px] md:w-[240px] md:h-[425px] flex items-center justify-center flex-col text-center`}
+          className={`rounded-xl text-color-5 shadow-lg hover:border-x  border-color-5/10 relative px-6 py-6 cursor-pointer transition-all hover:shadow-xl w-[235px] md:w-[240px] flex items-center justify-center flex-col text-center`}
           onMouseEnter={() => setSaiba(index)}
           onMouseLeave={() => setSaiba(null)}
         >
-          <div className="w-full h-[140px] md:h-[140px]">
+          <div className="w-full h-[200px]">
             <img
               src={product.productImage.image}
               className="w-full h-full object-contain"
@@ -46,22 +44,35 @@ function Constructor({ carousel }: CarouselProps) {
             </p>
           </div>
           <div>
-            <p className="text-[13px] mt-2 h-16 text-color-5/70">
+            <p className="text-[13px] h-16 mt-4 text-color-5/70">
               {product.description}
             </p>
           </div>
-          <div>
-            <div className="text-[16px] h-10 items-center text-center flex text-color-5 font-bold">
-              <p>{formatCurrency(product.priceBundle[0].unitPrice)}</p>
+          <div className="flex flex-col gap-2">
+            <div className="flex text-color-5/70 text-sm">
+              <p>De &nbsp;</p>
+              <p className="line-through">
+                {formatCurrency(
+                  product.priceBundle[0].unitPrice +
+                    (product.priceBundle[0].unitPrice * 30) / 100
+                )}
+              </p>
+            </div>
+
+            <div className=" h-4 items-center text-center flex  ">
+              <p>por &nbsp;</p>
+              <p className="font-bold text-2xl ">
+                {formatCurrency(product.priceBundle[0].unitPrice)}
+              </p>
             </div>
           </div>
 
           <div
             className={`h-10 bg-color-1 ${
               Saiba === index ? "flex" : " flex sm:invisible "
-            } items-center justify-center text-color-branco text-[16px] w-full  rounded-lg mt-4 text-color-3`}
+            } items-center justify-center text-color-branco text-[16px] w-full py-4 rounded-lg mt-6 text-color-3`}
           >
-            Saiba Mais
+            Saiba mais
           </div>
         </div>
       </Link>
@@ -98,10 +109,10 @@ function Constructor({ carousel }: CarouselProps) {
   }, [emblaApi]);
 
   return (
-    <div className="container py-12">
-      <div className="flex relative px-[15px]">
+    <div className="py-12 md:container">
+      <div className=" relative">
         <div className="embla" ref={emblaRef}>
-          <div className="embla__container  flex justify-start gap-1 py-8">
+          <div className="embla__container flex px-4 py-8 gap-6">
             {slideElements}
           </div>
         </div>
@@ -112,7 +123,7 @@ function Constructor({ carousel }: CarouselProps) {
             selected === 0
               ? "text-color-5/20 cursor-default"
               : "text-color-5 cursor-pointer"
-          } rounded-full w-11 h-11 flex absolute left-[-35px] top-1/2 rotate-180 -translate-y-1/2  items-center justify-center text-color-branco/90 `}
+          } hidden rounded-full w-11 h-11 md:flex absolute left-[-35px] top-1/2 rotate-180 -translate-y-1/2  items-center justify-center text-color-branco/90 `}
         >
           <IoIosArrowForward size={35}></IoIosArrowForward>
         </div>
@@ -122,7 +133,7 @@ function Constructor({ carousel }: CarouselProps) {
             canScrollNext() == false
               ? "text-color-5/20 cursor-default"
               : "text-color-5 cursor-pointer"
-          } rounded-full w-11 h-11  absolute right-[-35px] top-1/2 -translate-y-1/2 flex items-center justify-center text-color-branco/90 `}
+          } hidden rounded-full w-11 h-11  absolute right-[-35px] top-1/2 -translate-y-1/2 md:flex items-center justify-center text-color-branco/90 `}
         >
           <IoIosArrowForward size={35}></IoIosArrowForward>
         </div>
@@ -153,7 +164,7 @@ function Dots({ Quantity, Selected }: Items) {
   }
 
   return (
-    <div className=" container mt-[-15px] mb-[15px]">
+    <div className="hidden lg:container mt-[-15px] mb-[15px]">
       <div className="flex items-center justify-center gap-2 h-6 ">{dots}</div>
     </div>
   );

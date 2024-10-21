@@ -44,13 +44,9 @@ export default function Header({
 }: HeaderProps) {
   const pathName = usePathname();
   const studio = pathName.startsWith("/studio");
+  const checkout = pathName.startsWith("/checkout");
   const [Down, setDown] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [toggleSecondMenu, setToggleSecondMenu] = useState({});
-
-  function toggleMenu() {
-    setIsMenuOpen((prevMobileMenu) => !prevMobileMenu);
-  }
 
   useEffect(() => {
     const slugs = allCategData.map((name) => {
@@ -65,47 +61,14 @@ export default function Header({
     });
   }, [allCategData]);
 
-  if (studio) {
+  if (studio || checkout) {
     return null;
   } else
     return (
       // Add Font
       <div>
-        <div
-          onClick={toggleMenu}
-          className={` ${
-            isMenuOpen ? " opacity-100 " : "opacity-0 invisible"
-          } fixed z-30 bg-color-5/60 w-full h-full  md:hidden transition-all duration-300`}
-        ></div>
-        <div
-          className={`${
-            isMenuOpen ? " w-[80%]" : " w-0"
-          } md:hidden z-40 left-0 h-full bg-color-3 fixed overflow-hidden transition-[width] duration-300`}
-        >
-          <div className="p-4 border-b border-color-4 w-full h-16">
-            <div className="flex font-medium w-full justify-between text-2xl">
-              <p>Explorar</p>
-              <p className="cursor-pointer" onClick={toggleMenu}>
-                x
-              </p>
-            </div>
-          </div>
-          <div className="p-4 gap-8 flex flex-col font-medium mt-4">
-            {/* CONCERTAR O MENU DE MOBILE */}
-            {allCategData &&
-              allCategData.map((category) => (
-                <DropDownMobile
-                  key={category._id}
-                  text={category.title}
-                  slug={category.slug.current}
-                  setIsMenuOpen={setIsMenuOpen}
-                />
-              ))}
-          </div>
-        </div>
-
         {/* GREEN MENU, HIDDES IN MOBILE*/}
-        <div className="h-12 bg-color-1 w-full mt-[-10px] items-end justify-center relative hidden md:flex">
+        <div className="h-12 bg-color-1 w-full  items-end justify-center relative hidden md:flex">
           <div className=" flex items-center container justify-between text-white">
             <Hamburguer
               setDown={setDown}
@@ -114,20 +77,20 @@ export default function Header({
               toggleSecondMenu={toggleSecondMenu}
               setToggleSecondMenu={setToggleSecondMenu}
             ></Hamburguer>
-            <Link href={"/categorias/queda-capilar"}>
-              <Menu text="Queda Capilar"></Menu>
+            <Link href={"/categorias/interruptores"}>
+              <Menu text="Interruptores"></Menu>
             </Link>
-            <Link href={"/categorias/emagrecimento"}>
-              <Menu text="Emagrecimento"></Menu>
+            <Link href={"/categorias/sensores"}>
+              <Menu text="Sensores"></Menu>
             </Link>
-            <Link href={"/categorias/dormir-bem"}>
-              <Menu text="Dormir Bem"></Menu>
+            <Link href={"/categorias/gateways"}>
+              <Menu text="Gateways"></Menu>
             </Link>
-            <Link href={"/categorias/saude-sexual"}>
-              <Menu text="Saúde Sexual"></Menu>
+            <Link href={"/categorias/r-fiders"}>
+              <Menu text="R-fiders"></Menu>
             </Link>
-            <Link href={"/categorias/desempenho-fisico"}>
-              <Menu text="Desempenho Físico"></Menu>
+            <Link href={"/categorias/saude-sexual"} className="bg-color-2">
+              <Menu text="Automação Industrial"></Menu>
             </Link>
           </div>
         </div>
@@ -202,7 +165,6 @@ export function Hamburguer({
         </div>
       </div>
       <div>
-        {/* AQUI VAI SECONDARY MENU */}
         {allCategData.map((category) => (
           <div key={category.slug.current}>
             {toggleSecondMenu[category.slug.current] && (
@@ -238,13 +200,14 @@ function SecondaryMenu({
     });
   };
   return (
-    <div
-      onMouseEnter={openSecondMenu}
-      onMouseLeave={closeSecondMenu}
-      className="bg-color-3 absolute top-[43px] md:w-[500px] lg:w-[750px] xl:w-[1000px] h-[488px] md:left-[145px] lg:left-[200px] pl-12 cursor-default shadow-md pt-4 "
-    >
-      Opa entrei usando o botão:{text}
-    </div>
+    <div></div>
+    // <div
+    //   onMouseEnter={openSecondMenu}
+    //   onMouseLeave={closeSecondMenu}
+    //   className="bg-color-3 absolute top-[43px] md:w-[500px] lg:w-[750px] xl:w-[1000px] h-[488px] md:left-[145px] lg:left-[200px] pl-12 cursor-default shadow-md pt-4 "
+    // >
+    //   Opa entrei usando o botão:{text}
+    // </div>
   );
 }
 
@@ -288,37 +251,6 @@ function DropDownOptions({
           </div>
         </Link>
       </div>
-    </div>
-  );
-}
-type DropDownMobile = {
-  text: string;
-  slug: string;
-  setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-function DropDownMobile({ text, slug, setIsMenuOpen }: DropDownMobile) {
-  var hrefi = `/categorias/${slug}`;
-  return (
-    <div>
-      <div className="w-full">
-        <Link href={hrefi} onClick={() => setIsMenuOpen(false)}>
-          <div className="cursor-pointer px-4 hover:text-color-1 flex items-center justify-between ">
-            {text}
-            <IoIosArrowForward></IoIosArrowForward>
-          </div>
-        </Link>
-      </div>
-    </div>
-  );
-}
-
-export function HamburguerPhone() {
-  return (
-    <div className="flex flex-col gap-1 cursor-pointer">
-      <div className="border border-color-5 w-7 rounded-md"></div>
-      <div className="border border-color-5 w-7 rounded-md"></div>
-      <div className="border border-color-5 w-7 rounded-md"></div>
     </div>
   );
 }

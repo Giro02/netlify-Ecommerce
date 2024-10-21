@@ -81,7 +81,7 @@ export default function BundleDropdown({
         {isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
       </div>
       {isOpen && (
-        <div className="absolute flex flex-col border border-color-5/25 w-[400px] right-0 shadow-lg rounded-xl gap-3 p-5 mt-1 bg-color-3">
+        <div className="absolute flex flex-col border border-color-5/25 w-full max-w-[450px] right-0 shadow-lg rounded-xl gap-3 p-5 mt-1 bg-color-3">
           {bundles}
         </div>
       )}
