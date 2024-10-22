@@ -8,6 +8,7 @@ import { ProductType } from "@/types";
 import { useCart } from "@/app/context/CartContext";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { FaCheckSquare } from "react-icons/fa";
 import ProductInformations from "./ProductInformations";
 
@@ -28,6 +29,7 @@ export default function ProductShopBlock({
     unitsNumber: selectedPrice.unitsNumber,
     total: selectedPrice.unitPrice * selectedPrice.unitsNumber,
     image: product.productImage.image,
+    description: product.informations.explicacao,
   };
   const [popUp, setPopUp] = useState(false);
 
@@ -38,7 +40,7 @@ export default function ProductShopBlock({
       setPopUp(false);
     }, 3000);
   };
-  console.log(product);
+
   return (
     <div className="lg:px-40 flex flex-col lg:flex-row gap-8 lg:gap-28 mt-7">
       {popUp && (
@@ -52,10 +54,14 @@ export default function ProductShopBlock({
       </h1>
       <div className="block lg:hidden h-[2px] w-[400px] bg-gradient-to-r from-color-1" />
       <div className="w-full max-w-[450px] border-2 p-4 max-h-[450px] flex items-center justify-center rounded-md border-color-5/10">
-        <img
+        <Image
           src={product.productImage.image}
           alt={product.productImage.alt}
-          className="object-contain w-full h-full"
+          className="object-contain"
+          width={450}
+          height={450}
+          sizes="(max-width: 450px) 100vw, 450px"
+          priority
         />
       </div>
       <div className="flex flex-col justify-between">

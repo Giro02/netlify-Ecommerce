@@ -56,7 +56,7 @@ export default function ShoppingCart() {
               <h2>Verifique todos os seus itens</h2>
             </div>
           </div>
-          <div className="bg-color-3 py-4 px-6 rounded-b-lg">
+          <div className="flex gap-8 flex-col bg-color-3 py-4 rounded-b-lg ">
             {cart.length === 0 && (
               <div className="bg-color-6 items-center justify-center rounded-md md:p-4 p-2 flex gap-4 text-base text-color-5">
                 <IoIosWarning className="text-2xl w-12" />

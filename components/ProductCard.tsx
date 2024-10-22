@@ -18,12 +18,15 @@ const ProductCard = ({
   function NumbToString(number: number) {
     return number.toFixed(2).toString().replace(".", ",");
   }
+  console.log(description);
 
   return (
-    <div className="w-full items-center h-52 flex  md:p-4 text-color-5 md:gap-6">
+    <div className="w-full items-center flex  text-color-5 md:px-6 pr-6">
       <FaCheckSquare size={26} className=" text-color-1 hidden md:block" />
-      <div>
-        <img src={imageSrc} alt={title} className="w-20  object-cover" />
+      <div className="h-32 w-32 overflow-hidden ">
+        <div className="h-44 w-44 mt-[-24px] ml-[-24px]">
+          <img src={imageSrc} alt={title} />
+        </div>
       </div>
       <div className="flex-1 md:gap-4">
         <div className="flex justify-between">
@@ -56,6 +59,7 @@ const ProductCard = ({
         </div>
         <div className="max-h-[58px] overflow-y-auto mt-4">
           <p className="font-medium text-sm">Descrição:</p>
+
           <p className="text-xs text-color-5/80">{description}</p>
         </div>
       </div>
