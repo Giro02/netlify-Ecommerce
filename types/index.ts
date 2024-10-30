@@ -33,6 +33,10 @@ export type ProductType = {
     alt: string;
     image: string;
   };
+  productImages: {
+    alt: string;
+    image: string;
+  },
   priceBundle: Array<{
     unitPrice: number;
     bundleURL: URL;

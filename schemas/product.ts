@@ -81,7 +81,7 @@ const product = {
       type: "image",
       validation: (Rule) => Rule.required(),
       options: {
-        accept: "image/png",
+        accept: "image/png, image/jpeg",
       },
       fields: [
         {
@@ -90,6 +90,29 @@ const product = {
           validation: (Rule) => Rule.required(),
         },
       ],
+    }),
+    defineField({
+      name: "productImages",
+      title: "Product Images",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: {
+            accept: "image/png, image/jpeg", 
+          },
+          fields: [
+            {
+              name: "alt",
+              type: "string",
+              title: "Alt Text",
+              validation: (Rule) =>
+                Rule.required().warning("Alt text é recomendado para acessibilidade."),
+            },
+          ],
+        },
+      ],
+      validation: (Rule) => Rule.min(1).warning("Adicione pelo menos uma imagem."),
     }),
     defineField({
       name: "category",

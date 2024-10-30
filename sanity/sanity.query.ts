@@ -87,11 +87,13 @@ export async function getSingleProduct(slug: string) {
       slug,
       priceBundle,
       productImage {alt, "image": asset -> url},
+      productImages[] {alt,"image": asset->url},
         category[]-> {
         _id,
         title,
         slug
       },
+
       informations {
         beneficios,
           uso,

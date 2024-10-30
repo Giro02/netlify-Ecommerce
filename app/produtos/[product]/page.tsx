@@ -33,6 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProductLayout({ params, searchParams }: Props) {
   const slug = params.product;
   let bundle = Number(searchParams?.bundle?.replace("-", "") || "0");
+
   if (isNaN(bundle)) {
     bundle = 0;
   }
@@ -40,6 +41,7 @@ export default async function ProductLayout({ params, searchParams }: Props) {
   if (bundle > product.priceBundle.length) {
     bundle = product.priceBundle.length - 1;
   }
+
   if (!product) {
     notFound();
   } else {

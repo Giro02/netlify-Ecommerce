@@ -3,14 +3,18 @@ import { formatCurrency } from "@/utils/UtilityFunctions";
 import { TbPigMoney } from "react-icons/tb";
 import BundleDropdown from "./BundleDropdown";
 import { Link as Scroll } from "react-scroll";
-import { IoIosArrowDropdownCircle } from "react-icons/io";
+import { IoIosArrowDropdownCircle, IoIosArrowForward } from "react-icons/io";
 import { ProductType } from "@/types";
 import { useCart } from "@/app/context/CartContext";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { FaCheckSquare } from "react-icons/fa";
-import ProductInformations from "./ProductInformations";
+import useEmblaCarousel from "embla-carousel-react";
+import { FaWhatsappSquare } from "react-icons/fa";
+import "../public/static/carousel.css";
+import { CiMail } from "react-icons/ci";
+import { PiPackage } from "react-icons/pi";
+import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 
 type ProductShopBlockProps = {
   selectedOption: number;
@@ -32,6 +36,32 @@ export default function ProductShopBlock({
     description: product.informations.explicacao,
   };
   const [popUp, setPopUp] = useState(false);
+  const [selected, setSelected] = useState(0);
+  const [isIndex, setIsIndex] = useState(0);
+  const [mainImage, setMainImage] = useState(product.productImages[0].image);
+  const [viewportRef, emblaApi] = useEmblaCarousel(
+    {
+      axis: "y",
+      skipSnaps: false,
+      dragFree: true,
+    },
+    [WheelGesturesPlugin({ forceWheelAxis: "y" })]
+  );
+
+  const onSelect = useCallback((emblaApi: any) => {
+    setSelected(emblaApi.selectedScrollSnap());
+  }, []);
+
+  useEffect(() => {
+    if (emblaApi) emblaApi.on("select", onSelect);
+  }, [emblaApi, onSelect]);
+
+  const scrollTo = useCallback(
+    (index) => {
+      if (emblaApi) emblaApi.scrollTo(index);
+    },
+    [emblaApi]
+  );
 
   const handleAddToCart = () => {
     addItem(productDetails);
@@ -40,30 +70,135 @@ export default function ProductShopBlock({
       setPopUp(false);
     }, 3000);
   };
+  const handleImageClick = (image: string, index: number) => {
+    scrollTo(index);
+    setSelected(index);
+    setMainImage(image);
+    setIsIndex(index);
+  };
+  const scrolToNextImage = () => {
+    if (isIndex < product.productImages.length - 1) {
+      scrollTo(isIndex + 1);
+      setSelected(isIndex + 1);
+      setIsIndex(isIndex + 1);
+      setMainImage(product.productImages[isIndex + 1].image);
+    }
+  };
+  const scrolToPrevImage = () => {
+    if (isIndex >= 1) {
+      scrollTo(isIndex - 1);
+      setSelected(isIndex - 1);
+      setIsIndex(isIndex - 1);
+      setMainImage(product.productImages[isIndex - 1].image);
+    }
+  };
 
-  return (
-    <div className="lg:px-40 flex flex-col lg:flex-row gap-8 lg:gap-28 mt-7">
-      {popUp && (
-        <div className="fixed flex items-center gap-4 top-0 left-1/2 transform -translate-x-1/2 bg-color-1 text-color-3 px-4 py-2 rounded-b-lg">
-          <FaCheckSquare size={18} className="text-color-3"></FaCheckSquare>
-          Item Adicionado ao carrinho
+  const startX = useRef(0);
+  const endX = useRef(0);
+
+  const handleTouchStart = (e) => {
+    startX.current = e.touches[0].clientX; // Armazenando a posição do toque inicial
+  };
+
+  const handleTouchMove = (e) => {
+    endX.current = e.touches[0].clientX; // Atualizando a posição do toque
+  };
+
+  const handleTouchEnd = () => {
+    const threshold = 50; // Distância mínima para considerar um swipe
+    const distance = endX.current - startX.current; // Calculando a distância do swipe
+
+    if (distance > threshold) {
+      // Swipe para a direita
+      scrolToPrevImage();
+    } else if (distance < -threshold) {
+      // Swipe para a esquerda
+      scrolToNextImage();
+    }
+  };
+
+  const productOutOfStockLayout = () => {
+    return (
+      <div className="flex flex-col justify-between">
+        <div className="max-w-[450px]">
+          <h1 className="hidden lg:block text-color-5 text-[28px]">
+            {product.title}
+          </h1>
+          <div className="hidden lg:block h-[2px] w-[400px] bg-gradient-to-r from-color-1" />
+
+          <div className="mt-4">
+            <a
+              href={`https://wa.me/54999879778?text=${encodeURIComponent(
+                `Olá gostaria de saber sobre a disponibilidade do produto ${product.title}`
+              )}`}
+            >
+              <div className="bg-color-6 hover:bg-color-6/70 flex items-center justify-center gap-4 p-2 text-color-5 rounded-xl text-center cursor-pointer font-medium">
+                <PiPackage size={36}></PiPackage>
+                <div className="items-start justify-start text-left">
+                  <p>Clique Para Encomendar</p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div className="flex w-full justify-center mt-4">
+            <p className="font-semibold">Ou</p>
+          </div>
+          <div className="mt-2">
+            <p>
+              Selecione uma das opções abaixo para fazer uma cotação com um de
+              nossos atendentes
+            </p>
+          </div>
         </div>
-      )}
-      <h1 className="block lg:hidden text-color-5 text-[28px]">
-        {product.title}
-      </h1>
-      <div className="block lg:hidden h-[2px] w-[400px] bg-gradient-to-r from-color-1" />
-      <div className="w-full max-w-[450px] border-2 p-4 max-h-[450px] flex items-center justify-center rounded-md border-color-5/10">
-        <Image
-          src={product.productImage.image}
-          alt={product.productImage.alt}
-          className="object-contain"
-          width={450}
-          height={450}
-          sizes="(max-width: 450px) 100vw, 450px"
-          priority
-        />
+        <div className="mt-4">
+          <div className="bg-color-5 py-2 px-4 rounded-b rounded-xl text-color-3 font-semibold">
+            ATENDIMENTO
+          </div>
+          <div className="flex gap-4 flex-col p-4  border border-color-4">
+            <a
+              href={`https://wa.me/54999879778?text=${encodeURIComponent(
+                `Olá gostaria de saber sobre a disponibilidade do produto ${product.title}`
+              )}`}
+            >
+              <div className="cursor-pointer gap-4 flex items-center hover:text text-color-5 underline underline-offset-4">
+                <FaWhatsappSquare
+                  className="text-color-8"
+                  size={32}
+                ></FaWhatsappSquare>{" "}
+                (54)99987-9778{" "}
+              </div>
+            </a>
+            <a
+              href="mailto:conectamaisautomacao@gmail.com"
+              className="cursor-pointer gap-4 flex items-center text-color-5 underline underline-offset-2"
+              title="Enviar um e-mail para conectamaisautomacao@gmail.com"
+            >
+              <CiMail size={32} className="hidden md:block" />
+              conectamaisautomacao@gmail.com
+            </a>
+          </div>
+          <div className="max-w-[450px] bg-color-4 px-4 py-2 rounded-b-xl text-xs">
+            <span className="font-medium">Horário de funcionamento:</span> De
+            segunda à sexta das 08h às 18h, Sábado das 08h às 12h.
+            <p></p>
+          </div>
+        </div>
+
+        <Scroll
+          to="InfoSection"
+          smooth={true}
+          duration={800}
+          className="flex mt-4 items-center text-color-1"
+          href="#InfoSection"
+        >
+          <IoIosArrowDropdownCircle />
+          <div className="font-semibold">Veja Detalhes</div>
+        </Scroll>
       </div>
+    );
+  };
+  const productSellLayout = () => {
+    return (
       <div className="flex flex-col justify-between">
         <div className="max-w-[450px]">
           <h1 className="hidden lg:block text-color-5 text-[28px]">
@@ -114,6 +249,98 @@ export default function ProductShopBlock({
           <div className="font-semibold">Veja Detalhes</div>
         </Scroll>
       </div>
+    );
+  };
+
+  const productSellRender =
+    product.priceBundle[0].unitPrice === 0
+      ? productOutOfStockLayout()
+      : productSellLayout();
+
+  return (
+    <div className=" flex justify-center flex-col lg:flex-row gap-8 lg:gap-36 mt-7">
+      {popUp && (
+        <div className="fixed flex items-center gap-4 top-0 left-1/2 transform -translate-x-1/2 bg-color-8 text-color-3 px-4 py-2 rounded-b-lg">
+          <FaCheckSquare size={18} className="text-color-3"></FaCheckSquare>
+          Item Adicionado ao carrinho
+        </div>
+      )}
+      <h1 className="block lg:hidden text-color-5 text-[28px]">
+        {product.title}
+      </h1>
+      <div className="block lg:hidden h-[2px] w-[400px] bg-gradient-to-r from-color-1" />
+      <div className="flex gap-2 over">
+        <div className="max-w-[150px] max-h-[550px] hidden md:block">
+          <div className="embla2" ref={viewportRef}>
+            <div className="embla__container2">
+              {product.productImages.map((img, index) => (
+                <div
+                  key={index}
+                  className={` ${
+                    selected === index
+                      ? "border-2 border-color-5/30 rounded-lg"
+                      : ""
+                  } embla__slide2 cursor-pointer`}
+                  onMouseEnter={() => handleImageClick(img.image, index)}
+                >
+                  <Image
+                    src={img.image}
+                    alt={img.alt}
+                    width={100}
+                    height={100}
+                    className={`object-cover rounded-md 
+                    }`}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Imagem Principal */}
+        <div
+          className="max-w-[550px]  p-4 max-h-[550px] flex items-center justify-center rounded-md  relative"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <Image
+            src={mainImage}
+            alt="Imagem do Produto"
+            className="object-contain"
+            width={550}
+            height={550}
+            sizes="(max-width: 550px) 100vw, 550px"
+            priority
+          />
+          <button
+            onClick={() => scrolToPrevImage()}
+            disabled={selected === 0}
+            className={`${
+              selected === 0
+                ? "text-color-5/20 cursor-default"
+                : "text-color-5 cursor-pointer"
+            }  rounded-full w-11 h-11 flex absolute left-0 top-1/2 rotate-180 -translate-y-1/2 items-center justify-center text-color-branco/90`}
+            aria-label="Previous Image"
+          >
+            <IoIosArrowForward size={28} />
+          </button>
+          <button
+            onClick={() => scrolToNextImage()}
+            disabled={isIndex === product.productImages.length - 1}
+            className={`${
+              isIndex === product.productImages.length - 1
+                ? "text-color-5/20 cursor-default"
+                : "text-color-5 cursor-pointer"
+            }  rounded-full w-11 h-11 absolute right-0 top-1/2 -translate-y-1/2 flex items-center justify-center text-color-branco/90`}
+            aria-label="Next Image"
+          >
+            <IoIosArrowForward size={28} />
+          </button>
+        </div>
+      </div>
+
+      {productSellRender}
     </div>
   );
 }

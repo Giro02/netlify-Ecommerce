@@ -10,5 +10,20 @@
     flex: 0 0 100%;
     overflow-x: hidden;
   }
+ 
+  .embla2 {
+    overflow: hidden;
+    width: 100%;
+  }
   
+  .embla__container2 {
+  height: 550px;
+  transition: ease 0.1s;
+  }
+  
+  .embla__slide2 {
+    position: relative;
+  overflow: hidden;
+  height: 105px;
+  }
 
