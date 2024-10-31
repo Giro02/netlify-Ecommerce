@@ -1,29 +1,25 @@
 .embla {
-    overflow: hidden;
-  }
-  
-  .embla__container {
-    display: flex;
-  }
-  
-  .embla__slide {
-    flex: 0 0 100%;
-    overflow-x: hidden;
-  }
- 
-  .embla2 {
-    overflow: hidden;
-    width: 100%;
-  }
-  
-  .embla__container2 {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+}
+
+.embla__slide2 {
+  flex: 0 0 75px; 
+  overflow: hidden;
+  height: 75px;
+  width: 75px;
+  position: relative;
+}
+
+.embla2 {
+  overflow: hidden;
+  width: 100%;
+}
+
+.embla__container2 {
   height: 550px;
   transition: ease 0.1s;
-  }
-  
-  .embla__slide2 {
-    position: relative;
-  overflow: hidden;
-  height: 105px;
-  }
-
+}

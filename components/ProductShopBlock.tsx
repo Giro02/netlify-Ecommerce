@@ -15,6 +15,7 @@ import "../public/static/carousel.css";
 import { CiMail } from "react-icons/ci";
 import { PiPackage } from "react-icons/pi";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
+import { CiShare2 } from "react-icons/ci";
 
 type ProductShopBlockProps = {
   selectedOption: number;
@@ -35,17 +36,18 @@ export default function ProductShopBlock({
     image: product.productImage.image,
     description: product.informations.explicacao,
   };
+  const [axis, setAxis] = useState("y");
   const [popUp, setPopUp] = useState(false);
   const [selected, setSelected] = useState(0);
   const [isIndex, setIsIndex] = useState(0);
   const [mainImage, setMainImage] = useState(product.productImages[0].image);
   const [viewportRef, emblaApi] = useEmblaCarousel(
     {
-      axis: "y",
+      axis,
       skipSnaps: false,
       dragFree: true,
     },
-    [WheelGesturesPlugin({ forceWheelAxis: "y" })]
+    [WheelGesturesPlugin({ forceWheelAxis: axis })]
   );
 
   const onSelect = useCallback((emblaApi: any) => {
@@ -92,7 +94,21 @@ export default function ProductShopBlock({
       setMainImage(product.productImages[isIndex - 1].image);
     }
   };
+  const handleResize = () => {
+    if (window.innerWidth <= 768) {
+      setAxis("x");
+    } else {
+      setAxis("y");
+    }
+  };
+  useEffect(() => {
+    handleResize(); // Executa ao montar o componente
+    window.addEventListener("resize", handleResize); // Escuta redimensionamentos
 
+    return () => {
+      window.removeEventListener("resize", handleResize); // Limpa o listener
+    };
+  }, []);
   const startX = useRef(0);
   const endX = useRef(0);
 
@@ -258,21 +274,17 @@ export default function ProductShopBlock({
       : productSellLayout();
 
   return (
-    <div className=" flex justify-center flex-col lg:flex-row gap-8 lg:gap-36 mt-7">
+    <div className=" flex justify-center flex-col lg:flex-row gap-8 lg:gap-36 mt-2 md:mt-7">
       {popUp && (
         <div className="fixed flex items-center gap-4 top-0 left-1/2 transform -translate-x-1/2 bg-color-8 text-color-3 px-4 py-2 rounded-b-lg">
           <FaCheckSquare size={18} className="text-color-3"></FaCheckSquare>
           Item Adicionado ao carrinho
         </div>
       )}
-      <h1 className="block lg:hidden text-color-5 text-[28px]">
-        {product.title}
-      </h1>
-      <div className="block lg:hidden h-[2px] w-[400px] bg-gradient-to-r from-color-1" />
-      <div className="flex gap-2 over">
+      <div className="flex flex-col md:flex-row gap-2">
         <div className="max-w-[150px] max-h-[550px] hidden md:block">
-          <div className="embla2" ref={viewportRef}>
-            <div className="embla__container2">
+          <div className="embla2 " ref={viewportRef}>
+            <div className="h-[550px] w-[100px] hidden">
               {product.productImages.map((img, index) => (
                 <div
                   key={index}
@@ -299,7 +311,7 @@ export default function ProductShopBlock({
 
         {/* Imagem Principal */}
         <div
-          className="max-w-[550px]  p-4 max-h-[550px] flex items-center justify-center rounded-md  relative"
+          className=" max-w-[550px]  p-4 max-h-[550px] md:flex items-center justify-center rounded-md  relative"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
@@ -313,11 +325,18 @@ export default function ProductShopBlock({
             sizes="(max-width: 550px) 100vw, 550px"
             priority
           />
+          <div className="absolute rounded-full p-2 bg-color-1 top-0 right-2">
+            <CiShare2 className="text-color-3" size={20} />
+          </div>
+          <div className="absolute top-1 left-2 bg-color-4/50 text-color-5 rounded-full py-1 px-4 text-xs font-medium">
+            Item {isIndex + 1}/{product.productImages.length}
+          </div>
+
           <button
             onClick={() => scrolToPrevImage()}
-            disabled={selected === 0}
+            disabled={isIndex === 0}
             className={`${
-              selected === 0
+              isIndex === 0
                 ? "text-color-5/20 cursor-default"
                 : "text-color-5 cursor-pointer"
             }  rounded-full w-11 h-11 flex absolute left-0 top-1/2 rotate-180 -translate-y-1/2 items-center justify-center text-color-branco/90`}
@@ -337,6 +356,31 @@ export default function ProductShopBlock({
           >
             <IoIosArrowForward size={28} />
           </button>
+        </div>
+        <div className="relative mt-[-35px]">
+          <div className="embla" ref={viewportRef}>
+            <div className="embla__container">
+              {product.productImages.map((img, index) => (
+                <div
+                  key={index}
+                  className={`${
+                    isIndex === index
+                      ? "border-2 border-color-5/30 rounded-lg"
+                      : ""
+                  } embla__slide2 cursor-pointer`}
+                  onClick={() => handleImageClick(img.image, index)}
+                >
+                  <Image
+                    src={img.image}
+                    alt={img.alt}
+                    width={75}
+                    height={75}
+                    className="object-cover rounded-md"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 

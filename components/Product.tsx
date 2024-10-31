@@ -14,7 +14,7 @@ export default function Product({ product, bundle }: ProductProps) {
   const selectedOption = bundle;
   return (
     <div className="px-4 md:container overflow-hidden font-montse text-color-5">
-      <ul className="flex items-center justify-start font-montse text-sm text-color-5/75 my-5">
+      <ul className="hidden md:flex items-center justify-start font-montse text-sm text-color-5/75 my-5">
         <li className="flex items-center">
           <Link href="/"> Início </Link>&nbsp;
         </li>
