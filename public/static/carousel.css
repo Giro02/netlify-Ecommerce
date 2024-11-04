@@ -5,6 +5,10 @@
 .embla__container {
   display: flex;
 }
+.embla__slide {
+  flex: 0 0 auto; 
+  width: 100%;   
+}
 
 .embla__slide2 {
   flex: 0 0 75px; 
@@ -20,6 +24,6 @@
 }
 
 .embla__container2 {
-  height: 550px;
+  height: 515px;
   transition: ease 0.1s;
 }

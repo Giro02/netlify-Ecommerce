@@ -27,7 +27,7 @@ function Constructor({ carousel }: CarouselProps) {
     <div key={index}>
       <Link className="w-full" href={`/produtos/${product.slug.current}`}>
         <div
-          className={`rounded-xl text-color-5 shadow-lg hover:border-x  border-color-5/10 relative px-6 py-6 cursor-pointer transition-all hover:shadow-xl w-[235px] md:w-[240px] flex items-center justify-center flex-col text-center`}
+          className={` rounded-xl text-color-5 shadow-lg hover:border-x  border-color-5/10 relative px-6 py-6 cursor-pointer transition-all hover:shadow-xl w-[235px] md:w-[240px] flex items-center justify-center flex-col text-center`}
           onMouseEnter={() => setSaiba(index)}
           onMouseLeave={() => setSaiba(null)}
         >

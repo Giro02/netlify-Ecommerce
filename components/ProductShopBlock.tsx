@@ -282,10 +282,10 @@ export default function ProductShopBlock({
         </div>
       )}
       {/* Carrousel Desktop */}
-      <div className="flex flex-col md:flex-row gap-2">
-        <div className="max-w-[150px] max-h-[550px] hidden md:block">
-          <div className="embla2 " ref={viewportRef}>
-            <div className="h-[550px] w-[100px] hidden">
+      <div className="flex flex-col md:flex-row gap-2 items-end">
+        <div className=" max-w-[150px]  max-h-[515px] hidden md:block">
+          <div className="embla2" ref={viewportRef}>
+            <div className="h-[515px] w-[100px]">
               {product.productImages.map((img, index) => (
                 <div
                   key={index}
@@ -326,7 +326,26 @@ export default function ProductShopBlock({
             sizes="(max-width: 550px) 100vw, 550px"
             priority
           />
-          <div className="absolute rounded-full p-2 bg-color-1 top-0 right-2">
+          <div
+            className="absolute rounded-full p-2 bg-color-1 top-0 right-2 cursor-pointer"
+            onClick={() => {
+              if (navigator.share) {
+                navigator
+                  .share({
+                    title: document.title,
+                    text: "Confira este produto que encontrei!",
+                    url: window.location.href,
+                  })
+                  .catch((error) =>
+                    console.log("Erro ao compartilhar:", error)
+                  );
+              } else {
+                alert(
+                  "A funcionalidade de compartilhamento não é suportada neste dispositivo."
+                );
+              }
+            }}
+          >
             <CiShare2 className="text-color-3" size={20} />
           </div>
           <div className="absolute top-1 left-2 bg-color-4/50 text-color-5 rounded-full py-1 px-4 text-xs font-medium">
@@ -358,7 +377,8 @@ export default function ProductShopBlock({
             <IoIosArrowForward size={28} />
           </button>
         </div>
-        <div className="relative mt-[-35px]">
+        {/* Carrousel Mobile */}
+        <div className="relative flex max-w-[325px] mt-[-35px] md:hidden">
           <div className="embla" ref={viewportRef}>
             <div className="embla__container">
               {product.productImages.map((img, index) => (
