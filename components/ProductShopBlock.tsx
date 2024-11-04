@@ -281,6 +281,7 @@ export default function ProductShopBlock({
           Item Adicionado ao carrinho
         </div>
       )}
+      {/* Carrousel Desktop */}
       <div className="flex flex-col md:flex-row gap-2">
         <div className="max-w-[150px] max-h-[550px] hidden md:block">
           <div className="embla2 " ref={viewportRef}>
