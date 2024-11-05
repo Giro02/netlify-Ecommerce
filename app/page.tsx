@@ -48,14 +48,17 @@ export default async function Home() {
         <div>
           <BannersHome BannerName={banner1}></BannersHome>
         </div>
-        <div className="mt-24">
+        <div className="mt-12">
           <TitleHome title={"CONECTA+ INDICA"} iconType={"like"}></TitleHome>
         </div>
 
         <div>
           <Carousel carousel={carouselArray[2]}></Carousel>
         </div>
-        <TitleHome title={"MELHORES PREÇOS"} iconType={"pig"}></TitleHome>
+        <div className="mt-12">
+          <TitleHome title={"MELHORES PREÇOS"} iconType={"pig"}></TitleHome>
+        </div>
+
         <div>
           <Carousel carousel={carouselArray[0]}></Carousel>
         </div>

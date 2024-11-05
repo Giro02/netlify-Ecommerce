@@ -109,7 +109,7 @@ function Constructor({ carousel }: CarouselProps) {
   }, [emblaApi]);
 
   return (
-    <div className="py-12 md:container">
+    <div className=" md:container">
       <div className=" relative">
         <div className="embla" ref={emblaRef}>
           <div className="embla__container flex px-4 py-8 gap-6">

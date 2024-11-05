@@ -104,7 +104,7 @@ export default function ProductComponent({ product }: ProductComponentProps) {
           <div
             className={`h-10 bg-color-1 ${
               Saiba === 1 ? "flex" : "flex sm:invisible"
-            } items-center justify-center text-color-branco text-[16px] mt-6 w-[282px] py-4 rounded-lg  text-color-3 `}
+            } items-center justify-center text-color-branco text-[16px] mt-6 w-full py-4 rounded-lg  text-color-3 `}
           >
             Ver detalhes
           </div>
