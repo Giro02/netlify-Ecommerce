@@ -13,7 +13,7 @@ type NavItemsProps = {
 const NavItems: React.FC<NavItemsProps> = ({ children, active }) => {
   return (
     <li
-      className={`p-4 flex items-center ${
+      className={` p-4 flex items-center ${
         active
           ? "text-color-1 bg-color-4/40 border-l-4 font-medium border-color-1 cursor-default hover:text-color-1"
           : "cursor-pointer hover:bg-color-4/40 border-l-4 border-l-color-3 hover:border-l-color-4/40"
@@ -48,13 +48,10 @@ export default function FloatMenu() {
 
   return (
     <div className="mt-2 text-color-5">
-      <div className="hidden lg:block mt-3 rounded-lg bg-color-3 w-full max-w-[275px] max-h-[315px] py-4 shadow-sm">
+      <div className="hidden lg:block mt-3 rounded-lg bg-color-3 py-4 shadow-sm">
         {menu(currentPath)}
       </div>
       <div className="lg:hidden">
-        {/* <h1 className="text-color-5 w-full text-center font-medium text-3xl mb-4">
-          Menu
-        </h1> */}
         <div
           className={` ${
             collapse ? "rounded-t-lg " : "rounded-lg shadow-md"

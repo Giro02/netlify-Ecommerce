@@ -80,17 +80,17 @@ export default function Header({
             <Link href={"/categorias/interruptores"}>
               <Menu text="Interruptores"></Menu>
             </Link>
+            <Link href={"/categorias/lampadas"}>
+              <Menu text="Lâmpadas"></Menu>
+            </Link>
             <Link href={"/categorias/sensores"}>
               <Menu text="Sensores"></Menu>
             </Link>
             <Link href={"/categorias/gateways"}>
               <Menu text="Gateways"></Menu>
             </Link>
-            <Link href={"/categorias/r-fiders"}>
-              <Menu text="R-fiders"></Menu>
-            </Link>
-            <Link href={"/categorias/saude-sexual"} className="bg-color-2">
-              <Menu text="Automação Industrial"></Menu>
+            <Link href={"/categorias/Receptores"}>
+              <Menu text="Receptores de Sinal"></Menu>
             </Link>
           </div>
         </div>

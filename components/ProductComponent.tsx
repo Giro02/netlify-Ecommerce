@@ -91,7 +91,7 @@ export default function ProductComponent({ product }: ProductComponentProps) {
           <h4 className="mt-4 text-lg overflow-hidden">{product.title}</h4>
 
           <div className="flex">
-            <h4 className="text-lg text-color-7 font-semibold">
+            <h4 className="text-lg text-color-5 font-semibold">
               Sob encomenda
             </h4>
           </div>
