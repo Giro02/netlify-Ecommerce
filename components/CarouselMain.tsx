@@ -5,6 +5,7 @@ import Autoplay from "embla-carousel-autoplay";
 import "../public/static/carousel.css";
 import { IoIosArrowForward } from "react-icons/io";
 import { CarouselType } from "@/types";
+import Image from "next/image";
 
 interface CarouselProps {
   carousel: Array<CarouselType>;
@@ -50,7 +51,7 @@ export default function CarouselMain(carousel: CarouselProps) {
           {carousel.carousel.map((i, index) => (
             <div key={index} className="embla__slide">
               <Images
-                Image={i.homeimagesmobile?.image}
+                imagem={i.homeimagesmobile?.image}
                 size={"mobile"}
               ></Images>
             </div>
@@ -61,7 +62,7 @@ export default function CarouselMain(carousel: CarouselProps) {
         <div className="embla__container">
           {carousel.carousel.map((i, index) => (
             <div key={index} className="embla__slide">
-              <Images Image={i.homeimages?.image} size={"desktop"}></Images>
+              <Images imagem={i.homeimages?.image} size={"desktop"}></Images>
             </div>
           ))}
         </div>
@@ -84,24 +85,41 @@ export default function CarouselMain(carousel: CarouselProps) {
 }
 
 type ItemProps = {
-  Image: string;
+  imagem: string;
   size: string;
 };
 
-function Images({ Image, size }: ItemProps) {
+function Images({ imagem, size }: ItemProps) {
+  console.log(size);
   if (size === "mobile") {
     return (
-      <div
-        className=" md:hidden bg-cover bg-center aspect-0.96/1 flex items-center justify-center"
-        style={{ backgroundImage: `url(${Image})` }}
-      ></div>
+      <div className="md:hidden">
+        <Image
+          src={imagem}
+          alt="Mobile image"
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{ width: "100%", height: "auto" }}
+          className="object-contain"
+          priority
+        />
+      </div>
     );
   }
   return (
-    <div
-      className="bg-cover bg-center hidden aspect-4.47/1 md:flex items-center justify-center"
-      style={{ backgroundImage: `url(${Image})` }}
-    ></div>
+    <div className="hidden md:block">
+      <Image
+        src={imagem}
+        alt="Desktop image"
+        width={0}
+        height={0}
+        sizes="100vw"
+        style={{ width: "100%", height: "auto" }}
+        className="object-contain"
+        priority
+      />
+    </div>
   );
 }
 

@@ -166,7 +166,7 @@ export default function MobileMenu({ allCategData, userSerialized }) {
 
 export function HamburguerPhone({ toggleMenu }: { toggleMenu: () => void }) {
   return (
-    <div onClick={toggleMenu} className="flex flex-col gap-1">
+    <div onClick={toggleMenu} className="flex flex-col gap-2">
       <div className="border border-color-5 w-7 rounded-md"></div>
       <div className="border border-color-5 w-7 rounded-md"></div>
       <div className="border border-color-5 w-7 rounded-md"></div>

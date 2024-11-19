@@ -17,11 +17,11 @@ export async function generateMetadata({
   return {
     title: `${searchParams.q} `,
     description: "Descricao da EssenciaQi",
-    // openGraph: {
-    //   description: `${category.ogdescription}`,
-    //   images: category.categoryImage.image,
-    //   title: `${category.title}`,
-    // },
+    //openGraph: {
+    //description: `${category.ogdescription}`,
+    //images: category.categoryImage.image,
+    //title: `${category.title}`,
+    //},
   };
 }
 

@@ -15,20 +15,22 @@ import { CategoryType, ProductPreviewArray } from "@/types";
 export default function Footer(allCategData: CategoryType) {
   const pathName = usePathname();
   const studio = pathName.startsWith("/studio");
+  const date = new Date();
+  const year = date.getFullYear();
 
   if (studio) {
     return null;
   } else {
     return (
       <div>
-        <div className=" bg-color-4 text-color-5/90 mt-16">
-          <div className="container p-8 py-16 md:p-16">
-            <div className="flex flex-col md:flex-row gap-20">
+        <div className=" bg-color-4/20 text-color-5/90 ">
+          <div className="container px-4 py-16 md:p-16">
+            <div className="flex flex-col md:flex-row gap-8">
               <Link href={"/"}>
                 <ConectaMais></ConectaMais>
               </Link>
               <div className="flex flex-col gap-2">
-                <h1 className="font-bold text-color-5">Conecta +</h1>
+                <h1 className="font-medium text-color-5 text-2xl">Conecta +</h1>
                 <h2 className="mt-2 ">Fale Conosco</h2>
 
                 <Link href={"/quem-somos"}>
@@ -38,7 +40,9 @@ export default function Footer(allCategData: CategoryType) {
 
               <div className="flex ">
                 <div className="flex flex-col gap-2">
-                  <h1 className="font-bold text-color-5 mb-2">Categorias</h1>
+                  <h1 className="font-medium text-2xl text-color-5 mb-2">
+                    Categorias
+                  </h1>
                   {allCategData.allCategData
                     .slice(0, 4)
                     .map((category, index) => (
@@ -66,25 +70,26 @@ export default function Footer(allCategData: CategoryType) {
               </div>
             </div>
             <div className="flex flex-col md:flex-row justify-between mt-16">
-              <div className="font-bold">
-                <h1 className="text-color-5">Formas de Pagamento</h1>
+              <div className="font-medium">
+                <h1 className="text-color-5 text-2xl">Formas de Pagamento</h1>
                 <div className="flex gap-4 mt-2">
                   <Image
                     src={MasterLogo}
                     alt="mastercardLogo"
                     width={65}
+                    height={65}
                   ></Image>
                   <Image src={VisaLogo} alt="mastercardLogo" width={65}></Image>
                 </div>
               </div>
-              <div className="font-bold text-color-5">
-                <h1>Segurança</h1>
+              <div className="font-medium text-color-5 mt-16">
+                <h1 className="text-2xl">Segurança</h1>
                 <div className="mt-[-30px]">
                   <Image src={GoogleLogo} alt="GoogleLogo" width={125}></Image>
                 </div>
               </div>
-              <div className="font-bold text-color-5">
-                <h1>Redes Sociais?</h1>
+              <div className="font-medium text-color-5">
+                <h1 className=" text-2xl">Redes Sociais</h1>
                 <div className="flex gap-4 mt-2">
                   <div className="rounded-full flex items-center justify-center bg-color-1/30 text-color-1 h-[50px] w-[50px]">
                     <FaInstagram size={25}></FaInstagram>
@@ -101,7 +106,7 @@ export default function Footer(allCategData: CategoryType) {
           </div>
         </div>
         <h1 className="my-4 w-full text-center ">
-          © Copyright 2024 Essência Qi. Todos os direitos reservados
+          © Copyright {year} Conecta+. Todos os direitos reservados
         </h1>
       </div>
     );

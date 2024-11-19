@@ -7,6 +7,8 @@ import { usePathname } from "next/navigation";
 import { AutomaBras } from "../Svgs";
 import { ConectaMais } from "../Svgs";
 import MobileMenu from "./MobileMenu";
+import Image from "next/image";
+import Cart from "./Cart";
 
 export default function LogoSearch({
   allProductsPreview,
@@ -42,30 +44,26 @@ export default function LogoSearch({
 
   if (checkout) {
     return (
-      <div className="max-w-[200px] overflow-hidden">
+      <div className=" overflow-hidden">
         <Link href="/">
-          <ConectaMais className=" text-[3.3rem]" />
+          <ConectaMais className=" md:w-[3rem] md:h-[3rem] w-[16rem] h-[5rem]" />
         </Link>
       </div>
     );
   }
 
   return (
-    <div>
-      <div className="flex gap-4 md:gap-12 items-center">
-        <div className="md:hidden" onClick={toggleMenu}>
-          <MobileMenu
-            allCategData={allCategData}
-            userSerialized={userSerialized}
-          ></MobileMenu>
-        </div>
-
-        <div>
-          <Link href="/">
-            <ConectaMais className=" text-[3rem]" />
-          </Link>
-        </div>
+    <div className="flex justify-between w-full items-center">
+      <div className="md:hidden" onClick={toggleMenu}>
+        <MobileMenu
+          allCategData={allCategData}
+          userSerialized={userSerialized}
+        ></MobileMenu>
       </div>
+      <Link href="/">
+        <ConectaMais className="md:w-[3rem] md:h-[3rem] w-[16rem] h-[5rem]" />
+      </Link>
+      <Cart></Cart>
     </div>
   );
 }

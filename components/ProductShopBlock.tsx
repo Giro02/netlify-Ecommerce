@@ -43,7 +43,6 @@ export default function ProductShopBlock({
   const [mainImage, setMainImage] = useState(product.productImages[0].image);
   const [viewportRef, emblaApi] = useEmblaCarousel(
     {
-      axis,
       skipSnaps: false,
       dragFree: true,
     },
@@ -78,22 +77,32 @@ export default function ProductShopBlock({
     setMainImage(image);
     setIsIndex(index);
   };
-  const scrolToNextImage = () => {
+  const scrolToNextImage = (isIndex) => {
     if (isIndex < product.productImages.length - 1) {
       scrollTo(isIndex + 1);
       setSelected(isIndex + 1);
-      setIsIndex(isIndex + 1);
       setMainImage(product.productImages[isIndex + 1].image);
+      setIsIndex(isIndex + 1);
     }
+    console.log(isIndex);
   };
-  const scrolToPrevImage = () => {
+  const scrolToPrevImage = (isIndex) => {
     if (isIndex >= 1) {
+      setIsIndex(isIndex - 1);
       scrollTo(isIndex - 1);
       setSelected(isIndex - 1);
-      setIsIndex(isIndex - 1);
       setMainImage(product.productImages[isIndex - 1].image);
     }
   };
+
+  const scrollToIndex = (index) => {
+    console.log(index);
+    setIsIndex(index);
+    scrollTo(index);
+    setSelected(index);
+    setMainImage(product.productImages[index].image);
+  };
+
   const handleResize = () => {
     if (window.innerWidth <= 768) {
       setAxis("x");
@@ -311,8 +320,10 @@ export default function ProductShopBlock({
         </div>
 
         {/* Imagem Principal */}
+        <div className="text-2xl font-medium">{product.title}</div>
+
         <div
-          className=" max-w-[550px]  p-4 max-h-[550px] md:flex items-center justify-center rounded-md  relative"
+          className="mt-4 max-w-[550px]  p-4 max-h-[550px] md:flex items-center justify-center rounded-md  relative"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
@@ -326,6 +337,7 @@ export default function ProductShopBlock({
             sizes="(max-width: 550px) 100vw, 550px"
             priority
           />
+
           <div
             className="absolute rounded-full p-2 bg-color-1 top-0 right-2 cursor-pointer"
             onClick={() => {
@@ -353,7 +365,7 @@ export default function ProductShopBlock({
           </div>
 
           <button
-            onClick={() => scrolToPrevImage()}
+            onClick={() => scrolToPrevImage(isIndex)}
             disabled={isIndex === 0}
             className={`${
               isIndex === 0
@@ -365,7 +377,7 @@ export default function ProductShopBlock({
             <IoIosArrowForward size={28} />
           </button>
           <button
-            onClick={() => scrolToNextImage()}
+            onClick={() => scrolToNextImage(isIndex)}
             disabled={isIndex === product.productImages.length - 1}
             className={`${
               isIndex === product.productImages.length - 1
@@ -389,7 +401,7 @@ export default function ProductShopBlock({
                       ? "border-2 border-color-5/30 rounded-lg"
                       : ""
                   } embla__slide2 cursor-pointer`}
-                  onClick={() => handleImageClick(img.image, index)}
+                  onClick={() => scrollToIndex(index)}
                 >
                   <Image
                     src={img.image}

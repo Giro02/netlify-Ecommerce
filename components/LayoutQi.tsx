@@ -26,14 +26,13 @@ export default async function Layout({
   return (
     <CartProvider>
       <div className="text-color-5 ">
-        <div className="flex w-full px-4 md:container h-[100px] items-center">
-          <div>
-            <LogoSearch
-              allProductsPreview={allProductsPreview}
-              allCategData={allCategData}
-              userSerialized={userSerialized}
-            />
-          </div>
+        <div className="flex w-full px-4 md:container justify-between h-[100px] items-center">
+          <LogoSearch
+            allProductsPreview={allProductsPreview}
+            allCategData={allCategData}
+            userSerialized={userSerialized}
+          />
+
           <div className="px-10 hidden lg:block w-full">
             <Procure productsSearch={allProductsPreview} />
           </div>
