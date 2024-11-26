@@ -61,9 +61,11 @@ export default function LogoSearch({
         ></MobileMenu>
       </div>
       <Link href="/">
-        <ConectaMais className="md:w-[3rem] md:h-[3rem] w-[16rem] h-[5rem]" />
+        <ConectaMais className="md:w-[12rem] md:h-[12rem] w-[16rem] h-[5rem]" />
       </Link>
-      <Cart></Cart>
+      <div className="md:hidden">
+        <Cart></Cart>
+      </div>
     </div>
   );
 }
